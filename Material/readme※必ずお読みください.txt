@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------
-	          ITunEsTooL　Ver.3.0.0.2
+	          ITunEsTooL　Ver.3.1.0.0
 ----------------------------------------------------------------------------
 【動作環境】
 下記OSが快適に使用できるパソコン
@@ -41,6 +41,7 @@ ITunEsTooLは、以下の条件に従って使用して下さい。万が一問題は発生した場合は、
 
 WebSite:http://itunestool.jp/
 Contact:http://itunestool.php.xdomain.jp/contact.html
+Github:https://github.com/isaito-kurumizawa/itunestool
 
 【更新履歴】
 
@@ -150,7 +151,7 @@ F1キーで起動していたマニュアルをWEB化
 ITunEsTooLにアートワークが設定される場合、画像が表示されないバグを修正
 C:\Program Files以下のITunEsTooLtmp.jpgが保存されるバグを修正
 ソース公開しました(ひど過ぎるソースですが。。。
-https://github.com/isaito-kurumizawa/ITunEsTooL_Source.git
+https://github.com/isaito-kurumizawa/itunestool
 
 
 2015/05/23 Ver 3.0.0.0
@@ -169,3 +170,6 @@ https://github.com/isaito-kurumizawa/ITunEsTooL_Source.git
 Windows10対応
 インストーラーをWindows8以降も使えるように変更
 インストールフォルダをマイドキュメントに変更
+
+2017/09/08 Ver 3.1.0.0
+GoogleAPIのサービスが終了してしまったのでitunesAPIに移行しました。

@@ -180,16 +180,7 @@ namespace ITunEsTooL
 
                 ver = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 CONF.ppath = Path.GetDirectoryName(myAssembly.Location);
-                
-                strErrMsg = CheckExistsFiles();
-                if (strErrMsg != "")
-                {
-                    Msgbox(strErrMsg + "が存在しません。\n" + "Setup.exeを実行した後にITunEsTooLを起動して下さい。", 
-                           HeadMsg.NOTICE,2);
-                    this.Close();
-                    return;
-                }
-                
+                                
                 Constructor();
 
                 SetConf();
