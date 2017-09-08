@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EA34BB3E-331A-4BBC-9507-73924B6C3B03}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ITunEsTooL</RootNamespace>
+    <AssemblyName>ITunEsTooL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\saito\Desktop\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>2.2.1.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>
+    </Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Sidebar -Music.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ITunEsTooL.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>D34C1157E3966679D60010FA3B9482AD4518B6A7</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>itunesTool_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tamir.SharpSSH, Version=1.1.1.13, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Tamir.SharpSSH.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CrashReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrashReport.Designer.cs">
+      <DependentUpon>CrashReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileOperation.cs" />
+    <Compile Include="ImageOperation.cs" />
+    <Compile Include="ITunEsTooL_Beams.cs" />
+    <Compile Include="Mail.cs" />
+    <Compile Include="Model\ITunesSearchAPI.cs" />
+    <Compile Include="Review.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Review.Designer.cs">
+      <DependentUpon>Review.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PicCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PicCheck.Designer.cs">
+      <DependentUpon>PicCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Picture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Picture.Designer.cs">
+      <DependentUpon>Picture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PictureOpen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PictureOpen.Designer.cs">
+      <DependentUpon>PictureOpen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVersion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVersion.Designer.cs">
+      <DependentUpon>frmVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlayListName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlayListName.Designer.cs">
+      <DependentUpon>PlayListName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Start.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Start.Designer.cs">
+      <DependentUpon>Start.cs</DependentUpon>
+    </Compile>
+    <Compile Include="splash.cs" />
+    <Compile Include="CommonValue.cs" />
+    <Compile Include="Dialog.cs" />
+    <Compile Include="frmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSplash.Designer.cs">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ichiran.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ichiran.Designer.cs">
+      <DependentUpon>Ichiran.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Itune.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Itune.Designer.cs">
+      <DependentUpon>Itune.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemSetting.cs" />
+    <EmbeddedResource Include="CrashReport.resx">
+      <DependentUpon>CrashReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Review.resx">
+      <DependentUpon>Review.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PicCheck.resx">
+      <DependentUpon>PicCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Picture.resx">
+      <DependentUpon>Picture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PictureOpen.resx">
+      <DependentUpon>PictureOpen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVersion.resx">
+      <DependentUpon>frmVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlayListName.resx">
+      <DependentUpon>PlayListName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Start.resx">
+      <DependentUpon>Start.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSplash.resx">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ichiran.resx">
+      <DependentUpon>Ichiran.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itune.resx">
+      <DependentUpon>Itune.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="iTunesLib">
+      <Guid>{9E93C96F-CF0D-43F6-8BA8-B807A3370712}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>13</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="NetFwTypeLib">
+      <Guid>{58FBCF7C-E7A9-467C-80B3-FC65E8FCCA08}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 および x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows インストーラー 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ajax-loader%285%29.gif" />
+    <None Include="Resources\ico_xmark8a_8.gif" />
+    <None Include="bin\Debug\ロゴ.jpg" />
+    <None Include="bin\Debug\ロゴ２.jpg" />
+    <None Include="bin\Debug\ロゴ３.jpg" />
+    <None Include="Resources\水色音符.jpg" />
+    <None Include="Resources\緑音符.jpg" />
+    <None Include="bin\Debug\NoImage.jpg" />
+    <None Include="Resources\clown-gl01_b.png" />
+    <None Include="Resources\clown-sl01_b.png" />
+    <None Include="Resources\clown-br01_b.png" />
+    <None Include="Resources\1406208501DiPsi8BWjGbD_Z_1406208500.gif" />
+    <None Include="Resources\054.png" />
+    <None Include="Resources\mark_warning01.gif" />
+    <None Include="Resources\business_002b.png" />
+    <None Include="Resources\1.jpg" />
+    <None Include="Resources\2.jpg" />
+    <None Include="Resources\3.jpg" />
+    <None Include="Resources\4.jpg" />
+    <None Include="Resources\5.jpg" />
+    <Content Include="Sidebar -Music.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
