@@ -128,7 +128,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                strErr += "System Exception 23534 : " + ex.Message + "\n";
+                strErr += "System Exception 23534 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
             finally
             {

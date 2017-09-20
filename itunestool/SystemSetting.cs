@@ -36,7 +36,7 @@ namespace ITunEsTooL
             }
             catch (Exception ex)
             {
-                strErrMsg += "System Exception 14411 : " + ex.Message + "\n";
+                strErrMsg += "System Exception 14411 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
             return strErrMsg;
         }

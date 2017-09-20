@@ -261,7 +261,7 @@ namespace ITunEsTooL
                 if (File.Exists(CONF.pxmlPath))
                     DeleteFile(CONF.pxmlPath);
                 Msgbox("System Exception 1001" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
-                pErrMessage += "System Exception 1001 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1001 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
         }
@@ -303,7 +303,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                strErrMsg = ex.Message;    
+                strErrMsg = ex.Message + "\n" + ex.StackTrace + "\n";    
             }
             return strErrMsg;
 
@@ -324,7 +324,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 3046 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 3046 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return;
             }
 
@@ -542,7 +542,7 @@ namespace ITunEsTooL
             }
             catch (SystemException ex)
             {
-                pErrMessage += "System Exception 5624 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 5624 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
         
@@ -625,7 +625,7 @@ namespace ITunEsTooL
             catch (System.Exception ex)
             {
                 
-                pErrMessage += "System Exception 1012 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1012 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 Msgbox("System Exception 1012" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
             }
             finally
@@ -683,7 +683,7 @@ namespace ITunEsTooL
                 
                 COMVAL.Release();
                 COMVAL = null;
-                pErrMessage += "System Exception 1187 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1187 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
         }
@@ -707,7 +707,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 2355 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 2355 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
         /// <summary>
@@ -734,7 +734,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 9845 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 9845 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
         /// <summary>
@@ -750,7 +750,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 9846 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 9846 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
 
@@ -847,7 +847,7 @@ namespace ITunEsTooL
             catch (System.Exception ex)
             {
                 Conf_reader.Close();
-                pErrMessage += "System Exception 1014 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1014 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
         }
@@ -938,7 +938,7 @@ namespace ITunEsTooL
                 if(reader != null)
                     reader.Close();
                 COMVAL = null;
-                pErrMessage += "System Exception 1013 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1013 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
         }
@@ -981,7 +981,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 2398 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 2398 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
         }
@@ -1078,7 +1078,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1011 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1011 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
        }
@@ -1113,7 +1113,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 5332 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 5332 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
 
         }
@@ -1218,7 +1218,7 @@ namespace ITunEsTooL
                         YorN = Msgbox("iTunesの情報が取得出来ませんでした。iTunesに問題がある可能性があります。処理を続行しますか？", HeadMsg.CONNECT_ITUNES, 8);
                         if (YorN == DialogResult.No)
                         {
-                            pErrMessage += "System Exception 14202 : " + ex.Message + "\n";
+                            pErrMessage += "System Exception 14202 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                             break;
                         }
                     }
@@ -1227,7 +1227,7 @@ namespace ITunEsTooL
                         YorN = Msgbox("iTunesの情報が取得出来ませんでした。iTunesに問題がある可能性があります。処理を続行しますか？", HeadMsg.CONNECT_ITUNES, 8);
                         if (YorN == DialogResult.No)
                         {
-                            pErrMessage += "System Exception 14203 : " + ex.Message + "\n";
+                            pErrMessage += "System Exception 14203 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                             break;
                         }
                     }
@@ -1246,13 +1246,13 @@ namespace ITunEsTooL
             {
 
                 Msgbox("iTunesの情報が取得出来ません。iTunesの設定を確認してください。", HeadMsg.HEAD_EXCEPTION, 2);
-                pErrMessage += "System Exception 14201 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 14201 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
             catch (System.Exception ex)
             {
                 splash.CloseSplash();
                 Msgbox("iTunesと同期が出来ませんでした。iTunesを再起動して下さい。", HeadMsg.HEAD_EXCEPTION, 2);
-                pErrMessage += "System Exception 1002 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1002 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
             finally
             {
@@ -1337,7 +1337,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1011 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1011 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
             finally
@@ -1409,7 +1409,7 @@ namespace ITunEsTooL
                 if (File.Exists(CONF.pxmlPath))
                     DeleteFile(CONF.pxmlPath);
                 Msgbox("System Exception 1003" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
-                pErrMessage += "System Exception 1003 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1003 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -1507,7 +1507,7 @@ namespace ITunEsTooL
                 if (File.Exists(CONF.pxmlPath))
                     DeleteFile(CONF.pxmlPath);
                 Msgbox("System Exception 1004" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
-                pErrMessage += "System Exception 1004 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1004 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -1608,7 +1608,7 @@ namespace ITunEsTooL
                         }
                         catch (System.Exception ex)
                         {
-                           pErrMessage +=  "System Exception 1005 : " + ex.Message + "\n";
+                           pErrMessage +=  "System Exception 1005 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                         }
 
                     }
@@ -1668,7 +1668,7 @@ namespace ITunEsTooL
                         }
                         catch (System.Exception ex)
                         {
-                           pErrMessage +=  "System Exception 1006 : " + ex.Message + "\n";
+                           pErrMessage +=  "System Exception 1006 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                         }
                     }
                     cnt++;
@@ -1732,7 +1732,7 @@ namespace ITunEsTooL
                         }
                         catch (System.Exception ex)
                         {
-                            pErrMessage += "System Exception 1006 : " + ex.Message + "\n";
+                            pErrMessage += "System Exception 1006 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                         }
                     }
                     cnt++;
@@ -2244,7 +2244,7 @@ namespace ITunEsTooL
                 if (File.Exists(CONF.pxmlPath))
                     DeleteFile(CONF.pxmlPath);
                 Msgbox("System Exception 1007" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1007 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1007 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
 
             }
@@ -2448,7 +2448,7 @@ namespace ITunEsTooL
                     DeleteFile(CONF.pxmlPath);
                 splash.CloseSplash();
                 Msgbox("System Exception 1009" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 2);
-                pErrMessage += "System Exception 1009 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1009 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -2499,7 +2499,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1014 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1014 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
             return true;
@@ -2536,7 +2536,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1009 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1009 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
         /// <summary>
@@ -2686,7 +2686,7 @@ namespace ITunEsTooL
                     DeleteFile(CONF.pxmlPath);
                 splash.CloseSplash();
                 Msgbox("System Exception 1010" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 2);
-                pErrMessage += "System Exception 1010 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1010 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -2955,7 +2955,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 7411 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 7411 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
             finally
@@ -3112,7 +3112,7 @@ namespace ITunEsTooL
                     DeleteFile(CONF.pxmlPath);
                 DialogSaizenmen();
                 Msgbox("System Exception 1027" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1027 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1027 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -3188,7 +3188,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1028 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1028 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 SetNoImage(false);
                 return;
             }
@@ -3239,7 +3239,7 @@ namespace ITunEsTooL
             catch (System.Exception ex)
             {
 
-                pErrMessage += "AddArt Exception 1035 : " + ex.Message + "\n";
+                pErrMessage += "AddArt Exception 1035 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
         }
@@ -3301,7 +3301,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "track_Dlt Exception 1034 : " + ex.Message + "\n";
+                pErrMessage += "track_Dlt Exception 1034 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
 
         }
@@ -3330,7 +3330,7 @@ namespace ITunEsTooL
              }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1030 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1030 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return "";
             }
         }
@@ -3389,7 +3389,7 @@ namespace ITunEsTooL
 		    }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1029 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1029 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
 
@@ -3408,7 +3408,7 @@ namespace ITunEsTooL
              }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1032 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1032 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
 
@@ -3427,7 +3427,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1033 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1033 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
 
@@ -3508,7 +3508,7 @@ namespace ITunEsTooL
             catch (System.Exception ex)
             {                
                 Msgbox("System Exception 3045" + "\n" + "iTunesが起動されていないか、予期せぬエラーが発生しました。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 3045 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 3045 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
         }
@@ -3633,7 +3633,7 @@ namespace ITunEsTooL
                     DeleteFile(CONF.pxmlPath);
                 splash.CloseSplash();
                 Msgbox("System Exception 1054" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1054 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1054 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -3696,7 +3696,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 1040 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1040 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
             finally
             {
@@ -3740,7 +3740,7 @@ namespace ITunEsTooL
                 if (File.Exists(CONF.pxmlPath))
                     DeleteFile(CONF.pxmlPath);
                 Msgbox("System Exception 1052" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1052 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1052 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -3952,7 +3952,7 @@ namespace ITunEsTooL
             {
                 splash.CloseSplash();
                 Msgbox("System Exception 1248" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1248 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1248 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
             finally
             {
@@ -4160,7 +4160,7 @@ namespace ITunEsTooL
             {
                 splash.CloseSplash();
                 Msgbox("System Exception 1153" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1153 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1153 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -4204,7 +4204,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 13457 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 13457 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
             finally
@@ -4336,7 +4336,7 @@ namespace ITunEsTooL
 		    }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 8451 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 8451 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
             finally
@@ -4467,7 +4467,7 @@ namespace ITunEsTooL
             {
                 splash.CloseSplash();
                 Msgbox("System Exception 1132" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1132 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1132 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
             finally
             {
@@ -4680,7 +4680,7 @@ namespace ITunEsTooL
             {
                 splash.CloseSplash();
                 Msgbox("System Exception 1152" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1152 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1152 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -4831,7 +4831,7 @@ namespace ITunEsTooL
             }
             catch (SystemException ex)
             {
-                pErrMessage += "System Exception 7643 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 7643 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
 
@@ -4888,7 +4888,7 @@ namespace ITunEsTooL
             }
             catch (SystemException ex)
             {
-		        pErrMessage += "System Exception 2102 : " + ex.Message + "\n";
+		        pErrMessage += "System Exception 2102 : " + ex.Message + "\n" + ex.StackTrace + "\n";
 		        return 3;
 		    }
             finally
@@ -5065,7 +5065,7 @@ namespace ITunEsTooL
             {
                 splash.CloseSplash();
                 Msgbox("System Exception 1088" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1088 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1088 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
             finally
             {
@@ -5171,7 +5171,7 @@ namespace ITunEsTooL
             {
                 splash.CloseSplash();
                 Msgbox("System Exception 1355" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
-                pErrMessage += "System Exception 1355 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1355 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
@@ -5207,7 +5207,7 @@ namespace ITunEsTooL
             catch (System.Exception ex)
             {
                 Msgbox("System Exception 3325" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
-                pErrMessage += "System Exception 3325 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 3325 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
         }
@@ -5234,7 +5234,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                pErrMessage += "System Exception 6325 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 6325 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return 2;
             }
         }
@@ -5465,7 +5465,7 @@ namespace ITunEsTooL
             {
                 splash.CloseSplash();
                 Msgbox("System Exception 1248" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1248 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 1248 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
             finally
             {
@@ -5546,7 +5546,7 @@ namespace ITunEsTooL
                 lblAlbum.BackColor = Color.WhiteSmoke;
                 lblArtist.BackColor = Color.WhiteSmoke;
                 Msgbox("System Exception 8534" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 8534 : " + ex.Message + "\n";
+                pErrMessage += "System Exception 8534 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
         }
