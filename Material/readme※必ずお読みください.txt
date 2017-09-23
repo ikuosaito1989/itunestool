@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------
-	          ITunEsTooL　Ver.3.1.0.1
+	          ITunEsTooL　Ver.3.1.0.2
 ----------------------------------------------------------------------------
 【動作環境】
 下記OSが快適に使用できるパソコン
@@ -39,7 +39,7 @@ ITunEsTooLは、以下の条件に従って使用して下さい。万が一問題は発生した場合は、
 追加して欲しい機能がありましたら出来るだけ対応しますので、
 ご意見をお待ちしております。
 
-WebSite:http://itunestool.jp/
+WebSite:http://itunestool.html.xdomain.jp/
 Contact:http://itunestool.php.xdomain.jp/contact.html
 Github:https://github.com/isaito-kurumizawa/itunestool
 
@@ -176,3 +176,7 @@ GoogleAPIのサービスが終了してしまったのでitunesAPIに移行しました。
 
 2017/09/20 Ver 3.1.0.1
 エラーを修正。エラーに対応しやすくしました。
+
+2017/09/23 Ver 3.1.0.2
+設定値の取得方法を変更。
+起動時のエラーを修正

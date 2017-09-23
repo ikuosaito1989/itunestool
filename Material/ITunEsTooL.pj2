@@ -7,7 +7,7 @@ InstallerModuleLanguage=1041
 MajorVersion=4
 MinorVersion=60
 CreateDateTime=2014/01/03 21:33:59
-UpdateDateTime=2017/09/20 19:03:41
+UpdateDateTime=2017/09/23 12:40:38
 Generator=EINSTALL 2.0
 ProjectType=0
 CreateFileType=1
@@ -46,7 +46,7 @@ LogoTransparent=0
 MajorVersion=3
 MinorVersion=1
 ReleaseVersion=0
-BuildVersion=1
+BuildVersion=2
 OtherVersion=0
 DocumentFile=
 LicenseFile=
@@ -132,20 +132,6 @@ EndFileRenOperation=0
 FileUseCheck=0
 MemoryCheck=0
 
-[Files]
-0=1|1|%InstallDir%|Log||フォルダの作成||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,||||||||||
-1=1|1|%InstallDir%|Artwork||フォルダの作成||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,||||||||||
-2=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\ITunEsTooL.config|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
-3=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\ITunEsTooL.exe|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
-4=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\Interop.iTunesLib.dll|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
-5=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\readme※必ずお読みください.txt|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
-6=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\Shortcut.CMD|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
-7=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\Windows8.1用アンインストール.bat|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
-8=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\Windows8.1用セットアップ.bat|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
-9=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\ITunEsTooL.exe.config|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
-10=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\Newtonsoft.Json.dll|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
-11=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\RestSharp.dll|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
-
 [ShortCutItems]
 0=ITunEsTooL|%InstallDir%\ItunEsTooL.exe|||%InstallDir%\ItunEsTooL.exe|0||0|15|0|||||||||||
 
@@ -156,4 +142,15 @@ MemoryCheck=0
 3=0|%InstallDir%||ITunEsTooL.exe|||0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,||||||||||||
 4=0|%InstallDir%||Interop.iTunesLib.dll|||0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,||||||||||||
 5=1|%InstallDir%|||||0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,||||||||||||
+
+[Files]
+0=1|1|%InstallDir%|Log||フォルダの作成||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,||||||||||
+1=1|1|%InstallDir%|Artwork||フォルダの作成||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,||||||||||
+2=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\ITunEsTooL.exe|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
+3=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\Interop.iTunesLib.dll|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
+4=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\readme※必ずお読みください.txt|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
+5=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\Shortcut.CMD|||0|0|3968|0,0,0,0,0,0,0,0,,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,,,,,,,,,,,,,,,|||||||||
+6=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\ITunEsTooL.exe.config|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
+7=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\Newtonsoft.Json.dll|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
+8=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\RestSharp.dll|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
 
