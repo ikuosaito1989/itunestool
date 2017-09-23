@@ -42,7 +42,6 @@ namespace ITunEsTooL
         private Boolean pAutoShutdown = false;
         private Boolean pDoukiFlg = false;
         private Boolean blnSaishin = true;
-        private Boolean blnshorichu = true;
         private Boolean PicCheckFlag = false;
         private Point mousePoint;
         private FileVersionInfo ver = null;
@@ -183,7 +182,7 @@ namespace ITunEsTooL
                                 
                 Constructor();
 
-                SetConf();
+                Read_Conf();
 
                 switch (CONF.pColor)
                 {
@@ -270,7 +269,7 @@ namespace ITunEsTooL
         {
             SystemEvents.UserPreferenceChanged +=
                     new UserPreferenceChangedEventHandler(SystemEvents_UserPreferenceChanged);
-            itunesD.OnDatabaseChangedEvent += new _IiTunesEvents_OnDatabaseChangedEventEventHandler(itunes_OnDatabaseChangedEvent);
+            //itunesD.OnDatabaseChangedEvent += new _IiTunesEvents_OnDatabaseChangedEventEventHandler(itunes_OnDatabaseChangedEvent);
         }
 
         /// <summary>
@@ -309,26 +308,26 @@ namespace ITunEsTooL
 
         }
 
-        /// <summary>
-        /// iTunes上のデータが変更された時
-        /// </summary>
-        /// <param name="deletedObjectIDs"></param>
-        /// <param name="changedObjectIDs"></param>
-        private void itunes_OnDatabaseChangedEvent(object deletedObjectIDs, object changedObjectIDs)
-        {
+        ///// <summary>
+        ///// iTunes上のデータが変更された時
+        ///// </summary>
+        ///// <param name="deletedObjectIDs"></param>
+        ///// <param name="changedObjectIDs"></param>
+        //private void itunes_OnDatabaseChangedEvent(object deletedObjectIDs, object changedObjectIDs)
+        //{
             
-            try{
-                if (blnshorichu == false && itunesD.LibraryPlaylist.Tracks.Count != Convert.ToDecimal(CONF.pTrackCnt))
-                    blnSaishin = false;
-                Thread.Sleep(1000);
-            }
-            catch (System.Exception ex)
-            {
-                pErrMessage += "System Exception 3046 : " + ex.Message + "\n" + ex.StackTrace + "\n";
-                return;
-            }
+        //    try{
+        //        if (blnshorichu == false && itunesD.LibraryPlaylist.Tracks.Count != Convert.ToDecimal(CONF.pTrackCnt))
+        //            blnSaishin = false;
+        //        Thread.Sleep(1000);
+        //    }
+        //    catch (System.Exception ex)
+        //    {
+        //        pErrMessage += "System Exception 3046 : " + ex.Message + "\n" + ex.StackTrace + "\n";
+        //        return;
+        //    }
 
-        }
+        //}
 
         /// <summary>
         /// 必須ファイルチェック
@@ -350,20 +349,6 @@ namespace ITunEsTooL
             
         }
        
-        /// <summary>
-        /// 設定ファイル読み込み
-        /// </summary>
-        private void SetConf()
-        {
-
-            CONF.pTrackCnt = "0";
-            if (!Read_Conf() || !File.Exists(CONF.ppath + @"\ITunEsTooL.config"))
-            {
-                Make_Conf();
-                Read_Conf();
-            }
-
-        }
         /// <summary>
         /// バージョン取得
         /// </summary>
@@ -759,66 +744,24 @@ namespace ITunEsTooL
         /// </summary>
         private Boolean Read_Conf()
         {
-            XmlTextReader Conf_reader = null;
 
             try{
-                Conf_reader = new XmlTextReader(CONF.ppath + @"\ITunEsTooL.config");
-                while (Conf_reader.Read())
-                {
-                    if (Conf_reader.NodeType == XmlNodeType.Element)
-                    {
-                        switch (Conf_reader.LocalName)
-                        {
-                            case "ErrorLogPath":
-                                CONF.pErrLog = Conf_reader.ReadString();
-                                break;
-                            case "XmlPath":
-                                CONF.pxmlPath = Conf_reader.ReadString();
-                                break;
-                            case "DeleteArtwork":
-                                CONF.pDelArt = Conf_reader.ReadString();
-                                break;
-                            case "ArtworkPath":
-                                CONF.pArtWork = Conf_reader.ReadString();
-                                break;
-                            case "SaveArtworkName":
-                                CONF.pSaveArtwork = Conf_reader.ReadString();
-                                break;
-                            case "SavePictureName":
-                                CONF.pSavePicture = Conf_reader.ReadString();
-                                break;
-                            case "SmallArtworkSize":
-                                CONF.pSmallArtwork = Conf_reader.ReadString();
-                                break;
-                            case "InCompilation":
-                                CONF.pComp = Conf_reader.ReadString();
-                                break;
-                            case "BackupType":
-                                CONF.pbkup = Conf_reader.ReadString();
-                                break;                                
-                            case "iTunesSync":
-                                CONF.pSync = Conf_reader.ReadString();
-                                break;
-                            case "Color":
-                                CONF.pColor = Conf_reader.ReadString();
-                                break;
-                            case "TrackCount":
-                                CONF.pTrackCnt = Conf_reader.ReadString();
-                                break;
-                            case "UpdateDate":
-                                CONF.pDate = Conf_reader.ReadString();
-                                lblkoushin.Text = CONF.pDate == "なし" ? "" : CONF.pDate;
-                                break;
-                            case "Review":
-                                CONF.pReview = Conf_reader.ReadString();
-                                break;
-                            case "AutoShutdown":
-                                CONF.pAutoShutdown = Conf_reader.ReadString();
-                                break;
-                           
-                        }
-                    }
-                }
+                CONF.pErrLog = ConfigurationManager.AppSettings["ErrorLogPath"];
+                CONF.pxmlPath = ConfigurationManager.AppSettings["XmlPath"];
+                CONF.pDelArt = ConfigurationManager.AppSettings["DeleteArtwork"];
+                CONF.pArtWork = ConfigurationManager.AppSettings["ArtworkPath"];
+                CONF.pSaveArtwork = ConfigurationManager.AppSettings["SaveArtworkName"];
+                CONF.pSavePicture = ConfigurationManager.AppSettings["SavePictureName"];
+                CONF.pSmallArtwork = ConfigurationManager.AppSettings["SmallArtworkSize"];
+                CONF.pComp = ConfigurationManager.AppSettings["InCompilation"];
+                CONF.pbkup = ConfigurationManager.AppSettings["BackupType"];
+                CONF.pSync = ConfigurationManager.AppSettings["iTunesSync"];
+                CONF.pColor = ConfigurationManager.AppSettings["Color"];
+                CONF.pTrackCnt = ConfigurationManager.AppSettings["TrackCount"];
+                CONF.pDate = ConfigurationManager.AppSettings["UpdateDate"];
+                lblkoushin.Text = CONF.pDate == "なし" ? "" : CONF.pDate;
+                CONF.pReview = ConfigurationManager.AppSettings["Review"];
+                CONF.pAutoShutdown = ConfigurationManager.AppSettings["AutoShutdown"];
                 switch (CONF.pColor)
                 {
 
@@ -840,13 +783,10 @@ namespace ITunEsTooL
                         rdoviolet.Checked = true;
                         break;
                 }
-
-                Conf_reader.Close();
                 return true;
             }
             catch (System.Exception ex)
             {
-                Conf_reader.Close();
                 pErrMessage += "System Exception 1014 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
@@ -943,136 +883,62 @@ namespace ITunEsTooL
             }
         }
         /// <summary>
-        /// 設定ファイル作成
-        /// </summary>
-        /// <param name="Make"></param>
-        private Boolean Make_Conf()
-        {
-
-            try{
-                XmlTextWriter xtw = null;
-
-                if (File.Exists(CONF.ppath + @"\ITunEsTooL.config"))
-                    DeleteFile(CONF.ppath + @"\ITunEsTooL.config");
-
-                xtw = new XmlTextWriter(CONF.ppath + @"\ITunEsTooL.config", Encoding.Default);
-                WriteHeaderXml(ref xtw, "ItunEsTooL_Configure");
-                xtw.WriteStartElement("Default");
-                xtw.WriteElementString("ErrorLogPath", @"C:\Program Files\ITunEsTooL\Log");
-                xtw.WriteElementString("XmlPath", @"C:\Program Files\ITunEsTooL\ITunesDataLibrary.xml");
-                xtw.WriteElementString("DeleteArtwork", TRUE);
-                xtw.WriteElementString("ArtworkPath", @"C:\Program Files\ITunEsTooL\ArtWork");
-                xtw.WriteElementString("SaveArtworkName", "2");
-                xtw.WriteElementString("SavePictureName", "jpg");
-                xtw.WriteElementString("SmallArtworkSize", "-300");
-                xtw.WriteElementString("InCompilation", FALSE);
-                xtw.WriteElementString("BackupType", "1");
-                xtw.WriteElementString("iTunesSync", FALSE);
-                xtw.WriteElementString("TrackCount", "0");
-                xtw.WriteElementString("Color", "SkyBlue");
-                xtw.WriteElementString("UpdateDate", "なし");
-                xtw.WriteElementString("Review", TRUE);
-                xtw.WriteElementString("AutoShutdown", FALSE);
-                xtw.WriteEndElement();
-                xtw.WriteEndElement();
-                xtw.WriteEndDocument();
-                xtw.Close();
-                return true;
-            }
-            catch (System.Exception ex)
-            {
-                pErrMessage += "System Exception 2398 : " + ex.Message + "\n" + ex.StackTrace + "\n";
-                return false;
-            }
-        }
-        /// <summary>
         /// 設定ファイル作成、更新
         /// </summary>
         /// <param name="Make"></param>
-        private Boolean Update_Conf(){
+        private Boolean Update_Conf()
+        {
 
-           XmlTextWriter xtw = null;
            string strColor = "";
            string strArtworkName = "";
            string strKakuchoushiName = "";
            string strSmall = "0";
            string strtrackcnt = string.Empty;
            Decimal ihanten = 0;
-           try
+           var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            try
            {
-                xtw = new XmlTextWriter(CONF.ppath + @"\ITunEsTooL.config", Encoding.Default);
+                config.AppSettings.Settings["ErrorLogPath"].Value = CONF.pErrLog;
+                config.AppSettings.Settings["XmlPath"].Value = CONF.pxmlPath;
+                config.AppSettings.Settings["DeleteArtwork"].Value = chkArtworkDel.Checked.ToString();
+                config.AppSettings.Settings["ArtworkPath"].Value = CONF.pArtWork;
 
-                WriteHeaderXml(ref xtw, "ItunEsTooL_Configure");
-                xtw.WriteStartElement("Default");
-                xtw.WriteElementString("ErrorLogPath", CONF.pErrLog);
-                xtw.WriteElementString("XmlPath", CONF.pxmlPath);
-                xtw.WriteElementString("DeleteArtwork", chkArtworkDel.Checked.ToString());
-                xtw.WriteElementString("ArtworkPath", CONF.pArtWork);
+                if (rdoArtName.Checked) strArtworkName = "1";
+                if (rdoArtAlbum.Checked) strArtworkName = "2";
+                if (rdoArtArtist.Checked) strArtworkName = "3";
+                if (rdoNmArb.Checked) strArtworkName = "4";
+                if (rdoArbArt.Checked) strArtworkName = "5";
+                config.AppSettings.Settings["SaveArtworkName"].Value = strArtworkName;
 
-                if (rdoArtName.Checked)
-                    strArtworkName = "1";
-                if (rdoArtAlbum.Checked)
-                    strArtworkName = "2";
-                if (rdoArtArtist.Checked)
-                    strArtworkName = "3";
-                if (rdoNmArb.Checked)
-                    strArtworkName = "4";
-                if (rdoArbArt.Checked)
-                    strArtworkName = "5";
-
-                xtw.WriteElementString("SaveArtworkName", strArtworkName);
-                
-                if (rdoJpg.Checked)
-                    strKakuchoushiName = "jpg";
-                if (rdoPng.Checked)
-                    strKakuchoushiName = "png";
-                if (rdoBmp.Checked)
-                    strKakuchoushiName = "bmp";
-
-                xtw.WriteElementString("SavePictureName", strKakuchoushiName);
+                if (rdoJpg.Checked) strKakuchoushiName = "jpg";
+                if (rdoPng.Checked) strKakuchoushiName = "png";
+                if (rdoBmp.Checked) strKakuchoushiName = "bmp";                
+                config.AppSettings.Settings["SavePictureName"].Value = strKakuchoushiName;
 
                 ihanten = numUDSize.Value;
-
                 if (!chkSmalGazou.Checked)
                     ihanten = -ihanten;
-                strSmall = ihanten.ToString();
-                xtw.WriteElementString("SmallArtworkSize", strSmall);
+                strSmall = ihanten.ToString();                
+                config.AppSettings.Settings["SmallArtworkSize"].Value = strSmall;                
+                config.AppSettings.Settings["InCompilation"].Value = CONF.pComp;
+                config.AppSettings.Settings["BackupType"].Value = (rdoUwagaki.Checked) ? "1" : "2";
 
-                xtw.WriteElementString("InCompilation", CONF.pComp);
-
-                if(rdoUwagaki.Checked)
-                    xtw.WriteElementString("BackupType", "1");
-                else
-                    xtw.WriteElementString("BackupType", "2");
-
-                xtw.WriteElementString("iTunesSync", CONF.pSync);
-
-                if (COMVAL.strName == null)
-                    strtrackcnt = "0";
-                else
-                    strtrackcnt = COMVAL.strName.Length.ToString();
-
+                config.AppSettings.Settings["iTunesSync"].Value = CONF.pSync;
+                strtrackcnt = (COMVAL.strName == null) ? "0" : COMVAL.strName.Length.ToString();
                 CONF.pTrackCnt = strtrackcnt;
+                config.AppSettings.Settings["TrackCount"].Value = CONF.pTrackCnt;
 
-                xtw.WriteElementString("TrackCount", CONF.pTrackCnt);
+                if (rdoskyBlue.Checked) strColor = frmColor.SKYBLUE;
+                if (rdoGreen.Checked) strColor = frmColor.LIGHTGREEN;
+                if (rdoTomato.Checked) strColor = frmColor.TOMATO;
+                if (rdoviolet.Checked) strColor = frmColor.VIOLET;
 
-                if (rdoskyBlue.Checked)
-                    strColor = frmColor.SKYBLUE;
-                if (rdoGreen.Checked)
-                    strColor = frmColor.LIGHTGREEN;
-                if (rdoTomato.Checked)
-                    strColor = frmColor.TOMATO;
-                if (rdoviolet.Checked)
-                    strColor = frmColor.VIOLET;
+                config.AppSettings.Settings["Color"].Value = strColor;
+                config.AppSettings.Settings["UpdateDate"].Value = CONF.pDate;                
+                config.AppSettings.Settings["Review"].Value = CONF.pReview;                
+                config.AppSettings.Settings["AutoShutdown"].Value = CONF.pAutoShutdown;
 
-                xtw.WriteElementString("Color", strColor);
-                xtw.WriteElementString("UpdateDate", CONF.pDate);
-                xtw.WriteElementString("Review", CONF.pReview);
-                xtw.WriteElementString("AutoShutdown", CONF.pAutoShutdown);
-                xtw.WriteEndElement();
-                xtw.WriteEndElement();
-                xtw.WriteEndDocument();
-                xtw.Close();
+                config.Save();
                 return true;
 
             }
@@ -1287,15 +1153,13 @@ namespace ITunEsTooL
         /// <returns></returns>
         private Boolean Update_ConfTrack(Boolean Make = false)
         {
-
-            XmlTextWriter xtw = null;
             string strErr = "";
             string strxml = "";
             string strColor = "";
             string strTrack = string.Empty;
             iTunesApp app = new iTunesApp();
             IITLibraryPlaylist libraryPlaylist = app.LibraryPlaylist;
-
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             try
             {
                 if (Make)
@@ -1308,17 +1172,12 @@ namespace ITunEsTooL
                     strxml = CONF.pxmlPath;
                 }
 
-                xtw = new XmlTextWriter(CONF.ppath + @"\ITunEsTooL.config", Encoding.Default);
-
-                WriteHeaderXml(ref xtw, "ItunEsTooL_Configure");
-                xtw.WriteStartElement("Default");
-
                 if (Directory.Exists(strErr))
-                    xtw.WriteElementString("ErrorLogPath", strErr);
-                xtw.WriteElementString("XmlPath", strxml);
+                    config.AppSettings.Settings["ErrorLogPath"].Value = strErr;
+                config.AppSettings.Settings["XmlPath"].Value = strxml;
 
                 CONF.pTrackCnt = libraryPlaylist.Tracks.Count.ToString();
-                xtw.WriteElementString("TrackCount", CONF.pTrackCnt);
+                config.AppSettings.Settings["TrackCount"].Value = CONF.pTrackCnt;
 
                 if (rdoskyBlue.Checked)
                     strColor = frmColor.SKYBLUE;
@@ -1329,10 +1188,8 @@ namespace ITunEsTooL
                 if (rdoviolet.Checked)
                     strColor = frmColor.VIOLET;
 
-                xtw.WriteElementString("Color", strColor);
-                xtw.WriteEndElement();
-                xtw.WriteEndElement();
-                xtw.WriteEndDocument();
+                config.AppSettings.Settings["Color"].Value = strColor;
+                config.Save();
                 return true;
             }
             catch (System.Exception ex)
@@ -1346,8 +1203,6 @@ namespace ITunEsTooL
                     Marshal.ReleaseComObject(app);
                 if (libraryPlaylist != null)
                     Marshal.ReleaseComObject(libraryPlaylist);
-                if(xtw != null)
-                    xtw.Close();
             }
         }
 
@@ -1895,11 +1750,9 @@ namespace ITunEsTooL
         private void KeikokuDouki()
         {
             blnSaishin = true;
-            blnshorichu = true;
             tabControl1.SelectedTab = tabControl1.TabPages["tabSetting"];
             btnDouki.ForeColor = Color.Red;
             lblkoushin.Text = "最新の情報が取得されていない可能性があります！";
-            blnshorichu = false;
         }
         /// <summary>
         /// マルチスレッド処理
