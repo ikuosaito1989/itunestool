@@ -19,7 +19,7 @@ namespace ITunEsTooL
         public string Path
         {
             set
-            { _Path= value; }
+            { _Path = value; }
         }
         public Color Color
         {

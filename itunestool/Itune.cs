@@ -30,8 +30,8 @@ namespace ITunEsTooL
 {
     public partial class frmItune : Form
     {
-        
-#region 定数宣言用領域
+
+        #region 定数宣言用領域
 
         private int pSplashNum = 1;
         private int pSelectCnt = 0;
@@ -92,13 +92,13 @@ namespace ITunEsTooL
 
         private struct HeaderName
         {
-            
+
             public const string TITLE = "ITunEsTooL - iTunesの不満解消ツール";
             public const string ICHIRAN = "曲名一覧";
             public const string GET_ITUNEDATA = "iTunesのデータを取得しています...";
             public const string CSV = "ＣＳＶファイルを作成しています...";
             public const string EXCEPTION = "予期せぬエラーが発生しました。";
-        
+
         }
 
         private struct frmColor
@@ -109,9 +109,9 @@ namespace ITunEsTooL
             public const string VIOLET = "Violet";
         }
 
-        
 
-#endregion
+
+        #endregion
 
         /// <summary>
         /// イニシャライズ
@@ -164,7 +164,7 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void frmItune_Load(object sender, EventArgs e)
         {
-           try
+            try
             {
                 string strErrMsg = string.Empty;
                 string strNewVer = string.Empty;
@@ -176,10 +176,23 @@ namespace ITunEsTooL
                     this.Close();
                     return;
                 }
-
                 ver = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                strNewVer = getNewVersion();
+                if (strNewVer != "")
+                {
+                    if (NetworkInterface.GetIsNetworkAvailable() && strNewVer != ver.FileVersion)
+                    {
+                        DialogResult YorN = DialogResult.No;
+                        YorN = Msgbox("ITunEsTooLは最新のバージョンではありません。" + "\n" + "ダウンロードサイトに遷移しますか？", HeadMsg.NOTICE, 3);
+                        if (YorN == DialogResult.Yes)
+                        {
+                            System.Diagnostics.Process.Start(Domain + "?ref=verchk");
+                        }
+                    }
+                }
+
                 CONF.ppath = Path.GetDirectoryName(myAssembly.Location);
-                                
+
                 Constructor();
 
                 Read_Conf();
@@ -207,10 +220,10 @@ namespace ITunEsTooL
                 if (!SysSet.IsAdministrator())
                 {
                     Msgbox("ITunEsTooLは管理者のみが使用することが可能です。" + "\n" +
-                           "「管理者として実行(A)...」で起動して下さい。",HeadMsg.NOTICE, 7);
+                           "「管理者として実行(A)...」で起動して下さい。", HeadMsg.NOTICE, 7);
                     this.Close();
                     return;
-                }                
+                }
 
                 ClassicCorrespondence();
 
@@ -225,8 +238,6 @@ namespace ITunEsTooL
 
                 lblTitle.Text = HeaderName.TITLE;
 
-                strNewVer = getNewVersion();
-
                 StartSplash.Stop = true;
                 while (true)
                 {
@@ -238,19 +249,6 @@ namespace ITunEsTooL
                 AnimateWindow(this.Handle, 300, (uint)(AnimateWindowFlags.AW_HOR_NEGATIVE | AnimateWindowFlags.AW_BLEND));
                 this.Activate();
 
-                if (strNewVer != "")
-                {
-                    if (NetworkInterface.GetIsNetworkAvailable() && strNewVer != ver.FileVersion)
-                    {
-                        DialogResult YorN = DialogResult.No;
-                        YorN = Msgbox("ITunEsTooLは最新のバージョンではありません。" + "\n" + "ダウンロードサイトに遷移しますか？", HeadMsg.NOTICE, 3);
-                        if (YorN == DialogResult.Yes)
-                        {
-                            System.Diagnostics.Process.Start(ConfigurationManager.AppSettings["Domain"]);
-                        }
-                    }
-                }
-
                 pSplashNum = 1;
 
                 StartEventHandler();
@@ -259,7 +257,7 @@ namespace ITunEsTooL
             {
                 if (File.Exists(CONF.pxmlPath))
                     DeleteFile(CONF.pxmlPath);
-                Msgbox("System Exception 1001" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
+                Msgbox("System Exception 1001" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
                 pErrMessage += "System Exception 1001 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
@@ -285,7 +283,7 @@ namespace ITunEsTooL
             FileOpe = new FileOperation();
             pSplashNum = 2;
         }
-        
+
         /// <summary>
         /// iTunesオブジェクト生成
         /// </summary>
@@ -294,7 +292,8 @@ namespace ITunEsTooL
         {
             string strErrMsg = string.Empty;
 
-            try{
+            try
+            {
                 if (itunesD == null)
                 {
                     itunesD = new iTunesAppClass();
@@ -302,7 +301,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                strErrMsg = ex.Message + "\n" + ex.StackTrace + "\n";    
+                strErrMsg = ex.Message + "\n" + ex.StackTrace + "\n";
             }
             return strErrMsg;
 
@@ -315,7 +314,7 @@ namespace ITunEsTooL
         ///// <param name="changedObjectIDs"></param>
         //private void itunes_OnDatabaseChangedEvent(object deletedObjectIDs, object changedObjectIDs)
         //{
-            
+
         //    try{
         //        if (blnshorichu == false && itunesD.LibraryPlaylist.Tracks.Count != Convert.ToDecimal(CONF.pTrackCnt))
         //            blnSaishin = false;
@@ -338,17 +337,17 @@ namespace ITunEsTooL
             string strErrMsg = string.Empty;
             if (!File.Exists(CONF.ppath + @"\ItunEsTooL.exe"))
                 strErrMsg += "ItunEsTooL.exe" + "\n";
-            if(!File.Exists(CONF.ppath + @"\Interop.iTunesLib.dll"))
+            if (!File.Exists(CONF.ppath + @"\Interop.iTunesLib.dll"))
                 strErrMsg += "Interop.iTunesLib.dll" + "\n";
-            if(!Directory.Exists(CONF.ppath + @"\Log"))
+            if (!Directory.Exists(CONF.ppath + @"\Log"))
                 strErrMsg += "Log" + "\n";
-            if(!Directory.Exists(CONF.ppath + @"\Artwork"))
+            if (!Directory.Exists(CONF.ppath + @"\Artwork"))
                 strErrMsg += "Artwork" + "\n";
 
             return strErrMsg;
-            
+
         }
-       
+
         /// <summary>
         /// バージョン取得
         /// </summary>
@@ -357,13 +356,14 @@ namespace ITunEsTooL
             string strVer = string.Empty;
             WebClient wc = new WebClient();
 
-            try{
+            try
+            {
 
-                if(!NetworkInterface.GetIsNetworkAvailable())
+                if (!NetworkInterface.GetIsNetworkAvailable())
                     throw new Exception();
 
                 Stream st = wc.OpenRead(Domain);
-                
+
                 Encoding enc = Encoding.GetEncoding("utf-8");
                 StreamReader sr = new StreamReader(st, enc);
                 string html = sr.ReadToEnd();
@@ -478,9 +478,9 @@ namespace ITunEsTooL
             pictureBox5.AllowDrop = true;
             groupBox4.AllowDrop = true;
             if (SysSet.Win7Check() || SysSet.IsUacEnabled())
-                toolTip1.SetToolTip(pictureBox5, "右クリックメニューで様々な設定が出来ます。"+ "\n" + "【Ctrl + V】で画像の貼り付けが可能です。");
+                toolTip1.SetToolTip(pictureBox5, "右クリックメニューで様々な設定が出来ます。" + "\n" + "【Ctrl + V】で画像の貼り付けが可能です。");
             else
-                toolTip1.SetToolTip(pictureBox5, "画像ファイルをドラッグして設定することが可能です。" + "\n" + "また、右クリックメニューで様々な設定が出来ます。"+ "\n" + "【Ctrl + V】で画像の貼り付けが可能です。");
+                toolTip1.SetToolTip(pictureBox5, "画像ファイルをドラッグして設定することが可能です。" + "\n" + "また、右クリックメニューで様々な設定が出来ます。" + "\n" + "【Ctrl + V】で画像の貼り付けが可能です。");
 
             toolTip1.SetToolTip(tabControl1, "F1キーでマニュアルが表示されます（インターネット接続時のみ）");
             toolTip1.SetToolTip(txtBefor, "ダブルクリックでドラッグした曲の" + "\n" + "詳細確認が出来ます。");
@@ -504,7 +504,8 @@ namespace ITunEsTooL
             FileInfo cFileInfo = new FileInfo(stFilePath);
 
 
-            try{
+            try
+            {
                 if (cFileInfo.Exists)
                 {
 
@@ -517,8 +518,8 @@ namespace ITunEsTooL
                             cFileInfo.Delete();
                         }
                         catch (SystemException)
-                        { 
-                            if(retry == 2) throw new Exception();
+                        {
+                            if (retry == 2) throw new Exception();
                         }
                         Thread.Sleep(200);
                         retry++;
@@ -530,7 +531,7 @@ namespace ITunEsTooL
                 pErrMessage += "System Exception 5624 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
         }
-        
+
         /// <summary>
         /// フォームクローズ
         /// </summary>
@@ -564,9 +565,9 @@ namespace ITunEsTooL
                         CONF.pReview = frmReview.Jikai;
                     }
                 }
-                                
-                WriteXML();                
-                Update_Conf();                
+
+                WriteXML();
+                Update_Conf();
 
                 if (pAutoShutdown)
                 {
@@ -576,7 +577,7 @@ namespace ITunEsTooL
 
                 if (pErrMessage != "" && Directory.Exists(CONF.pErrLog))
                 {
-                    
+
                     if (pErrMessage.Contains("System Exception"))
                     {
                         OperatingSystem os = Environment.OSVersion;
@@ -602,14 +603,14 @@ namespace ITunEsTooL
 
                         DeleteFile(strErrLogPath);
                     }
-                    
+
                 }
                 SystemEvents.UserPreferenceChanged -=
                     new UserPreferenceChangedEventHandler(SystemEvents_UserPreferenceChanged);
             }
             catch (System.Exception ex)
             {
-                
+
                 pErrMessage += "System Exception 1012 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 Msgbox("System Exception 1012" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
             }
@@ -636,13 +637,13 @@ namespace ITunEsTooL
 
             try
             {
-                if (COMVAL == null  || COMVAL.strName == null ||  !SysSet.IsAdministrator())
+                if (COMVAL == null || COMVAL.strName == null || !SysSet.IsAdministrator())
                     return true;
 
                 strDir = Path.GetDirectoryName(CONF.pxmlPath);
                 strFile = @"\" + Path.GetFileName(CONF.pxmlPath);
                 strXmlPath = strDir + strFile;
-          
+
                 xtw = new XmlTextWriter(strXmlPath, Encoding.Unicode);
                 WriteHeaderXml(ref xtw, "ITunesDataLibrary");
 
@@ -650,7 +651,7 @@ namespace ITunEsTooL
                 {
                     WriteElementXml(ref xtw, COMVAL.iPersistentIDHigh[icnt], COMVAL.iPersistentIDRow[icnt], COMVAL.blnCompilation[icnt],
                                     COMVAL.strName[icnt], COMVAL.strAlbum[icnt], COMVAL.strArtist[icnt],
-                                    COMVAL.strLocation[icnt], COMVAL.strAlbumArtist[icnt],Convert.ToString(COMVAL.iArtCnt[icnt]));
+                                    COMVAL.strLocation[icnt], COMVAL.strAlbumArtist[icnt], Convert.ToString(COMVAL.iArtCnt[icnt]));
                     icnt++;
                 }
 
@@ -661,11 +662,11 @@ namespace ITunEsTooL
                 return true;
             }
             catch (System.Exception ex)
-            {        
-                if(xtw != null)
+            {
+                if (xtw != null)
                     xtw.Close();
-//                try { DeleteFile(strXmlPath); }catch (Exception) { }
-                
+                //                try { DeleteFile(strXmlPath); }catch (Exception) { }
+
                 COMVAL.Release();
                 COMVAL = null;
                 pErrMessage += "System Exception 1187 : " + ex.Message + "\n" + ex.StackTrace + "\n";
@@ -681,7 +682,8 @@ namespace ITunEsTooL
         /// <param name="StartTag2"></param>
         private void WriteHeaderXml(ref XmlTextWriter xtw, string title, string StartTag = "SongList", string StartTag2 = "head")
         {
-            try{
+            try
+            {
                 xtw.Formatting = System.Xml.Formatting.Indented;
 
                 xtw.WriteStartDocument();
@@ -704,7 +706,8 @@ namespace ITunEsTooL
         {
             string[] separator = { "\r\n" };
 
-            try{
+            try
+            {
                 xtw.WriteStartElement("Track");                                     //開始タグ
                 xtw.WriteElementString("Name", ITunesData[0]);                      //曲名
                 xtw.WriteElementString("Album", ITunesData[1]);                     //アルバム
@@ -729,7 +732,8 @@ namespace ITunEsTooL
         /// <param name="?"></param>
         private void CloseElementXml(ref XmlTextWriter xtw)
         {
-            try{
+            try
+            {
                 xtw.WriteEndElement();
                 xtw.WriteEndDocument();
             }
@@ -745,7 +749,8 @@ namespace ITunEsTooL
         private Boolean Read_Conf()
         {
 
-            try{
+            try
+            {
                 CONF.pErrLog = ConfigurationManager.AppSettings["ErrorLogPath"];
                 CONF.pxmlPath = ConfigurationManager.AppSettings["XmlPath"];
                 CONF.pDelArt = ConfigurationManager.AppSettings["DeleteArtwork"];
@@ -791,7 +796,7 @@ namespace ITunEsTooL
                 return false;
             }
         }
-        
+
         /// <summary>
         /// 音楽情報取得
         /// </summary>
@@ -808,7 +813,7 @@ namespace ITunEsTooL
             try
             {
 
-                COMVAL.NEWVAL();                
+                COMVAL.NEWVAL();
                 COMVAL.COMVAL_initialize();
                 reader = new XmlTextReader(strpath);
                 COMVAL.CommonRerize(cnt);
@@ -827,7 +832,7 @@ namespace ITunEsTooL
                             case "Album":
                                 COMVAL.strAlbum[cnt] = reader.ReadString();
                                 break;
-                            case "Artist":                                
+                            case "Artist":
                                 COMVAL.strArtist[cnt] = reader.ReadString();
                                 break;
                             case "Location":
@@ -836,10 +841,10 @@ namespace ITunEsTooL
                             case "AlbumArtist":
                                 COMVAL.strAlbumArtist[cnt] = reader.ReadString();
                                 break;
-                            case "ArtworkCount":                                
+                            case "ArtworkCount":
                                 COMVAL.iArtCnt[cnt] = int.Parse(reader.ReadString());
                                 break;
-                            case "PersistentIDHigh":                                
+                            case "PersistentIDHigh":
                                 COMVAL.iPersistentIDHigh[cnt] = int.Parse(reader.ReadString());
                                 break;
                             case "PersistentIDrow":
@@ -850,7 +855,7 @@ namespace ITunEsTooL
                                     COMVAL.blnCompilation[cnt] = true;
                                 else
                                     COMVAL.blnCompilation[cnt] = false;
-                                break;    
+                                break;
 
                         }
                     }
@@ -875,7 +880,7 @@ namespace ITunEsTooL
             }
             catch (System.Exception ex)
             {
-                if(reader != null)
+                if (reader != null)
                     reader.Close();
                 COMVAL = null;
                 pErrMessage += "System Exception 1013 : " + ex.Message + "\n" + ex.StackTrace + "\n";
@@ -889,15 +894,15 @@ namespace ITunEsTooL
         private Boolean Update_Conf()
         {
 
-           string strColor = "";
-           string strArtworkName = "";
-           string strKakuchoushiName = "";
-           string strSmall = "0";
-           string strtrackcnt = string.Empty;
-           Decimal ihanten = 0;
-           var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            string strColor = "";
+            string strArtworkName = "";
+            string strKakuchoushiName = "";
+            string strSmall = "0";
+            string strtrackcnt = string.Empty;
+            Decimal ihanten = 0;
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             try
-           {
+            {
                 config.AppSettings.Settings["ErrorLogPath"].Value = CONF.pErrLog;
                 config.AppSettings.Settings["XmlPath"].Value = CONF.pxmlPath;
                 config.AppSettings.Settings["DeleteArtwork"].Value = chkArtworkDel.Checked.ToString();
@@ -912,14 +917,14 @@ namespace ITunEsTooL
 
                 if (rdoJpg.Checked) strKakuchoushiName = "jpg";
                 if (rdoPng.Checked) strKakuchoushiName = "png";
-                if (rdoBmp.Checked) strKakuchoushiName = "bmp";                
+                if (rdoBmp.Checked) strKakuchoushiName = "bmp";
                 config.AppSettings.Settings["SavePictureName"].Value = strKakuchoushiName;
 
                 ihanten = numUDSize.Value;
                 if (!chkSmalGazou.Checked)
                     ihanten = -ihanten;
-                strSmall = ihanten.ToString();                
-                config.AppSettings.Settings["SmallArtworkSize"].Value = strSmall;                
+                strSmall = ihanten.ToString();
+                config.AppSettings.Settings["SmallArtworkSize"].Value = strSmall;
                 config.AppSettings.Settings["InCompilation"].Value = CONF.pComp;
                 config.AppSettings.Settings["BackupType"].Value = (rdoUwagaki.Checked) ? "1" : "2";
 
@@ -934,8 +939,8 @@ namespace ITunEsTooL
                 if (rdoviolet.Checked) strColor = frmColor.VIOLET;
 
                 config.AppSettings.Settings["Color"].Value = strColor;
-                config.AppSettings.Settings["UpdateDate"].Value = CONF.pDate;                
-                config.AppSettings.Settings["Review"].Value = CONF.pReview;                
+                config.AppSettings.Settings["UpdateDate"].Value = CONF.pDate;
+                config.AppSettings.Settings["Review"].Value = CONF.pReview;
                 config.AppSettings.Settings["AutoShutdown"].Value = CONF.pAutoShutdown;
 
                 config.Save();
@@ -947,7 +952,7 @@ namespace ITunEsTooL
                 pErrMessage += "System Exception 1011 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return false;
             }
-       }
+        }
 
         /// <summary>
         /// ユーザー設定が変更されたとき
@@ -958,7 +963,7 @@ namespace ITunEsTooL
                 UserPreferenceChangedEventArgs e)
         {
             ClassicCorrespondence();
-           
+
         }
         /// <summary>
         /// 名前の初期値
@@ -967,7 +972,8 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void SetName()
         {
-            try{
+            try
+            {
                 btnExistFile.Text = "存在しない" + "\n" + "ファイルを削除";
                 btnMakePList.Text = "検索する曲の" + "\n" + "プレイリストを作成";
                 label1.Text = "iTunesから曲をドラッグ＆ドロップで追加します。" + "\n" + "複数データの詳細を見たい場合はテキストをダブルクリックして下さい。";
@@ -1138,13 +1144,13 @@ namespace ITunEsTooL
         /// <param name="strArtist"></param>
         /// <param name="strLocatuin"></param>
         /// <param name="strAlbumArtist"></param>
-        private void nullConv(string strName,string strAlbum,string strArtist,string strLocation, string strAlbumArtist,int icnt)
+        private void nullConv(string strName, string strAlbum, string strArtist, string strLocation, string strAlbumArtist, int icnt)
         {
             COMVAL.strName[icnt] = strName == null ? "" : strName;
             COMVAL.strAlbum[icnt] = strAlbum == null ? "" : strAlbum;
             COMVAL.strArtist[icnt] = strArtist == null ? "" : strArtist;
             COMVAL.strLocation[icnt] = strLocation == null ? "" : strLocation;
-            COMVAL.strAlbumArtist[icnt] = strAlbumArtist == null ? "" : strAlbumArtist;           
+            COMVAL.strAlbumArtist[icnt] = strAlbumArtist == null ? "" : strAlbumArtist;
         }
         /// <summary>
         /// 設定ファイル保存
@@ -1206,7 +1212,7 @@ namespace ITunEsTooL
             }
         }
 
-        
+
         /// <summary>
         /// ドラッグドロップ
         /// </summary>
@@ -1221,7 +1227,7 @@ namespace ITunEsTooL
                     return;
                 if (COMVAL.strLocation == null)
                 {
-                    Msgbox("iTunesと同期して下さい。", HeadMsg.ATTENTION,5);
+                    Msgbox("iTunesと同期して下さい。", HeadMsg.ATTENTION, 5);
                     return;
                 }
                 lblKeikoku1.Visible = false;
@@ -1251,7 +1257,7 @@ namespace ITunEsTooL
                     }
                 }
                 if (iExistCnt != 0)
-                {                    
+                {
                     lblKeikoku1.Visible = true;
                     lblKeikoku2.Visible = true;
                     lblKeikokuNum.Visible = true;
@@ -1263,13 +1269,13 @@ namespace ITunEsTooL
             {
                 if (File.Exists(CONF.pxmlPath))
                     DeleteFile(CONF.pxmlPath);
-                Msgbox("System Exception 1003" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
+                Msgbox("System Exception 1003" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
                 pErrMessage += "System Exception 1003 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
             finally
             {
-             
+
             }
         }
 
@@ -1294,7 +1300,7 @@ namespace ITunEsTooL
                 return;
 
             DialogResult YorN;
-            YorN = Msgbox("指定した曲をクリアしてもよろしいですか？", "クリア",3);
+            YorN = Msgbox("指定した曲をクリアしてもよろしいですか？", "クリア", 3);
 
             if (YorN == DialogResult.No)
                 return;
@@ -1320,20 +1326,20 @@ namespace ITunEsTooL
                 return;
             if (COMVAL.strLocation == null)
             {
-                Msgbox("iTunesと同期して下さい。", HeadMsg.ATTENTION,5);
+                Msgbox("iTunesと同期して下さい。", HeadMsg.ATTENTION, 5);
                 return;
             }
-            
+
             try
             {
                 Ichiran frmIchiran = new Ichiran();
-                
+
                 string name = string.Empty;
 
                 COMVAL.DIALOG_TITLE = HeaderName.ICHIRAN;
                 frmIchiran.CLSCOMVAL = COMVAL;
                 frmIchiran.CColor = COMVAL.strColor;
-                
+
                 DialogSaizenmen();
                 frmIchiran.ShowDialog();
 
@@ -1361,7 +1367,7 @@ namespace ITunEsTooL
             {
                 if (File.Exists(CONF.pxmlPath))
                     DeleteFile(CONF.pxmlPath);
-                Msgbox("System Exception 1004" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
+                Msgbox("System Exception 1004" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
                 pErrMessage += "System Exception 1004 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
@@ -1386,9 +1392,9 @@ namespace ITunEsTooL
             Boolean blnCancel = false;
             DialogResult YorN = DialogResult.No;
 
-            if(!ErrCheck())
+            if (!ErrCheck())
                 return;
-            
+
             YorN = Msgbox("コピーを開始します。よろしいですか？" + "\n" + "※同じファイル名が存在する場合は上書きします。"
                                       + "\n" + "iTunesと同期直後でない場合、正しい結果が得られない場合があります。",
                                       "ファイルをコピー",
@@ -1401,7 +1407,8 @@ namespace ITunEsTooL
             if (rdoAlbum.Checked)
             {
                 Album_or_Artist = "Album";
-            }else if(rdoArtist.Checked)
+            }
+            else if (rdoArtist.Checked)
             {
                 Album_or_Artist = "Artist";
             }
@@ -1456,14 +1463,14 @@ namespace ITunEsTooL
                                 }
                                 else
                                 {
-                                    if(rdoUwagaki.Checked)
+                                    if (rdoUwagaki.Checked)
                                         File.Copy(COMVAL.strLocation[Index], txtAfter.Text + @"\" + ConvName + @"\" + Path.GetFileName(COMVAL.strLocation[Index]), true);
                                 }
                             }
                         }
                         catch (System.Exception ex)
                         {
-                           pErrMessage +=  "System Exception 1005 : " + ex.Message + "\n" + ex.StackTrace + "\n";
+                            pErrMessage += "System Exception 1005 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                         }
 
                     }
@@ -1472,8 +1479,8 @@ namespace ITunEsTooL
                     blnCancel = splash.Cancel;
                     if (blnCancel)
                     {
-                        Msgbox("処理を中断します。", HeadMsg.NOTICE,7);
-                        splash.SendCacncel = false;                        
+                        Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
+                        splash.SendCacncel = false;
                         splash.SendCan(false);
                         break;
                     }
@@ -1523,7 +1530,7 @@ namespace ITunEsTooL
                         }
                         catch (System.Exception ex)
                         {
-                           pErrMessage +=  "System Exception 1006 : " + ex.Message + "\n" + ex.StackTrace + "\n";
+                            pErrMessage += "System Exception 1006 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                         }
                     }
                     cnt++;
@@ -1549,7 +1556,7 @@ namespace ITunEsTooL
                         ConvName2 = FileOpe.ValidFileName(COMVAL.strAlbum[Index]);
                         try
                         {
-                            
+
                             if (ConvName == "")
                             {
                                 if (Directory.Exists(txtAfter.Text + @"\" + "アーティスト名不明") == false)
@@ -1595,7 +1602,7 @@ namespace ITunEsTooL
                     blnCancel = splash.Cancel;
                     if (blnCancel)
                     {
-                        Msgbox("処理を中断します。", HeadMsg.NOTICE,7);
+                        Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
                         splash.SendCacncel = false;
                         splash.SendCan(false);
                         break;
@@ -1620,7 +1627,7 @@ namespace ITunEsTooL
             string strRet = string.Empty;
             if (strAlbum != "")
             {
-                if(!Directory.Exists(strpath + @"\" + strAlbum))
+                if (!Directory.Exists(strpath + @"\" + strAlbum))
                     Directory.CreateDirectory(strpath + @"\" + strAlbum);
                 strRet = strpath + @"\" + strAlbum;
             }
@@ -1640,13 +1647,13 @@ namespace ITunEsTooL
         {
             if (COMVAL.strName == null)
             {
-                Msgbox("設定にて、iTunesの情報を取得して下さい。", HeadMsg.ATTENTION,5);
+                Msgbox("設定にて、iTunesの情報を取得して下さい。", HeadMsg.ATTENTION, 5);
                 return false;
             }
 
             if (txtBefor.Text == "")
             {
-                Msgbox("曲名を指定して下さい。", HeadMsg.ATTENTION,5);
+                Msgbox("曲名を指定して下さい。", HeadMsg.ATTENTION, 5);
                 txtBefor.Focus();
                 return false;
             }
@@ -1700,7 +1707,7 @@ namespace ITunEsTooL
         {
             DialogResult YorN = DialogResult.No;
 
-            YorN = Msgbox("ITunEs TooLを終了してもよろしいですか？","確認",3);
+            YorN = Msgbox("ITunEs TooLを終了してもよろしいですか？", "確認", 3);
 
             if (YorN == DialogResult.No)
                 return;
@@ -1720,7 +1727,7 @@ namespace ITunEsTooL
         }
         private void frmItune_Activated(object sender, EventArgs e)
         {
-            this.Update();            
+            this.Update();
         }
 
         private void frmItune_Click(object sender, EventArgs e)
@@ -1731,9 +1738,10 @@ namespace ITunEsTooL
         {
             if (lblkoushin.Text == "")
                 return;
-            try{
-            
-                if (!blnSaishin || itunesD.LibraryPlaylist.Tracks.Count  != Convert.ToDecimal(CONF.pTrackCnt))
+            try
+            {
+
+                if (!blnSaishin || itunesD.LibraryPlaylist.Tracks.Count != Convert.ToDecimal(CONF.pTrackCnt))
                 {
                     Msgbox("iTunesの最新の情報が取得出来ていない可能性があります。" + "\n" + "iTunesと同期して下さい。", HeadMsg.NOTICE, 2);
                     KeikokuDouki();
@@ -1745,7 +1753,7 @@ namespace ITunEsTooL
                        "ITunEsTooLを終了します。", HeadMsg.NOTICE, 2);
                 this.Close();
             }
-            
+
         }
         private void KeikokuDouki()
         {
@@ -1769,8 +1777,8 @@ namespace ITunEsTooL
                 case 2:
                     StartSplash.ShowDialog();
                     break;
-            }            
-        }      
+            }
+        }
 
         /// <summary>
         /// フォーム表示
@@ -1785,19 +1793,19 @@ namespace ITunEsTooL
             picLeft.Update();
             picRight.Update();
             pictureBox1.Update();
-          
+
             chkArtworkDel.Text = "ダウンロードした画像のみ設定する";
             btnBackArt.Text = "iTunesの" + "\n" + "アートワークを" + "\n" + "バックアップ";
 
             if (CONF.pSync == TRUE)
             {
-                tabControl1.SelectedTab = tabControl1.TabPages["tabSetting"]; 
+                tabControl1.SelectedTab = tabControl1.TabPages["tabSetting"];
                 chkDouki.Checked = true;
                 pDoukiFlg = true;
                 btnDouki.PerformClick();
                 pDoukiFlg = false;
             }
-            ChangeCheckBoxParameter(ref  chkDouki, ref CONF.pSync);
+            ChangeCheckBoxParameter(ref chkDouki, ref CONF.pSync);
             CheckSaishin();
 
             if (SysSet.Win7Check() || SysSet.IsUacEnabled())
@@ -1862,13 +1870,13 @@ namespace ITunEsTooL
                 chkAlbum.Select();
                 return;
             }
-            
-            YorN = Msgbox("問題点を検索します。よろしいですか？" + "\n" + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。", "検索",3);
+
+            YorN = Msgbox("問題点を検索します。よろしいですか？" + "\n" + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。", "検索", 3);
             if (YorN == DialogResult.No)
                 return;
-            
+
             this.Enabled = false;
-            
+
             if (txtSerchChr.Text != "")
             {
                 try
@@ -1892,7 +1900,7 @@ namespace ITunEsTooL
                 GetName.setSetumei = "作成するCSVの名前を設定して下さい。";
                 DialogSaizenmen();
                 GetName.ShowDialog();
-                
+
                 string strget = string.Empty;
                 if (!GetName.Ret)
                     return;
@@ -1910,15 +1918,15 @@ namespace ITunEsTooL
                     @System.Text.Encoding.GetEncoding("Shift_Jis"));
 
                 string strtxt = string.Empty;
-                strtxt =  txtSerchChr.Text.Replace(" ", "␣");
+                strtxt = txtSerchChr.Text.Replace(" ", "␣");
                 if (txtSerchChr.Text != "")
                     sw.WriteLine("\"" + "検索文字列" + "\"" + "," + "\"" + strtxt + "\"");
 
-                sw.WriteLine("\"" + "曲名"           + "\"" + "," 
-                           + "\"" + "アルバム"     + "\"" + ","
+                sw.WriteLine("\"" + "曲名" + "\"" + ","
+                           + "\"" + "アルバム" + "\"" + ","
                            + "\"" + "アーティスト" + "\"" + ","
                            + "\"" + "アルバムアーティスト" + "\"" + ","
-                           + "\"" + "抽出内容"       +"\"");
+                           + "\"" + "抽出内容" + "\"");
 
                 string strErr = string.Empty;
                 int cnt = 0;
@@ -2036,7 +2044,7 @@ namespace ITunEsTooL
                         }
                     }
 
-                   
+
                     if (chkAlbumArtist.Checked)
                     {
                         if (COMVAL.strAlbumArtist[cnt] == "" && chkBlank.Checked)
@@ -2068,29 +2076,29 @@ namespace ITunEsTooL
 
                     if (strErr != "")
                     {
-                        strMatch = strMatch + "\"" + COMVAL.strName[cnt]   + "\"" + "," +
-                                              "\"" + COMVAL.strAlbum[cnt]  + "\"" + "," +
+                        strMatch = strMatch + "\"" + COMVAL.strName[cnt] + "\"" + "," +
+                                              "\"" + COMVAL.strAlbum[cnt] + "\"" + "," +
                                               "\"" + COMVAL.strArtist[cnt] + "\"" + "," +
                                               "\"" + COMVAL.strAlbumArtist[cnt] + "\"" + "," +
-                                              "\"" + strErr                + "\"" + "\n";
+                                              "\"" + strErr + "\"" + "\n";
                     }
                     cnt++;
                     splash.SendData(cnt);
                     if (splash.Cancel)
-                {
-                    Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
-                    splash.SendCacncel = false;
-                    splash.SendCan(false);
-                    break;
+                    {
+                        Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
+                        splash.SendCacncel = false;
+                        splash.SendCan(false);
+                        break;
+                    }
                 }
-                }
-                
+
                 sw.Write(strMatch);
                 sw.Close();
                 splash.CloseSplash();
                 Msgbox("CSVファイルを作成しました。", HeadMsg.COMPLETE, 1);
                 this.Enabled = true;
-                
+
             }
             catch (System.Exception ex)
             {
@@ -2131,7 +2139,7 @@ namespace ITunEsTooL
             Boolean blnChkBlank = false;
             Boolean SetPlayLst = false;
             DialogResult YorN = DialogResult.No;
-             
+
             try
             {
                 if (!CheckChkControl())
@@ -2145,16 +2153,16 @@ namespace ITunEsTooL
                     Msgbox("設定にて、iTunesの情報を取得して下さい。", HeadMsg.ATTENTION, 5);
                     return;
                 }
-                YorN = Msgbox("チェックボックスで選択した項目のチェックを行います。" + "\n" + "その結果がプレイリストに反映されますがよろしいですか？" 
+                YorN = Msgbox("チェックボックスで選択した項目のチェックを行います。" + "\n" + "その結果がプレイリストに反映されますがよろしいですか？"
                                         + "\n" + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。",
-                    HeadMsg.MAKE_PLAYLIST,3);
+                    HeadMsg.MAKE_PLAYLIST, 3);
                 if (YorN == DialogResult.No)
                     return;
-                
+
                 app = new iTunesApp();
                 libraryPlaylist = app.LibraryPlaylist;
                 itunes = new iTunesAppClass();
-                
+
                 if (txtSerchChr.Text != "")
                 {
                     try
@@ -2181,14 +2189,14 @@ namespace ITunEsTooL
                 GetName.SelectEvent = 1;
                 DialogSaizenmen();
                 GetName.ShowDialog();
-                
+
                 if (!GetName.Ret)
                     return;
                 strget = GetName.getMassage;
                 lblTitle.Text = "プレイリストを作成しています...";
-                
+
                 //プレイリストの新規作成  
-                playList = itunes.CreatePlaylist(strget + "(検索)") as IITUserPlaylist;                
+                playList = itunes.CreatePlaylist(strget + "(検索)") as IITUserPlaylist;
                 DialogSaizenmen();
                 splash.SendVisible(true);
                 //マルチスレッド処理
@@ -2273,7 +2281,7 @@ namespace ITunEsTooL
                     //アートワーク
                     if (chkArtwork.Checked && !SetPlayLst)
                     {
-                        
+
                         if (COMVAL.iArtCnt[icnt] == 0 && !SetPlayLst && chkBlank.Checked)
                         {
                             AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
@@ -2324,7 +2332,7 @@ namespace ITunEsTooL
         /// <param name="playList"></param>
         /// <param name="track"></param>
         /// <returns></returns>
-        private Boolean ReleaseITunesObject(ref iTunesApp itunes, ref  iTunesApp app,
+        private Boolean ReleaseITunesObject(ref iTunesApp itunes, ref iTunesApp app,
                         ref IITLibraryPlaylist libraryPlaylist, ref IITTrackCollection trackCol,
                         ref IITUserPlaylist playList, ref IITTrack track)
         {
@@ -2378,13 +2386,13 @@ namespace ITunEsTooL
         /// <param name="playList"></param>
         /// <param name="trackCol"></param>
         /// <param name="icnt"></param>
-        private void AddPlayList(ref IITTrack track,ref object target, ref IITUserPlaylist playList, ref IITTrackCollection trackCol, int icnt)
+        private void AddPlayList(ref IITTrack track, ref object target, ref IITUserPlaylist playList, ref IITTrackCollection trackCol, int icnt)
         {
             try
             {
                 track = trackCol.get_ItemByPersistentID(COMVAL.iPersistentIDHigh[icnt], COMVAL.iPersistentIDRow[icnt]);
                 target = track;
-                if(target != null)
+                if (target != null)
                     playList.AddTrack(ref target);
             }
             catch (System.Exception ex)
@@ -2400,7 +2408,7 @@ namespace ITunEsTooL
         private void button6_Click(object sender, EventArgs e)
         {
             XmlTextWriter xtw = null;
-            iTunesApp app= null;
+            iTunesApp app = null;
             IITLibraryPlaylist libraryPlaylist = null;
             iTunesApp itunes = null;
             DialogResult YorN = DialogResult.No;
@@ -2431,8 +2439,8 @@ namespace ITunEsTooL
 
                 if (YorN == DialogResult.No)
                     return;
-                
-            
+
+
                 this.Enabled = false;
                 splash.SendDataALL(libraryPlaylist.Tracks.Count);
                 Message = "ファイルを削除中...";
@@ -2460,20 +2468,20 @@ namespace ITunEsTooL
                 WriteHeaderXml(ref xtw, "iTunesDataLibrary");
                 int iNewCnt = 0;
                 string strHead = string.Empty;
-                strHead = "\"" + "曲名" +  "\"" + "," +  "\"" + "アーティスト" +  "\""　+ "," +  "\"" + "アルバム名" +"\"" + "," +  "\"" + "場所" + "\"" + "\n";
+                strHead = "\"" + "曲名" + "\"" + "," + "\"" + "アーティスト" + "\"" + "," + "\"" + "アルバム名" + "\"" + "," + "\"" + "場所" + "\"" + "\n";
 
                 for (icnt = 0; icnt < COMVAL.strName.Length; icnt++)
                 {
                     if (!File.Exists(COMVAL.strLocation[icnt]))
                     {
                         iDelCnt++;
-                        strDelSong +=    "\"" + COMVAL.strName[icnt] + "\"" + "," 
-                                                + "\"" + COMVAL.strArtist[icnt] +  "\"" + "," 
-                                                + "\""　+ COMVAL.strAlbum[icnt] +  "\"" + ","
-                                                + "\""　+ COMVAL.strLocation[icnt] +  "\"" 
+                        strDelSong += "\"" + COMVAL.strName[icnt] + "\"" + ","
+                                                + "\"" + COMVAL.strArtist[icnt] + "\"" + ","
+                                                + "\"" + COMVAL.strAlbum[icnt] + "\"" + ","
+                                                + "\"" + COMVAL.strLocation[icnt] + "\""
                                                 + "\n";
                         track = trackCol.get_ItemByPersistentID(COMVAL.iPersistentIDHigh[icnt], COMVAL.iPersistentIDRow[icnt]);
-                        if(track != null)
+                        if (track != null)
                             track.Delete();
 
                     }
@@ -2489,9 +2497,9 @@ namespace ITunEsTooL
                         COMVAL.iPersistentIDRow[iNewCnt] = COMVAL.iPersistentIDRow[icnt];
                         COMVAL.blnCompilation[iNewCnt] = COMVAL.blnCompilation[icnt];
 
-                        WriteElementXml(ref xtw, COMVAL.iPersistentIDHigh[icnt], COMVAL.iPersistentIDRow[icnt],COMVAL.blnCompilation[icnt],
+                        WriteElementXml(ref xtw, COMVAL.iPersistentIDHigh[icnt], COMVAL.iPersistentIDRow[icnt], COMVAL.blnCompilation[icnt],
                             COMVAL.strName[icnt], COMVAL.strAlbum[icnt], COMVAL.strArtist[icnt],
-                            COMVAL.strLocation[icnt],COMVAL.strAlbumArtist[icnt], Convert.ToString(COMVAL.iArtCnt[icnt]));
+                            COMVAL.strLocation[icnt], COMVAL.strAlbumArtist[icnt], Convert.ToString(COMVAL.iArtCnt[icnt]));
                         iNewCnt++;
                     }
                     if (splash.Cancel)
@@ -2508,7 +2516,7 @@ namespace ITunEsTooL
 
                 CloseElementXml(ref xtw);
                 xtw.Close();
-                
+
                 splash.CloseSplash();
                 CONF.pTrackCnt = itunesD.LibraryPlaylist.Tracks.Count.ToString();
                 if (strDelSong != "")
@@ -2553,7 +2561,7 @@ namespace ITunEsTooL
                     Marshal.ReleaseComObject(app);
                 if (libraryPlaylist != null)
                     Marshal.ReleaseComObject(libraryPlaylist);
-                
+
             }
 
         }
@@ -2687,7 +2695,7 @@ namespace ITunEsTooL
                 tabSettei.BackColor = SystemColors.Control;
                 tabSonota.BackColor = SystemColors.Control;
                 tabHyouji.BackColor = SystemColors.Control;
-                label37.BackColor = SystemColors.Control; 
+                label37.BackColor = SystemColors.Control;
                 pictureBox6.Top = 46;
                 bitPic = ImgOpe.SetResources("ロゴ３");
                 if (bitPic != null)
@@ -2715,7 +2723,7 @@ namespace ITunEsTooL
                 bitPic = ImgOpe.SetResources("ロゴ");
                 if (bitPic != null)
                     pictureBox6.Image = bitPic;
-                    
+
             }
         }
 
@@ -2731,12 +2739,12 @@ namespace ITunEsTooL
 
             clsDialog = new Dialog();
 
-            strPath = clsDialog.OpenFileDialog("XMLファイルを選択して下さい。",CONF.pxmlPath);
+            strPath = clsDialog.OpenFileDialog("XMLファイルを選択して下さい。", CONF.pxmlPath);
             if (strPath != "")
             {
                 if (Path.GetFileName(strPath) != "ITunesDataLibrary.xml")
                 {
-                    Msgbox("ITunesDataLibrary.xmlを指定して下さい。", HeadMsg.ATTENTION,2);
+                    Msgbox("ITunesDataLibrary.xmlを指定して下さい。", HeadMsg.ATTENTION, 2);
                     return;
                 }
                 if (!CheckRead_Music(strPath))
@@ -2753,7 +2761,7 @@ namespace ITunEsTooL
                 btnDouki.ForeColor = Color.White;
                 CONF.pxmlPath = txtxmlPath.Text;
             }
-            
+
             clsDialog = null;
         }
 
@@ -2831,7 +2839,7 @@ namespace ITunEsTooL
             if (strPath != "")
                 txtAfter.Text = strPath;
         }
-        
+
         /// <summary>
         /// エラーチェックダイアログ
         /// </summary>
@@ -2840,7 +2848,7 @@ namespace ITunEsTooL
         private void btnBDialog_Click(object sender, EventArgs e)
         {
             string strPath;
-            
+
             strPath = OpenDialog("エラーチェックファイルを保存するフォルダを指定して下さい。", txtLogPath.Text);
             if (strPath != "")
                 txtLogPath.Text = strPath;
@@ -2903,7 +2911,7 @@ namespace ITunEsTooL
             if (this.TopMost)
                 this.TopMost = false;
         }
-       
+
         /// <summary>
         /// 設定されてない項目を検索（チェックボックス）
         /// </summary>
@@ -2926,31 +2934,32 @@ namespace ITunEsTooL
             iTunesLib.IITArtwork AW = null;
 
             int index = 0;
-            try{
+            try
+            {
 
                 trackCol = itunesD.LibraryPlaylist.Tracks;
 
                 if (!e.Data.GetDataPresent(DataFormats.FileDrop))
                     return;
-           
+
                 if (COMVAL.strLocation == null)
                 {
                     Msgbox("iTunesと同期して下さい。", HeadMsg.ATTENTION, 5);
                     return;
                 }
-                 
+
                 foreach (string filePath in (string[])e.Data.GetData(DataFormats.FileDrop))
                 {
                     index = Array.IndexOf(COMVAL.strLocation, filePath);
 
                     if (index == -1)
                     {
-                        Msgbox("ITunEsTooLにドラッグした曲の情報がありません。"+ "\n" + "再度、同期を行って下さい。", HeadMsg.ATTENTION, 5);
+                        Msgbox("ITunEsTooLにドラッグした曲の情報がありません。" + "\n" + "再度、同期を行って下さい。", HeadMsg.ATTENTION, 5);
                         return;
                     }
 
                     TR = trackCol.get_ItemByPersistentID(COMVAL.iPersistentIDHigh[index], COMVAL.iPersistentIDRow[index]);
-                    if(TR == null)
+                    if (TR == null)
                     {
                         Msgbox("ドラッグした曲の情報がありません。" + "\n" + "再度、同期を行って下さい。", HeadMsg.ATTENTION, 5);
                         return;
@@ -2983,7 +2992,7 @@ namespace ITunEsTooL
         /// アートワーク設定
         /// </summary>
         /// <param name="TTR">IITTrack</param>
-        private void SetArtWork(iTunesLib.IITTrack TTR,Boolean NextTrack = false)
+        private void SetArtWork(iTunesLib.IITTrack TTR, Boolean NextTrack = false)
         {
             FileStream fs = null;
             IITArtwork AW = null;
@@ -3013,12 +3022,12 @@ namespace ITunEsTooL
                     AW.SaveArtworkToFile(CONF.ppath + @"\tmp.jpg");
                     using (fs = new FileStream(CONF.ppath + @"\tmp.jpg", FileMode.Open, FileAccess.Read))
                     using (Image imgSrc = Image.FromStream(fs))
-                    { 
+                    {
                         pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
                         try
                         {
                             imgTmp = new Bitmap(imgSrc);
-                            
+
                             if (imgTmp != null)
                                 pictureBox5.Image = imgTmp;
                         }
@@ -3033,8 +3042,8 @@ namespace ITunEsTooL
                     SetNoImage(true);
                 }
 
-                if (NextTrack) 
-                { 
+                if (NextTrack)
+                {
                     if (itunesD.CurrentTrack != null)
                         TR = itunesD.CurrentTrack;
                 }
@@ -3048,8 +3057,8 @@ namespace ITunEsTooL
             finally
             {
                 if (AWC != null) Marshal.ReleaseComObject(AWC);
-                if (AW != null)  Marshal.ReleaseComObject(AW);
-                if (fs != null)  fs.Close();
+                if (AW != null) Marshal.ReleaseComObject(AW);
+                if (fs != null) fs.Close();
                 DeleteFile(CONF.ppath + @"\tmp.jpg");
             }
         }
@@ -3061,7 +3070,7 @@ namespace ITunEsTooL
         {
             Bitmap bitPic = null;
 
-            if(!ImageOnly)
+            if (!ImageOnly)
             {
                 lblName.Text = "";
                 lblAlbum.Text = "";
@@ -3082,11 +3091,12 @@ namespace ITunEsTooL
         /// <returns></returns>
         private Boolean AddArtworkFromFile(ref IITTrack TTrack, string strPicPath)
         {
-            
-            try{
-                
-                if(TTrack != null)
-                    TTrack.AddArtworkFromFile(strPicPath); 
+
+            try
+            {
+
+                if (TTrack != null)
+                    TTrack.AddArtworkFromFile(strPicPath);
                 return true;
             }
             catch (System.Exception ex)
@@ -3139,7 +3149,7 @@ namespace ITunEsTooL
                 strPicture = "bmp";
             return strPicture;
         }
-      
+
         /// <summary>
         /// 設定されているアートワーク削除
         /// </summary>
@@ -3168,7 +3178,8 @@ namespace ITunEsTooL
             string strFile = string.Empty;
             int iRenban = 1;
 
-            try{
+            try
+            {
                 strFile = strFilePath;
                 if (File.Exists(strFilePath + "." + CONF.pSavePicture))
                 {
@@ -3180,14 +3191,14 @@ namespace ITunEsTooL
                     }
                 }
                 return strFile + "." + CONF.pSavePicture;
-             }
+            }
             catch (System.Exception ex)
             {
                 pErrMessage += "System Exception 1030 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 return "";
             }
         }
-        
+
         /// <summary>
         /// 再生ボタン
         /// </summary>
@@ -3195,12 +3206,13 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void btnSaisei_Click(object sender, EventArgs e)
         {
-            try{
+            try
+            {
 
                 if (COMVAL.strName == null)
                     return;
-		        //両方のインスタンスがない場合
-		        if (TR == null && itunesD.CurrentTrack == null)
+                //両方のインスタンスがない場合
+                if (TR == null && itunesD.CurrentTrack == null)
                 {
                     IITTrackCollection trackCol = null;
                     trackCol = itunesD.LibraryPlaylist.Tracks;
@@ -3208,24 +3220,9 @@ namespace ITunEsTooL
                     TR.Play();
                     SetArtWork(TR);
 
-		        //曲が設定されてない且つ、iTunesの局が流れてる場合
+                    //曲が設定されてない且つ、iTunesの局が流れてる場合
                 }
-                else if (TR == null && itunesD.CurrentTrack != null )
-                {
-				    if(!itunesD.CurrentTrack.Enabled)
-					    itunesD.CurrentTrack.Play();
-				    else
-					    itunesD.PlayPause();
-				    SetArtWork(itunesD.CurrentTrack);
-                    TR = itunesD.CurrentTrack;
-
-		        //局が設定されていて且つ、iTunesの曲と設定されている曲が異なる場合
-                }
-                else if ((itunesD.CurrentTrack == null && TR != null) )
-                {
-				    TR.Play();
-				    SetArtWork(TR);
-		        }else if (itunesD.CurrentTrack.PlayOrderIndex == TR.PlayOrderIndex)
+                else if (TR == null && itunesD.CurrentTrack != null)
                 {
                     if (!itunesD.CurrentTrack.Enabled)
                         itunesD.CurrentTrack.Play();
@@ -3233,13 +3230,30 @@ namespace ITunEsTooL
                         itunesD.PlayPause();
                     SetArtWork(itunesD.CurrentTrack);
                     TR = itunesD.CurrentTrack;
-                }else if (itunesD.CurrentTrack.PlayOrderIndex != TR.PlayOrderIndex)
+
+                    //局が設定されていて且つ、iTunesの曲と設定されている曲が異なる場合
+                }
+                else if ((itunesD.CurrentTrack == null && TR != null))
+                {
+                    TR.Play();
+                    SetArtWork(TR);
+                }
+                else if (itunesD.CurrentTrack.PlayOrderIndex == TR.PlayOrderIndex)
+                {
+                    if (!itunesD.CurrentTrack.Enabled)
+                        itunesD.CurrentTrack.Play();
+                    else
+                        itunesD.PlayPause();
+                    SetArtWork(itunesD.CurrentTrack);
+                    TR = itunesD.CurrentTrack;
+                }
+                else if (itunesD.CurrentTrack.PlayOrderIndex != TR.PlayOrderIndex)
                 {
                     TR.Play();
                     SetArtWork(TR);
                 }
 
-		    }
+            }
             catch (System.Exception ex)
             {
                 pErrMessage += "System Exception 1029 : " + ex.Message + "\n" + ex.StackTrace + "\n";
@@ -3253,12 +3267,13 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void btnNext_Click(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 if (COMVAL.strName == null)
                     return;
                 itunesD.NextTrack();
-                SetArtWork(itunesD.CurrentTrack,true);
-             }
+                SetArtWork(itunesD.CurrentTrack, true);
+            }
             catch (System.Exception ex)
             {
                 pErrMessage += "System Exception 1032 : " + ex.Message + "\n" + ex.StackTrace + "\n";
@@ -3272,7 +3287,8 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void btnPrev_Click(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 if (COMVAL.strName == null)
                     return;
                 itunesD.BackTrack();
@@ -3292,7 +3308,7 @@ namespace ITunEsTooL
         private void btnArtWork_Click(object sender, EventArgs e)
         {
             string strPath;
-            
+
             strPath = OpenDialog("アートワークを保存するフォルダを指定して下さい。", CONF.pxmlPath);
             if (strPath != "")
                 CONF.pArtWork = txtArtWork.Text = strPath;
@@ -3306,7 +3322,8 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void btnGoogle_Click(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 if (TR != null)
                 {
                     if (TR.Album != null)
@@ -3315,13 +3332,14 @@ namespace ITunEsTooL
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                Msgbox("ITunEsTooLに設定されている曲は" + "\n" +"iTunesに登録されていない可能性があります。" + "\n" + "再度、同期を行ってください。", HeadMsg.NOTICE, 2);
+                Msgbox("ITunEsTooLに設定されている曲は" + "\n" + "iTunesに登録されていない可能性があります。" + "\n" + "再度、同期を行ってください。", HeadMsg.NOTICE, 2);
             }
         }
 
         private void button7_Click_1(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 if (TR != null)
                 {
                     if (TR.Name != null)
@@ -3330,12 +3348,13 @@ namespace ITunEsTooL
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                Msgbox("ITunEsTooLに設定されている曲は" + "\n" +"iTunesに登録されていない可能性があります。" + "\n" + "再度、同期を行ってください。", HeadMsg.NOTICE, 2);
+                Msgbox("ITunEsTooLに設定されている曲は" + "\n" + "iTunesに登録されていない可能性があります。" + "\n" + "再度、同期を行ってください。", HeadMsg.NOTICE, 2);
             }
         }
         private void button6_Click_1(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 if (TR != null)
                 {
                     if (TR.Artist != null)
@@ -3344,7 +3363,7 @@ namespace ITunEsTooL
             }
             catch (System.Runtime.InteropServices.COMException)
             {
-                Msgbox("ITunEsTooLに設定されている曲は" + "\n" +"iTunesに登録されていない可能性があります。" + "\n" + "再度、同期を行ってください。", HeadMsg.NOTICE, 2);
+                Msgbox("ITunEsTooLに設定されている曲は" + "\n" + "iTunesに登録されていない可能性があります。" + "\n" + "再度、同期を行ってください。", HeadMsg.NOTICE, 2);
             }
         }
 
@@ -3355,11 +3374,12 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 this.Update();
             }
             catch (System.Exception ex)
-            {                
+            {
                 Msgbox("System Exception 3045" + "\n" + "iTunesが起動されていないか、予期せぬエラーが発生しました。", HeadMsg.HEAD_EXCEPTION, 4);
                 pErrMessage += "System Exception 3045 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
@@ -3405,7 +3425,7 @@ namespace ITunEsTooL
             DialogResult YorN = DialogResult.No;
             Boolean blnCancel = false;
             string strPath;
-            Dialog clsDialog;;
+            Dialog clsDialog; ;
             int icnt = 0;
             int iChkCnt = 0;
             string[] strChkAlbum = new string[1];
@@ -3423,7 +3443,7 @@ namespace ITunEsTooL
             }
 
             YorN = Msgbox("アートワークのバックアップを行いますか？"
-                                                        + "\n" 
+                                                        + "\n"
                                                         + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。",
                                                         HeadMsg.CONNECT_ITUNES, 3);
             if (YorN == DialogResult.No)
@@ -3432,9 +3452,9 @@ namespace ITunEsTooL
             try
             {
                 app = new iTunesApp();
-                libraryPlaylist = app.LibraryPlaylist;               
+                libraryPlaylist = app.LibraryPlaylist;
                 clsDialog = new Dialog();
-                strPath = clsDialog.OpenFolderDialog(this,"バックアップするフォルダを指定して下さい。");
+                strPath = clsDialog.OpenFolderDialog(this, "バックアップするフォルダを指定して下さい。");
                 if (strPath == "")
                     return;
                 clsDialog = null;
@@ -3444,13 +3464,13 @@ namespace ITunEsTooL
                 DialogSaizenmen();
                 splash.SendVisible(true);
                 backgroundWorker1.RunWorkerAsync();
-                
+
                 trackCol = itunesD.LibraryPlaylist.Tracks;
-                
+
                 for (icnt = 0; icnt < COMVAL.strName.Length; icnt++)
                 {
-                    if (COMVAL.iArtCnt[icnt] != 0 && IBeans.GetAlbumMachiIndex(strChkAlbum,strChkArtist, strChkAlbumArtist, blnChkCompilation,
-                        COMVAL.strAlbum[icnt],COMVAL.strArtist[icnt], COMVAL.strAlbumArtist[icnt], COMVAL.blnCompilation[icnt]) == -1)
+                    if (COMVAL.iArtCnt[icnt] != 0 && IBeans.GetAlbumMachiIndex(strChkAlbum, strChkArtist, strChkAlbumArtist, blnChkCompilation,
+                        COMVAL.strAlbum[icnt], COMVAL.strArtist[icnt], COMVAL.strAlbumArtist[icnt], COMVAL.blnCompilation[icnt]) == -1)
                     {
 
                         Track = trackCol.get_ItemByPersistentID(COMVAL.iPersistentIDHigh[icnt], COMVAL.iPersistentIDRow[icnt]);
@@ -3467,14 +3487,14 @@ namespace ITunEsTooL
                         blnCancel = splash.Cancel;
                         if (blnCancel)
                         {
-                            Msgbox("処理を中断します。", HeadMsg.NOTICE,7);
+                            Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
                             splash.SendCacncel = false;
                             splash.SendCan(false);
                             break;
                         }
                     }
                     splash.SendData(icnt);
-                }               
+                }
 
                 splash.CloseSplash();
                 Msgbox("バックアップが完了しました。", HeadMsg.COMPLETE, 1);
@@ -3503,7 +3523,7 @@ namespace ITunEsTooL
         /// アートワーク設定
         /// </summary>
         /// <param name="TTR">IITTrack</param>
-        private void MakeArtWork(iTunesLib.IITTrack TTR,string strDirName)
+        private void MakeArtWork(iTunesLib.IITTrack TTR, string strDirName)
         {
             IITArtwork AW = null;
             IITArtworkCollection AWC = null;
@@ -3518,8 +3538,8 @@ namespace ITunEsTooL
             {
                 if (TTR == null)
                     return;
-                AWC = TTR.Artwork;       
-         
+                AWC = TTR.Artwork;
+
                 foreach (IITArtwork Art in AWC)
                 {
                     strAlbum = TTR.Album;
@@ -3528,16 +3548,17 @@ namespace ITunEsTooL
                     Art.SaveArtworkToFile(CONF.ppath + @"\tmp.jpg");
                     using (fs = new FileStream(CONF.ppath + @"\tmp.jpg", FileMode.Open, FileAccess.Read))
                     {
-                        using (imgSrc = Bitmap.FromStream(fs)) 
+                        using (imgSrc = Bitmap.FromStream(fs))
                         {
-                            try{
+                            try
+                            {
                                 imgTmp = new Bitmap(imgSrc);
                             }
                             catch (ArgumentException)
                             {
                                 break;
                             }
-                        }   
+                        }
                     }
 
                     if (rdoPng.Checked)
@@ -3571,7 +3592,7 @@ namespace ITunEsTooL
             try
             {
                 DialogResult YorN;
-                YorN = Msgbox("iTunesに登録されている曲を全て追加しますか？", HeadMsg.NOTICE,3);
+                YorN = Msgbox("iTunesに登録されている曲を全て追加しますか？", HeadMsg.NOTICE, 3);
 
                 if (YorN == DialogResult.No)
                     return;
@@ -3654,7 +3675,7 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void chkDouki_CheckedChanged(object sender, EventArgs e)
         {
-            ChangeCheckBoxParameter(ref  chkDouki, ref CONF.pSync);
+            ChangeCheckBoxParameter(ref chkDouki, ref CONF.pSync);
         }
 
         /// <summary>
@@ -3694,14 +3715,14 @@ namespace ITunEsTooL
                 }
                 else
                 {
-                    Msgbox("画像ファイルをドラッグしてください。", HeadMsg.NOTICE,2);
+                    Msgbox("画像ファイルをドラッグしてください。", HeadMsg.NOTICE, 2);
                     return;
                 }
             }
 
             if (TR == null)
             {
-                Msgbox("iTunesから曲をドラッグしてください。", HeadMsg.NOTICE,2);
+                Msgbox("iTunesから曲をドラッグしてください。", HeadMsg.NOTICE, 2);
                 return;
             }
             if (TR.Album == null)
@@ -3722,17 +3743,17 @@ namespace ITunEsTooL
                 if (TR.Album != null)
                     strAlbum = TR.Album;
                 if (TR.Artist != null)
-                    strArtist = TR.Artist;              
+                    strArtist = TR.Artist;
                 blnCompilation = TR.Compilation;
                 FileOrCDTrack = (IITFileOrCDTrack)TR;
                 if (FileOrCDTrack.AlbumArtist != null)
                     strAlbumArtist = FileOrCDTrack.AlbumArtist;
 
-                imax = IBeans.GetAlbumCount(strAlbum,strArtist, strAlbumArtist, blnCompilation, ref COMVAL);
+                imax = IBeans.GetAlbumCount(strAlbum, strArtist, strAlbumArtist, blnCompilation, ref COMVAL);
                 DialogSaizenmen();
                 splash.SendDataALL(imax);
                 Message = "画像を設定しています...";
-                
+
                 splash.SendVisible(true);
 
                 trackCol = itunesD.LibraryPlaylist.Tracks;
@@ -3757,14 +3778,14 @@ namespace ITunEsTooL
                 backgroundWorker1.RunWorkerAsync();
                 if (YorN == DialogResult.No)
                 {
-                    icnt = IBeans.GetMusicMachiIndex(ref COMVAL,itunesD.get_ITObjectPersistentIDHigh(TR),itunesD.get_ITObjectPersistentIDLow(TR));
+                    icnt = IBeans.GetMusicMachiIndex(ref COMVAL, itunesD.get_ITObjectPersistentIDHigh(TR), itunesD.get_ITObjectPersistentIDLow(TR));
                     if (!SetArtworkMusic(ref track, strPath, icnt))
                     {
                         splash.CloseSplash();
-                        Msgbox("【 " + COMVAL.strName[icnt] + " 】に画像を設定することが出来ませんでした。",HeadMsg.ATTENTION,5);
+                        Msgbox("【 " + COMVAL.strName[icnt] + " 】に画像を設定することが出来ませんでした。", HeadMsg.ATTENTION, 5);
                         return;
                     }
-                    
+
                     imusic++;
                 }
                 else
@@ -3776,12 +3797,12 @@ namespace ITunEsTooL
                         if (icnt == -1)
                             break;
 
-                        if (IBeans.MachiAlbum(COMVAL,strAlbum, strArtist, strAlbumArtist, blnCompilation,ref icnt))
+                        if (IBeans.MachiAlbum(COMVAL, strAlbum, strArtist, strAlbumArtist, blnCompilation, ref icnt))
                         {
                             if (!SetArtworkMusic(ref track, strPath, icnt))
                             {
                                 splash.CloseSplash();
-                                Msgbox("【 " + COMVAL.strName[icnt] + " 】に画像を設定することが出来ませんでした。",HeadMsg.ATTENTION,5);
+                                Msgbox("【 " + COMVAL.strName[icnt] + " 】に画像を設定することが出来ませんでした。", HeadMsg.ATTENTION, 5);
                                 return;
                             }
                             SetArtWork(track);
@@ -3794,11 +3815,11 @@ namespace ITunEsTooL
                             splash.SendCacncel = false;
                             splash.SendCan(false);
                             break;
-                        }                                                                   
+                        }
                     }
                 }
                 splash.CloseSplash();
-                Msgbox("画像設定が完了しました。", HeadMsg.COMPLETE,1);
+                Msgbox("画像設定が完了しました。", HeadMsg.COMPLETE, 1);
                 SetArtWork(TR);
             }
             catch (System.Exception ex)
@@ -3846,7 +3867,7 @@ namespace ITunEsTooL
 
             ITunEsTooL_Beams IBeans = new ITunEsTooL_Beams();
             PicCheck frmPicChk = new PicCheck();
-            
+
             if (!NetworkInterface.GetIsNetworkAvailable())
             {
                 Msgbox("インターネットに接続されていません。", HeadMsg.NOTICE, 2);
@@ -3854,17 +3875,17 @@ namespace ITunEsTooL
             }
             if (COMVAL.strLocation == null)
             {
-                Msgbox("設定にて、iTunesの情報を取得して下さい。", HeadMsg.ATTENTION,2);
+                Msgbox("設定にて、iTunesの情報を取得して下さい。", HeadMsg.ATTENTION, 2);
                 return;
             }
-            if (TR== null)
+            if (TR == null)
             {
-                Msgbox("曲をITunEsTooLにドラッグして下さい。", HeadMsg.ATTENTION,2);
+                Msgbox("曲をITunEsTooLにドラッグして下さい。", HeadMsg.ATTENTION, 2);
                 return;
             }
             if (TR.Album == null)
             {
-                Msgbox("アルバム名が設定されていない曲は画像を自動取得出来ません。"+ "\n"+ "アルバム名を設定して下さい。", HeadMsg.ATTENTION,2);                
+                Msgbox("アルバム名が設定されていない曲は画像を自動取得出来ません。" + "\n" + "アルバム名を設定して下さい。", HeadMsg.ATTENTION, 2);
                 return;
             }
 
@@ -3879,10 +3900,10 @@ namespace ITunEsTooL
                 if (Msgbox("現在設定されている画像が削除されます。" + "\n" + "画像のバックアップを取りますか？", HeadMsg.ATTENTION, 3) == DialogResult.Yes)
                 {
                     PicBackup(TR);
-                } 
+                }
             }
-            
-            YorN = Msgbox("ドラッグした曲のアートワークの自動設定を行います。"  +  "\n" + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。","自動設定",3);           
+
+            YorN = Msgbox("ドラッグした曲のアートワークの自動設定を行います。" + "\n" + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。", "自動設定", 3);
 
             if (YorN == DialogResult.No)
                 return;
@@ -3897,25 +3918,25 @@ namespace ITunEsTooL
             FileOrCDTrack = (IITFileOrCDTrack)TR;
             if (FileOrCDTrack.AlbumArtist != null)
                 strAlbumArtist = FileOrCDTrack.AlbumArtist;
- 
+
             try
             {
                 itunes = new iTunesAppClass();
 
-                imax = IBeans.GetAlbumCount(strAlbum,strArtist, strAlbumArtist, blnCompilation, ref COMVAL);
+                imax = IBeans.GetAlbumCount(strAlbum, strArtist, strAlbumArtist, blnCompilation, ref COMVAL);
 
                 splash.SendDataALL(imax);
                 Message = "画像をダウンロードしています...";
                 DialogSaizenmen();
                 splash.SendVisible(true);
-                
+
                 backgroundWorker1.RunWorkerAsync();
-               
+
                 //曲名のみの場合の検索を考える。
                 strtmpAlbum = DelDisc(strAlbum);
 
                 strtmpsch = GoogleKensaku(strtmpAlbum, strArtist, strAlbumArtist, blnCompilation);
-                
+
                 //results = GoogleSerch(strtmpsch);
                 var iTunesSearchApiModel = GetItunesSearchApiObject(strtmpsch);
                 if (iTunesSearchApiModel == null)
@@ -3929,7 +3950,7 @@ namespace ITunEsTooL
                     strArtworkName = SetArtworkName(strName, strAlbum, strArtist);
                     strPath = RepeatedFile(txtArtWork.Text + @"\" + FileOpe.ValidFileName(strArtworkName));
 
-                    idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "500x500bb"), ref imgChkData);
+                    idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "600x600bb"), ref imgChkData);
                     if (idownload >= 2) { continue; }
 
                     if (PicCheckFlag)
@@ -3951,20 +3972,21 @@ namespace ITunEsTooL
                         }
                     }
 
-                    if (!SaveImg(imgChkData, strPath)) {
-                        Msgbox("画像が設定出来ませんでした。再検索を行います。", HeadMsg.ATTENTION, 5); 
+                    if (!SaveImg(imgChkData, strPath))
+                    {
+                        Msgbox("画像が設定出来ませんでした。再検索を行います。", HeadMsg.ATTENTION, 5);
                         continue;
                     }
-                    
+
                     splash.SendMessage("画像を自動設定しています...");
                     splash.SendVisible(true);
-               
+
                     for (icnt = 0; icnt < COMVAL.strName.Length; icnt++)
                     {
                         icnt = Array.IndexOf(COMVAL.strAlbum, strAlbum, icnt);
                         if (icnt == -1)
                             break;
-                        if (IBeans.MachiAlbum(COMVAL,strAlbum, strArtist, strAlbumArtist, blnCompilation,ref  icnt))
+                        if (IBeans.MachiAlbum(COMVAL, strAlbum, strArtist, strAlbumArtist, blnCompilation, ref icnt))
                         {
                             if (SetArtworkMusic(ref track, strPath, icnt))
                             {
@@ -3972,7 +3994,7 @@ namespace ITunEsTooL
                                 splash.SendData(iArtCnt);
                                 if (splash.Cancel)
                                 {
-                                    Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);                                    
+                                    Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
                                     blnCancel = true;
                                     splash.SendCacncel = false;
                                     splash.SendCan(false);
@@ -3988,7 +4010,7 @@ namespace ITunEsTooL
                     {
                         if (splash.Cancel)
                         {
-                            Msgbox("処理を中断します。", HeadMsg.NOTICE,7);
+                            Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
                             splash.SendCacncel = false;
                             splash.SendCan(false);
                             break;
@@ -3998,11 +4020,11 @@ namespace ITunEsTooL
                     {
                         break;
                     }
-                    break;                                   
+                    break;
                 }
 
                 splash.CloseSplash();
-                if(iArtCnt > 0)
+                if (iArtCnt > 0)
                     Msgbox("自動設定が完了しました。", HeadMsg.COMPLETE, 1);
                 else
                     Msgbox("アートワークの自動取得が出来ませんでした" + "\n" + "指定のサイズの画像が見つからない可能性があります。", HeadMsg.NOTICE, 2);
@@ -4023,7 +4045,7 @@ namespace ITunEsTooL
                 if (FileOrCDTrack != null) { Marshal.ReleaseComObject(FileOrCDTrack); }
                 CheckSaizenmen();
             }
-        
+
         }
 
         /// <summary>
@@ -4032,7 +4054,7 @@ namespace ITunEsTooL
         /// <param name="btpic">画像データ（byte）</param>
         /// <param name="strPath">保存先のパス</param>
         /// <returns></returns>
-        private Boolean SaveImg(byte[] btpic,string strPath)
+        private Boolean SaveImg(byte[] btpic, string strPath)
         {
             MemoryStream st = null;
             Image imgTmp = null;
@@ -4052,7 +4074,7 @@ namespace ITunEsTooL
                     format = ImageFormat.Bmp;
 
                 imgTmp.Save(strPath, format);
-                
+
                 return true;
             }
             catch (System.Exception ex)
@@ -4073,7 +4095,7 @@ namespace ITunEsTooL
         ///// <returns></returns>
         //private SearchResults GoogleSerch(string strSerchWord)
         //{
-          
+
         //        SearchResults results = null;
         //        int iSchCnt = 0;
         //        //検索出来るまで繰り返す（ただし2回まで）
@@ -4090,14 +4112,14 @@ namespace ITunEsTooL
         //                if(pErrMessage.IndexOf("Web Exception 4123 : " + ex.Message + ": " + strSerchWord +  "\n") != -1)
         //                    pErrMessage += "Web Exception 4123 : " + ex.Message + ": " + strSerchWord +  "\n";                        
         //            }
-                    
+
         //            iSchCnt++;
         //            Thread.Sleep(1000);
         //            if(iSchCnt == 2)
         //                break;
         //        }
         //        return results;
-            
+
         //}
 
         private ITunesSearchAPI GetItunesSearchApiObject(string serchWord)
@@ -4126,7 +4148,7 @@ namespace ITunEsTooL
             {
                 strtmpsch = strAlbum;
             }
-            else 
+            else
             if (strAlbumArtist != "")
             {
                 strtmpsch = strAlbum + " " + strAlbumArtist;
@@ -4173,20 +4195,21 @@ namespace ITunEsTooL
         /// <param name="iComIndex">COMVALの添え字（IITTrackと同じ位置にする）</param>
         /// <returns>Success -> True Failure -> False</returns>
         private Boolean SetArtworkMusic(ref IITTrack TTR, string strPath, int iComIndex = -1)
-    	{
+        {
             IITTrackCollection trackCol = null;
 
-		    try{
-			    trackCol = itunesD.LibraryPlaylist.Tracks;
+            try
+            {
+                trackCol = itunesD.LibraryPlaylist.Tracks;
                 TTR = trackCol.get_ItemByPersistentID(COMVAL.iPersistentIDHigh[iComIndex], COMVAL.iPersistentIDRow[iComIndex]);
-			    if (chkArtworkDel.Checked && TTR != null)
+                if (chkArtworkDel.Checked && TTR != null)
                     DeleteArtwork(TTR.Artwork);
                 if (!AddArtworkFromFile(ref TTR, strPath))
                     return false;
-                if(TTR != null)
+                if (TTR != null)
                     COMVAL.iArtCnt[iComIndex] = TTR.Artwork.Count;
                 return true;
-		    }
+            }
             catch (System.Exception ex)
             {
                 pErrMessage += "System Exception 8451 : " + ex.Message + "\n" + ex.StackTrace + "\n";
@@ -4194,10 +4217,10 @@ namespace ITunEsTooL
             }
             finally
             {
-			    if (trackCol != null)
-				Marshal.ReleaseComObject(trackCol);
-		    }
-	    }
+                if (trackCol != null)
+                    Marshal.ReleaseComObject(trackCol);
+            }
+        }
 
 
         private void rdoBmp_CheckedChanged(object sender, EventArgs e)
@@ -4246,7 +4269,8 @@ namespace ITunEsTooL
             if (YorN == DialogResult.No)
                 return;
 
-            try{
+            try
+            {
 
                 itunes = new iTunesAppClass();
                 trackCol = itunes.LibraryPlaylist.Tracks;
@@ -4262,23 +4286,24 @@ namespace ITunEsTooL
                 strget = GetName.getMassage;
 
                 playList = itunes.CreatePlaylist(strget + "(重複)") as IITUserPlaylist;
-           
+
                 splash.SendDataALL(itunes.LibraryPlaylist.Tracks.Count);
                 Message = "重複曲を検索中...";
                 DialogSaizenmen();
                 splash.SendVisible(true);
                 backgroundWorker1.RunWorkerAsync();
 
-                foreach(var strName in COMVAL.strName) {
+                foreach (var strName in COMVAL.strName)
+                {
 
-                    foundIndex = icnt;              
+                    foundIndex = icnt;
 
                     if (Array.IndexOf(strDoubleName, strName) == -1)
-                    {                    
+                    {
                         while (foundIndex != -1)
-                        {                            
+                        {
                             FristfoundIndex = Array.IndexOf(COMVAL.strName, strName, foundIndex);
-                            foundIndex = Array.IndexOf(COMVAL.strName, strName, foundIndex+1);                        
+                            foundIndex = Array.IndexOf(COMVAL.strName, strName, foundIndex + 1);
 
                             if (FristfoundIndex != -1 && foundIndex != -1 &&
                                 COMVAL.strArtist[FristfoundIndex] == COMVAL.strArtist[foundIndex] &&
@@ -4330,10 +4355,10 @@ namespace ITunEsTooL
                     Marshal.ReleaseComObject(playList);
                 if (trackCol != null)
                     Marshal.ReleaseComObject(trackCol);
-                CheckSaizenmen();                
+                CheckSaizenmen();
 
             }
-            
+
         }
 
         /// <summary>
@@ -4352,16 +4377,16 @@ namespace ITunEsTooL
             string strExe = string.Empty;
             string strtmpAlbum = string.Empty;
             string strtmpsch = string.Empty;
-            
+
             Boolean blnCancel = false;
             DialogResult YorN = DialogResult.No;
-            
+
             iTunesApp itunes = null;
             IITTrack track = null;
 
             ITunEsTooL_Beams IBeans = new ITunEsTooL_Beams();
             PicCheck frmPicChk = new PicCheck();
-            
+
             byte[] imgChkData = null;
 
             if (!NetworkInterface.GetIsNetworkAvailable())
@@ -4387,17 +4412,18 @@ namespace ITunEsTooL
                 return;
             }
             YorN = Msgbox("アートワークが設定されていない曲の自動設定を行います。"
-                                      + "\n" 
+                                      + "\n"
                                       + "項目が多い場合は時間が掛かる場合があります。"
-                                       + "\n" 
+                                       + "\n"
                                       + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。", "自動設定",
                                         3);
             if (YorN == DialogResult.No)
                 return;
-            tabControl1.SelectedTab = tabControl1.TabPages["tabProperty"]; 
-            try{
+            tabControl1.SelectedTab = tabControl1.TabPages["tabProperty"];
+            try
+            {
                 itunes = new iTunesAppClass();
-            
+
                 splash.SendDataALL(itunes.LibraryPlaylist.Tracks.Count);
                 Message = "画像をダウンロードしています...";
                 DialogSaizenmen();
@@ -4408,7 +4434,7 @@ namespace ITunEsTooL
                 {
                     if (COMVAL.iArtCnt[iArtCnt] == 0 && COMVAL.strAlbum[iArtCnt] != "")
                     {
-                        strtmpAlbum = DelDisc(COMVAL.strAlbum[iArtCnt]);                    
+                        strtmpAlbum = DelDisc(COMVAL.strAlbum[iArtCnt]);
                         strtmpsch = GoogleKensaku(strtmpAlbum, COMVAL.strArtist[iArtCnt], COMVAL.strAlbumArtist[iArtCnt], COMVAL.blnCompilation[iArtCnt]);
                         //results = GoogleSerch(strtmpsch);
                         var iTunesSearchApiModel = GetItunesSearchApiObject(strtmpsch);
@@ -4420,7 +4446,7 @@ namespace ITunEsTooL
                             strArtworkName = SetArtworkName(COMVAL.strName[iArtCnt], COMVAL.strAlbum[iArtCnt], COMVAL.strArtist[iArtCnt]);
                             strPath = RepeatedFile(txtArtWork.Text + @"\" + FileOpe.ValidFileName(strArtworkName));
 
-                            idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "500x500bb"), ref imgChkData);
+                            idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "600x600bb"), ref imgChkData);
                             if (idownload >= 2) { continue; }
 
                             if (PicCheckFlag)
@@ -4437,7 +4463,7 @@ namespace ITunEsTooL
                                 frmPicChk.ShowDialog();
                                 if (frmPicChk.Jikai)
                                     PicCheckFlag = false;
-                                
+
                                 if (frmPicChk.Jump)
                                 {
                                     splash.SendVisible(true);
@@ -4460,9 +4486,10 @@ namespace ITunEsTooL
                                 }
                             }
 
-                            if (!SaveImg(imgChkData, strPath)) {
+                            if (!SaveImg(imgChkData, strPath))
+                            {
                                 Msgbox("画像が設定出来ませんでした。再検索を行います。", HeadMsg.ATTENTION, 5);
-                                continue; 
+                                continue;
                             }
 
                             splash.SendMessage("画像を自動設定しています...");
@@ -4473,29 +4500,29 @@ namespace ITunEsTooL
                                 icnt = Array.IndexOf(COMVAL.strAlbum, COMVAL.strAlbum[iArtCnt], icnt);
                                 if (icnt == -1)
                                     break;
-                                if (IBeans.MachiAlbum(COMVAL,COMVAL.strAlbum[iArtCnt], COMVAL.strArtist[iArtCnt],
+                                if (IBeans.MachiAlbum(COMVAL, COMVAL.strAlbum[iArtCnt], COMVAL.strArtist[iArtCnt],
                                                                     COMVAL.strAlbumArtist[iArtCnt], COMVAL.blnCompilation[iArtCnt], ref icnt))
                                 {
-                                     if (SetArtworkMusic(ref track, strPath, icnt))
-                                     {
-	                                        splash.SendData(iArtCnt);	                                
-	                                        if (splash.Cancel)
-	                                        {
-	                                            Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
-	                                            blnCancel = true;
-	                                            splash.SendCacncel = false;
-	                                            splash.SendCan(false);
-	                                            break;                                                                            
-	                                        }
-                                      }
-                                     COMVAL.iArtCnt[icnt] = track.Artwork.Count;
-                                     SetArtWork(track);
+                                    if (SetArtworkMusic(ref track, strPath, icnt))
+                                    {
+                                        splash.SendData(iArtCnt);
+                                        if (splash.Cancel)
+                                        {
+                                            Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
+                                            blnCancel = true;
+                                            splash.SendCacncel = false;
+                                            splash.SendCan(false);
+                                            break;
+                                        }
+                                    }
+                                    COMVAL.iArtCnt[icnt] = track.Artwork.Count;
+                                    SetArtWork(track);
                                 }
                             }
                             break;
                         }
                     }
-               
+
                     splash.SendData(iArtCnt);
                     if (!blnCancel)
                     {
@@ -4520,14 +4547,14 @@ namespace ITunEsTooL
                 if (chkAutoShutdown.Checked && !blnCancel)
                 {
                     pAutoShutdown = true;
-                    this.Close();   
+                    this.Close();
                 }
                 else
                 {
-                    Msgbox("自動設定が完了しました。" + "\n" + "※自動設定されない画像がある場合は、個別に自動設定を行って下さい。", HeadMsg.COMPLETE, 1);   
+                    Msgbox("自動設定が完了しました。" + "\n" + "※自動設定されない画像がある場合は、個別に自動設定を行って下さい。", HeadMsg.COMPLETE, 1);
                 }
                 SetArtWork(TR);
-            
+
             }
             catch (System.Exception ex)
             {
@@ -4539,8 +4566,8 @@ namespace ITunEsTooL
             finally
             {
                 if (track != null) { Marshal.ReleaseComObject(itunes); }
-                if (itunes != null){ Marshal.ReleaseComObject(itunes); }
-                
+                if (itunes != null) { Marshal.ReleaseComObject(itunes); }
+
                 CheckSaizenmen();
             }
         }
@@ -4567,7 +4594,7 @@ namespace ITunEsTooL
         /// </summary>
         /// <param name="COMVAL"></param>
         /// <param name="iArtCnt"></param>
-        private void SetMinus(ref CommonValue COMVAL,int iArtCnt)
+        private void SetMinus(ref CommonValue COMVAL, int iArtCnt)
         {
             int icnt = 0;
             ITunEsTooL_Beams IBeans = new ITunEsTooL_Beams();
@@ -4640,13 +4667,14 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
-            try{
+            try
+            {
                 //画像貼り付け
                 if (e.KeyData == (Keys.Control | Keys.V) && tabControl1.SelectedTab == tabControl1.TabPages["tabProperty"])
                 {
                     if (!lblName.ReadOnly)
                     {
-                        if(!lblName.Focused && !lblAlbum.Focused && !lblArtist.Focused)
+                        if (!lblName.Focused && !lblAlbum.Focused && !lblArtist.Focused)
                             Msgbox("編集モードでは、Ctrl + Vで貼り付けは行えません。", HeadMsg.ATTENTION, 2);
                         return;
                     }
@@ -4670,7 +4698,7 @@ namespace ITunEsTooL
                         if (NetworkInterface.GetIsNetworkAvailable())
                             System.Diagnostics.Process.Start(Domain + "/info/Artwork.html");
                     }
-                    else if (tabControl1.SelectedTab == tabControl1.TabPages["tabCopy"]) 
+                    else if (tabControl1.SelectedTab == tabControl1.TabPages["tabCopy"])
                     {
                         if (NetworkInterface.GetIsNetworkAvailable())
                             System.Diagnostics.Process.Start(Domain + "/info/mainte.html");
@@ -4679,7 +4707,7 @@ namespace ITunEsTooL
                     {
                         if (NetworkInterface.GetIsNetworkAvailable())
                             System.Diagnostics.Process.Start(Domain + "/info/Settei.html");
-                    }               
+                    }
                 }
             }
             catch (SystemException ex)
@@ -4703,7 +4731,7 @@ namespace ITunEsTooL
             byte[] pic = null;
 
             try
-            {                 
+            {
                 wc = new WebClient();
                 pic = wc.DownloadData(DownloadURL);
 
@@ -4736,21 +4764,21 @@ namespace ITunEsTooL
             }
             catch (WebException we)
             {
-		        pErrMessage += "Web Exception 2102 : " + we.Message + "\n";
-		        return 2;
+                pErrMessage += "Web Exception 2102 : " + we.Message + "\n";
+                return 2;
             }
             catch (SystemException ex)
             {
-		        pErrMessage += "System Exception 2102 : " + ex.Message + "\n" + ex.StackTrace + "\n";
-		        return 3;
-		    }
+                pErrMessage += "System Exception 2102 : " + ex.Message + "\n" + ex.StackTrace + "\n";
+                return 3;
+            }
             finally
             {
                 if (st != null) { st.Close(); }
                 if (IMG != null) { IMG.Dispose(); }
                 if (wc != null) { wc.Dispose(); }
-		    }
-	    }        
+            }
+        }
 
         /// <summary>
         /// クリップボードの画像を設定
@@ -4810,7 +4838,7 @@ namespace ITunEsTooL
                 frmPicture.CColor = COMVAL.strColor;
                 DialogSaizenmen();
                 frmPicture.ShowDialog();
-                
+
                 if (!frmPicture.Ret)
                     return;
                 if (TR.Name != null)
@@ -4837,7 +4865,7 @@ namespace ITunEsTooL
 
                 }
 
-                imax = IBeans.GetAlbumCount(strAlbum, strArtist,strAlbumArtist, blnCompilation, ref COMVAL);
+                imax = IBeans.GetAlbumCount(strAlbum, strArtist, strAlbumArtist, blnCompilation, ref COMVAL);
 
                 splash.SendDataALL(imax);
                 Message = "画像を設定しています...";
@@ -4848,7 +4876,8 @@ namespace ITunEsTooL
 
                 splash.SendMessage("アートワークを設定しています。");
                 splash.SendVisible(true);
-                if (!blnNotAlbum){
+                if (!blnNotAlbum)
+                {
                     YorN = Msgbox("クリップボードの画像を【 " + strAlbum + " 】のすべての曲に設定しますか？", HeadMsg.NOTICE, 3);
                 }
                 else
@@ -4859,7 +4888,7 @@ namespace ITunEsTooL
 
                     YorN = DialogResult.No;
                 }
-                   
+
                 if (YorN == DialogResult.No)
                     splash.SendDataALL(1);
 
@@ -4874,7 +4903,7 @@ namespace ITunEsTooL
                                                 HeadMsg.ATTENTION, 5);
                         return;
                     }
-                    
+
                     imusic++;
                 }
                 else
@@ -4966,8 +4995,8 @@ namespace ITunEsTooL
                     Msgbox("削除する画像がありません。", HeadMsg.NOTICE, 2);
                     return;
                 }
-               
-                if (Msgbox("現在設定されている画像が削除されます。" + "\n"  + "画像のバックアップを取りますか？", HeadMsg.ATTENTION, 3)  == DialogResult.Yes)
+
+                if (Msgbox("現在設定されている画像が削除されます。" + "\n" + "画像のバックアップを取りますか？", HeadMsg.ATTENTION, 3) == DialogResult.Yes)
                 {
                     PicBackup(TR);
                 }
@@ -4982,13 +5011,13 @@ namespace ITunEsTooL
                     strAlbumArtist = FileOrCDTrack.AlbumArtist;
 
                 YorN = Msgbox("【" + strAlbum + "】の画像を削除します。よろしいですか"
-                                        + "\n" + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。",                                        
+                                        + "\n" + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。",
                                         HeadMsg.ATTENTION, 3);
 
                 if (YorN == DialogResult.No)
                     return;
 
-                splash.SendDataALL(IBeans.GetAlbumCount(strAlbum, strArtist,strAlbumArtist, blnCompilation, ref COMVAL));
+                splash.SendDataALL(IBeans.GetAlbumCount(strAlbum, strArtist, strAlbumArtist, blnCompilation, ref COMVAL));
                 Message = "画像を削除しています...";
                 DialogSaizenmen();
                 splash.SendVisible(true);
@@ -4998,8 +5027,8 @@ namespace ITunEsTooL
                 {
                     icnt = Array.IndexOf(COMVAL.strAlbum, strAlbum, icnt);
                     if (icnt == -1)
-                        break;                  
-                    if (IBeans.MachiAlbum(COMVAL, strAlbum, strArtist, strAlbumArtist, blnCompilation, ref  icnt))
+                        break;
+                    if (IBeans.MachiAlbum(COMVAL, strAlbum, strArtist, strAlbumArtist, blnCompilation, ref icnt))
                     {
                         track = itunes.LibraryPlaylist.Tracks.get_ItemByPersistentID(COMVAL.iPersistentIDHigh[icnt], COMVAL.iPersistentIDRow[icnt]);
                         DeleteArtwork(track.Artwork);
@@ -5023,7 +5052,7 @@ namespace ITunEsTooL
             catch (System.Exception ex)
             {
                 splash.CloseSplash();
-                Msgbox("System Exception 1355" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
+                Msgbox("System Exception 1355" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
                 pErrMessage += "System Exception 1355 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
@@ -5038,8 +5067,9 @@ namespace ITunEsTooL
         }
 
         private void この画像のバックアップをとるToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
-            try{
+        {
+            try
+            {
                 if (TR == null)
                 {
                     Msgbox("iTunesから曲をドラッグしてください。", HeadMsg.NOTICE, 2);
@@ -5052,14 +5082,14 @@ namespace ITunEsTooL
                 }
                 if (PicBackup(TR) != 0)
                     return;
-                
+
                 Msgbox("バックアップが完了しました。", HeadMsg.COMPLETE, 1);
-                
-                
+
+
             }
             catch (System.Exception ex)
             {
-                Msgbox("System Exception 3325" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION,4);
+                Msgbox("System Exception 3325" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
                 pErrMessage += "System Exception 3325 : " + ex.Message + "\n" + ex.StackTrace + "\n";
                 this.Close();
             }
@@ -5073,9 +5103,10 @@ namespace ITunEsTooL
         /// <returns>0　→　正常 </returns>
         /// <returns>1　→　キャンセル</returns>
         /// <returns>2　→　異常</returns>
-        public int PicBackup(IITTrack TR_ )
+        public int PicBackup(IITTrack TR_)
         {
-            try{
+            try
+            {
                 Dialog clsDialog = null;
                 string strPath = string.Empty;
                 clsDialog = new Dialog();
@@ -5098,7 +5129,7 @@ namespace ITunEsTooL
         /// <param name="HeadMsg"></param>
         /// <param name="MsgType">１→Information,2→Warning,3→Question,4→Error,5→Exclamation,→Question</param>      
         /// <returns></returns>
-        private DialogResult Msgbox(string Msg,string HeadMsg, int MsgType)
+        private DialogResult Msgbox(string Msg, string HeadMsg, int MsgType)
         {
             DialogResult YorN = DialogResult.No;
 
@@ -5124,7 +5155,7 @@ namespace ITunEsTooL
                     MessageBox.Show(Msg, HeadMsg, MessageBoxButtons.OK, MessageBoxIcon.Question);
                     break;
                 case 7:
-                    MessageBox.Show(Msg,HeadMsg, MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                    MessageBox.Show(Msg, HeadMsg, MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                     break;
                 case 8:
                     YorN = MessageBox.Show(Msg, HeadMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
@@ -5133,7 +5164,7 @@ namespace ITunEsTooL
             CheckSaizenmen();
             return YorN;
         }
-       
+
         private void 再生中の曲をITunEsTooLに設定するToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (COMVAL.strAlbum == null)
@@ -5151,7 +5182,7 @@ namespace ITunEsTooL
                 TR = itunesD.CurrentTrack;
                 SetArtWork(TR);
             }
-        }     
+        }
 
         private void txtErrLog_DoubleClick(object sender, EventArgs e)
         {
@@ -5225,7 +5256,7 @@ namespace ITunEsTooL
             {
                 Msgbox("画像ファイルをドラッグしてください。", HeadMsg.NOTICE, 2);
                 return;
-            }            
+            }
 
             try
             {
@@ -5244,7 +5275,7 @@ namespace ITunEsTooL
                 DialogSaizenmen();
                 splash.SendDataALL(imax);
                 Message = "画像を設定しています...";
-                
+
                 splash.SendVisible(true);
 
                 trackCol = itunesD.LibraryPlaylist.Tracks;
@@ -5328,13 +5359,14 @@ namespace ITunEsTooL
 
             }
 
-            
+
 
         }
 
         private void 曲アルバムアーティスト名を編集モードにするToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 int index = 0;
 
                 if (COMVAL.strAlbum == null)
@@ -5407,21 +5439,21 @@ namespace ITunEsTooL
         private void 編集モードを取り消すToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-             lblName.Text = TR.Name;
-             lblAlbum.Text = TR.Album;
-             lblArtist.Text = TR.Artist;
-             lblName.ReadOnly = true;
-             lblAlbum.ReadOnly = true;
-             lblArtist.ReadOnly = true;
-             lblName.BackColor = Color.WhiteSmoke;
-             lblAlbum.BackColor = Color.WhiteSmoke;
-             lblArtist.BackColor = Color.WhiteSmoke;
-             曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Text = "曲アルバムアーティスト名を編集モードにする";
-             編集モードを取り消すToolStripMenuItem.Visible = false;
-             Msgbox("取り消しが完了しました。", HeadMsg.NOTICE, 1);
+            lblName.Text = TR.Name;
+            lblAlbum.Text = TR.Album;
+            lblArtist.Text = TR.Artist;
+            lblName.ReadOnly = true;
+            lblAlbum.ReadOnly = true;
+            lblArtist.ReadOnly = true;
+            lblName.BackColor = Color.WhiteSmoke;
+            lblAlbum.BackColor = Color.WhiteSmoke;
+            lblArtist.BackColor = Color.WhiteSmoke;
+            曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Text = "曲アルバムアーティスト名を編集モードにする";
+            編集モードを取り消すToolStripMenuItem.Visible = false;
+            Msgbox("取り消しが完了しました。", HeadMsg.NOTICE, 1);
         }
 
-       
+
 
         private void アートワークToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -5597,7 +5629,7 @@ namespace ITunEsTooL
         {
             SmalGazou();
         }
-     
+
         /// <summary>
         /// 小さい画像の設定（チェックボックス）
         /// </summary>
@@ -5634,11 +5666,11 @@ namespace ITunEsTooL
         {
             ChangeCheckBoxParameter(ref chkComp, ref CONF.pComp);
         }
-        
+
         private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (NetworkInterface.GetIsNetworkAvailable())
-                System.Diagnostics.Process.Start(Domain);
+                System.Diagnostics.Process.Start(Domain + "?ref=linklabel");
         }
 
         private void linkLabel2_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
@@ -5660,7 +5692,7 @@ namespace ITunEsTooL
         /// <summary>
         /// チェックボックスのパラメーターを変更する
         /// </summary>
-        private void ChangeCheckBoxParameter(ref CheckBox CheckBox,ref string ConfParam)
+        private void ChangeCheckBoxParameter(ref CheckBox CheckBox, ref string ConfParam)
         {
             ConfParam = CheckBox.Checked ? TRUE : FALSE;
             CheckBox.ForeColor = CheckBox.Checked ? Color.Black : Color.DimGray;
@@ -5676,8 +5708,8 @@ namespace ITunEsTooL
         private void button4_Click(object sender, EventArgs e)
         {
             PicCheckFlag = true;
-            button9_Click(null,null);
+            button9_Click(null, null);
             PicCheckFlag = false;
         }
-    }     
+    }
 }

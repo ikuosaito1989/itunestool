@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace ITunEsTooL
 {
-    public partial class PlayListName: Form
+    public partial class PlayListName : Form
     {
         //エラーメッセージ戻り値
         private string strMsg = string.Empty;
@@ -135,8 +135,8 @@ namespace ITunEsTooL
                         @MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     break;
                 case 1:
-                     YorN = MessageBox.Show("プレイリストの作成を中止しますか？", "プレイリスト作成",
-                        @MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    YorN = MessageBox.Show("プレイリストの作成を中止しますか？", "プレイリスト作成",
+                       @MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     break;
                 case 2:
                     YorN = MessageBox.Show("アートワークのバックアップを中止しますか？", "バックアップ",
@@ -157,6 +157,6 @@ namespace ITunEsTooL
             SystemEvents.UserPreferenceChanged -=
                 new UserPreferenceChangedEventHandler(SystemEvents_UserPreferenceChanged);
         }
-        
+
     }
 }

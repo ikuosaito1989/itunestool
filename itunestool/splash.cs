@@ -9,7 +9,7 @@ namespace ITunEsTooL
 {
     class splash
     {
-        
+
         private frmSplash clsSplash = null;
         private Boolean blnCancel = false;
         public Boolean Cancel
@@ -28,7 +28,7 @@ namespace ITunEsTooL
         /// <param name="strDaimei"></param>
         /// <param name="frmParentForm"></param>
         /// <param name="strColor"></param>
-        public void OpenSplash(string strDaimei,Form frmParentForm,string strColor)
+        public void OpenSplash(string strDaimei, Form frmParentForm, string strColor)
         {
             if (clsSplash != null)
             {
@@ -61,7 +61,7 @@ namespace ITunEsTooL
         public void SendData(int cnt)
         {
             clsSplash.Parcent = cnt;
-            blnCancel = clsSplash.Cancel;                         
+            blnCancel = clsSplash.Cancel;
 
         }
 
@@ -91,7 +91,7 @@ namespace ITunEsTooL
         public void SendVisible(Boolean blnVIS)
         {
             clsSplash.Daimei = "";
-            clsSplash.bVisible= blnVIS;
+            clsSplash.bVisible = blnVIS;
         }
         /// <summary>
         /// 処理するデータの合計値を渡す
@@ -104,6 +104,6 @@ namespace ITunEsTooL
             clsSplash.ALL = iGoukei;
             clsSplash.Zero = 0;
         }
-        
+
     }
 }

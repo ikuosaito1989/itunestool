@@ -72,13 +72,13 @@ namespace ITunEsTooL
             iTunesLib.IITArtworkCollection AWC = null;
             FileStream fs = null;
             iTunesLib.IITArtwork AW = null;
-            
+
             try
             {
                 int w = Screen.PrimaryScreen.WorkingArea.Width;
                 int h = Screen.PrimaryScreen.WorkingArea.Height;
                 this.SuspendLayout();
-               
+
                 AWC = TTR.Artwork;
                 AW = AWC[1];
                 AW.SaveArtworkToFile(strPath + "tmp.jpg");

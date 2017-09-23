@@ -24,7 +24,7 @@ namespace ITunEsTooL
         private int _iSetEventNum = 0;
         private int iWidth = 0;
         private int iHeight = 0;
-        
+
         public string Url
         {
             set
@@ -108,7 +108,7 @@ namespace ITunEsTooL
                 pictureBox1.Image = null;
 
             }
-            
+
         }
 
         private void PicCheck_Load(object sender, EventArgs e)

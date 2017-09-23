@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO ;
+using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
@@ -19,12 +19,12 @@ namespace ITunEsTooL
             ofd.InitialDirectory = Path.GetDirectoryName(DeFPath);
             ofd.FilterIndex = 2;
             ofd.Title = strTitle;
-            ofd.RestoreDirectory = true;            
+            ofd.RestoreDirectory = true;
             ofd.CheckFileExists = true;
             ofd.CheckPathExists = true;
 
             strPath = ofd.ShowDialog() == DialogResult.OK ? Convert.ToString(ofd.FileName) : "";
-            
+
             return strPath;
         }
 
@@ -35,7 +35,7 @@ namespace ITunEsTooL
             FolderBrowserDialog fbd = new FolderBrowserDialog();
 
             fbd.Description = strDePath;
-            
+
             fbd.RootFolder = Environment.SpecialFolder.Desktop;
             fbd.SelectedPath = strpath;
             fbd.ShowNewFolderButton = true;

@@ -26,7 +26,8 @@ namespace ITunEsTooL
         /// <summary>
         /// 共通項目生成
         /// </summary>
-        public void NEWVAL(){
+        public void NEWVAL()
+        {
             strName = new string[1];
             strAlbum = new string[1];
             strArtist = new string[1];
@@ -93,8 +94,8 @@ namespace ITunEsTooL
             Array.Resize(ref iPersistentIDHigh, cnt);
             Array.Resize(ref iPersistentIDRow, cnt);
             Array.Resize(ref blnCompilation, cnt);
-            
+
         }
-        
+
     }
 }

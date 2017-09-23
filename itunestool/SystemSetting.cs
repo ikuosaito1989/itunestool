@@ -77,7 +77,7 @@ namespace ITunEsTooL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <returns>座標（Point）</returns>
-        public void GetPoint(object sender,MouseEventArgs e, ref Point mousePoint)
+        public void GetPoint(object sender, MouseEventArgs e, ref Point mousePoint)
         {
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
@@ -91,7 +91,7 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         /// <param name="me"></param>
         /// <param name="mousePoint"></param>
-        public Point MoveForm(object sender,MouseEventArgs e,Point mousePoint,ref Point mePoint)
+        public Point MoveForm(object sender, MouseEventArgs e, Point mousePoint, ref Point mePoint)
         {
             int intLeft = 0;
             int intTop = 0;

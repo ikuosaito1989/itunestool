@@ -57,7 +57,7 @@ namespace ITunEsTooL
             Mail objMail = new Mail();
 
             _strErrMsg = objMail.SendMail(txtFrom.Text, strTo, strSubject, txtReview.Text, _intNum, 1);
-            
+
             this.Close();
         }
 
@@ -71,7 +71,7 @@ namespace ITunEsTooL
             _intNum = _intNum == 5 ? 1 : _intNum + 1;
             picReview.Image = ImgOpe.SetResources(_intNum.ToString());
         }
-     
+
         private void chkJikai_CheckedChanged(object sender, EventArgs e)
         {
             _strJikai = chkJikai.Checked ? "False" : "True";

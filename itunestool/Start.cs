@@ -22,11 +22,11 @@ namespace ITunEsTooL
         {
             InitializeComponent();
         }
-        
+
         public Color Color
         {
             set { _Color = value; }
-        
+
         }
         public Boolean Stop
         {
@@ -37,7 +37,7 @@ namespace ITunEsTooL
             get { return _blnCloseRet; }
 
         }
-        
+
         /// <summary>
         /// AnimateWindow 列挙型
         /// </summary>
@@ -72,7 +72,7 @@ namespace ITunEsTooL
                 cp.ClassStyle |= CS_DROPSHADOW;
                 return cp;
             }
-        } 
+        }
 
         /// <summary>
         /// Shown
@@ -84,9 +84,9 @@ namespace ITunEsTooL
             try
             {
                 this.Update();
-                this.Activate();   
+                this.Activate();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return;
             }
@@ -100,7 +100,7 @@ namespace ITunEsTooL
         private void Start_Load(object sender, EventArgs e)
         {
 
-            CommonValue COMVAL = new CommonValue();            
+            CommonValue COMVAL = new CommonValue();
 
             pictureBox3.BackColor = _Color;
             pictureBox4.BackColor = _Color;
@@ -110,7 +110,7 @@ namespace ITunEsTooL
 
             label5.Text = label5.Text + " " + COMVAL.strVer.FileVersion;
             AnimateWindow(this.Handle, 200, (uint)(AnimateWindowFlags.AW_HOR_NEGATIVE | AnimateWindowFlags.AW_BLEND));
-            
+
         }
 
         /// <summary>

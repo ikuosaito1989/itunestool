@@ -50,21 +50,22 @@ namespace ITunEsTooL
         /// <param name="flags">挙動を表すフラグ</param>
         [DllImport("user32")]
         private static extern bool AnimateWindow(IntPtr hwnd, int time, uint flags);
-        
+
         public new Form ParentForm
         {
             set
-            {frmParentForm = value;}
+            { frmParentForm = value; }
         }
         public Boolean Stop
         {
             set
-            {blnStop = value;}
+            { blnStop = value; }
         }
         public string HeadMessage
         {
             set
-            { strHeader = value;            
+            {
+                strHeader = value;
             }
         }
         public Boolean SendCancel
@@ -90,22 +91,22 @@ namespace ITunEsTooL
         public string Daimei
         {
             set
-            {strDaimei = value;}
+            { strDaimei = value; }
         }
         public string CColor
         {
             set
-            {strColor = value;}
+            { strColor = value; }
         }
         public int Parcent
         {
             set
-            {pintParcent = value;}
+            { pintParcent = value; }
         }
         public int ALL
         {
             set
-            {intALL = value;}
+            { intALL = value; }
         }
         public int Zero
         {
@@ -125,7 +126,7 @@ namespace ITunEsTooL
                 cp.ClassStyle |= CS_DROPSHADOW;
                 return cp;
             }
-        } 
+        }
         /// <summary>
         /// 画面操作
         /// </summary>
@@ -157,7 +158,7 @@ namespace ITunEsTooL
             frmParentForm.Location.X + (frmParentForm.Width - this.Width) / 2,
             frmParentForm.Location.Y + (frmParentForm.Height - this.Height) / 2);
             timer2.Enabled = true;
-            switch(strColor)
+            switch (strColor)
             {
                 case "SkyBlue":
 
@@ -166,7 +167,7 @@ namespace ITunEsTooL
                     label2.ForeColor = Color.LightBlue;
                     label3.ForeColor = Color.LightBlue;
                     label4.ForeColor = Color.LightBlue;
-                    lblALL.ForeColor = Color.LightBlue;    
+                    lblALL.ForeColor = Color.LightBlue;
                     break;
                 case "Tomato":
                     BackColorCange(Color.Tomato);
@@ -261,7 +262,7 @@ namespace ITunEsTooL
                 SetVisible(false);
                 button1.Visible = false;
             }
-            
+
             txtshori.Text = strDaimei;
             label2.Text = Convert.ToString(intZero);
             lblALL.Text = Convert.ToString(intALL);
@@ -293,13 +294,13 @@ namespace ITunEsTooL
         /// <param name="ColorCode"></param>
         private void BackColorCange(Color ColorCode)
         {
-          
+
             picTop.BackColor = ColorCode;
             picButtom.BackColor = ColorCode;
             picLeft.BackColor = ColorCode;
             picRight.BackColor = ColorCode;
             label1.BackColor = ColorCode;
-            
+
         }
 
         /// <summary>
@@ -330,7 +331,7 @@ namespace ITunEsTooL
                 this.Location = new Point(
                 frmParentForm.Location.X + (frmParentForm.Width - this.Width) / 2,
                 frmParentForm.Location.Y + (frmParentForm.Height - this.Height) / 2);
-//                blnLocate = true;
+                //                blnLocate = true;
 
             }
             if (blnStop)
@@ -339,7 +340,7 @@ namespace ITunEsTooL
                 timer2.Enabled = false;
                 blnStop = false;
                 this.Close();
-                
+
             }
         }
 
@@ -349,7 +350,7 @@ namespace ITunEsTooL
             label1.Text = strHeader;
             this.Activate();
         }
-        
+
         private void button1_Click(object sender, EventArgs e)
         {
             blnCancel = true;

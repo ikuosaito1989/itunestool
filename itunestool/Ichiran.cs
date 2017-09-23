@@ -16,8 +16,8 @@ namespace ITunEsTooL
         private CommonValue COMVAL = new CommonValue();
         private Boolean DelFlg = false;
         private string strColor = "";       //呼び出し元から受け取った色
-        //private string[] strALLName;
-        
+                                            //private string[] strALLName;
+
         //共通変数
         public CommonValue CLSCOMVAL
         {
@@ -46,10 +46,10 @@ namespace ITunEsTooL
         {
             this.Text = COMVAL.DIALOG_TITLE;
             string[] strName = new string[1];
-            
+
 
             lblSetumei.Text = "コピーする曲名の一覧を表示します。" + "\n" + "削除するには、選択後、削除ボタンを押して下さい。";
-  
+
             lstIchiran.Items.AddRange(COMVAL.strName);
             string strChkAlbum = string.Empty;
 
@@ -107,7 +107,7 @@ namespace ITunEsTooL
                 txtSerch.BackColor = Color.WhiteSmoke;
             }
         }
-         /// <summary>
+        /// <summary>
         /// 背景色変更
         /// </summary>
         /// <param name="ColorCode"></param>
@@ -136,14 +136,14 @@ namespace ITunEsTooL
                 this.Close();
                 return;
             }
-            
+
             foreach (string item in lstIchiran.Items)
             {
                 Array.Resize(ref strpath1, i + 1);
                 index = Array.IndexOf(COMVAL.strName, item);
                 strpath1[i] = COMVAL.strLocation[index];
                 i++;
-                    
+
             }
 
             COMVAL.strPaths = strpath1;
@@ -179,7 +179,7 @@ namespace ITunEsTooL
                 lstIchiran.Items.RemoveAt(lstIchiran.SelectedIndices[0]);
 
             }
-            
+
             this.Text = "曲名一覧";
             lstIchiran.EndUpdate();
             DelFlg = true;
@@ -212,7 +212,7 @@ namespace ITunEsTooL
         {
             string[] strUpName = new string[1];
             const int SCROLLVAL = 5;
-           
+
             if (txtSerch.Text == "")
                 return;
             lstIchiran.BeginUpdate();
@@ -222,14 +222,15 @@ namespace ITunEsTooL
                 if (item.StartsWith(txtSerch.Text) || item.StartsWith(txtSerch.Text.ToUpper()))
                 {
 
-                    if (i > Ichi){
+                    if (i > Ichi)
+                    {
 
                         if (lstIchiran.Items.Count > (i + SCROLLVAL))
                         {
                             lstIchiran.SetSelected(i + SCROLLVAL, true);
                             lstIchiran.SetSelected(i + SCROLLVAL, false);
                         }
-                        if(!chkSentaku.Checked)
+                        if (!chkSentaku.Checked)
                             lstIchiran.ClearSelected();
                         lstIchiran.SetSelected(i, true);
                         Ichi = i;
@@ -244,7 +245,7 @@ namespace ITunEsTooL
                 System.Media.SystemSounds.Beep.Play();
                 Ichi = -1;
             }
-         
+
             lstIchiran.EndUpdate();
             strUpName = null;
         }

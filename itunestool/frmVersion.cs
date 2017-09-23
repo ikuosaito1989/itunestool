@@ -32,7 +32,7 @@ namespace ITunEsTooL
                 cp.ClassStyle |= CS_DROPSHADOW;
                 return cp;
             }
-        } 
+        }
         /// <summary>
         /// AnimateWindow関数にて利用されるフラグを表す列挙型です。
         /// </summary>

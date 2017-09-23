@@ -14,7 +14,7 @@ namespace ITunEsTooL
     {
         private Boolean blnRet = true;
         private string strColor = "";       //呼び出し元から受け取った色
-        
+
         public string CColor
         {
             set
@@ -85,11 +85,11 @@ namespace ITunEsTooL
             //クラシックテーマ対策
             if (System.Windows.Forms.VisualStyles.VisualStyleInformation.DisplayName == "")
             {
-                this.BackColor = SystemColors.Control;               
+                this.BackColor = SystemColors.Control;
             }
             else
             {
-                this.BackColor = Color.White;                
+                this.BackColor = Color.White;
             }
         }
         /// <summary>
@@ -99,7 +99,7 @@ namespace ITunEsTooL
         private void BackColorCange(Color ColorCode)
         {
             Yes.BackColor = ColorCode;
-            No.BackColor = ColorCode;                   
+            No.BackColor = ColorCode;
         }
 
         private void Yes_Click(object sender, EventArgs e)
