@@ -67,5 +67,15 @@ namespace ITunEsTooL
             if (File.Exists(_Path))
                 System.Diagnostics.Process.Start(_Path);
         }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://picpic.html.xdomain.jp/");
+        }
     }
 }

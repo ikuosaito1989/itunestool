@@ -42,6 +42,8 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.btnNotSend = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,7 +81,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(135, 117);
+            this.label4.Location = new System.Drawing.Point(135, 101);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(17, 12);
             this.label4.TabIndex = 4;
@@ -89,7 +91,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("MS UI Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label5.Location = new System.Drawing.Point(155, 117);
+            this.label5.Location = new System.Drawing.Point(155, 101);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(63, 13);
             this.label5.TabIndex = 5;
@@ -99,7 +101,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label6.Location = new System.Drawing.Point(224, 117);
+            this.label6.Location = new System.Drawing.Point(224, 101);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(111, 12);
             this.label6.TabIndex = 6;
@@ -109,7 +111,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label7.Location = new System.Drawing.Point(135, 139);
+            this.label7.Location = new System.Drawing.Point(135, 123);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(203, 12);
             this.label7.TabIndex = 7;
@@ -119,7 +121,8 @@
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.linkLabel1.Location = new System.Drawing.Point(337, 136);
+            this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.linkLabel1.Location = new System.Drawing.Point(337, 120);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(38, 17);
             this.linkLabel1.TabIndex = 8;
@@ -131,7 +134,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label8.Location = new System.Drawing.Point(380, 139);
+            this.label8.Location = new System.Drawing.Point(380, 123);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(100, 12);
             this.label8.TabIndex = 9;
@@ -144,7 +147,7 @@
             this.btnSyosai.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSyosai.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnSyosai.ForeColor = System.Drawing.Color.White;
-            this.btnSyosai.Location = new System.Drawing.Point(13, 182);
+            this.btnSyosai.Location = new System.Drawing.Point(13, 240);
             this.btnSyosai.Name = "btnSyosai";
             this.btnSyosai.Size = new System.Drawing.Size(110, 27);
             this.btnSyosai.TabIndex = 12;
@@ -159,7 +162,7 @@
             this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSend.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnSend.ForeColor = System.Drawing.Color.White;
-            this.btnSend.Location = new System.Drawing.Point(370, 182);
+            this.btnSend.Location = new System.Drawing.Point(370, 240);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(110, 27);
             this.btnSend.TabIndex = 13;
@@ -174,7 +177,7 @@
             this.btnNotSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNotSend.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnNotSend.ForeColor = System.Drawing.Color.White;
-            this.btnNotSend.Location = new System.Drawing.Point(254, 182);
+            this.btnNotSend.Location = new System.Drawing.Point(254, 240);
             this.btnNotSend.Name = "btnNotSend";
             this.btnNotSend.Size = new System.Drawing.Size(110, 27);
             this.btnNotSend.TabIndex = 14;
@@ -192,13 +195,39 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.linkLabel2.Location = new System.Drawing.Point(42, 199);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(401, 19);
+            this.linkLabel2.TabIndex = 15;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "picpic - アルバムを検索してアルバムアートワークを見つけよう！";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label9.Location = new System.Drawing.Point(32, 178);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(423, 12);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "ITunEsTooLで画像が設定できない場合は、picpicをで画像を検索してください。";
+            this.label9.Click += new System.EventHandler(this.label9_Click);
+            // 
             // CrashReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(496, 222);
+            this.ClientSize = new System.Drawing.Size(496, 274);
             this.ControlBox = false;
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.btnNotSend);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.btnSyosai);
@@ -217,7 +246,7 @@
             this.Name = "CrashReport";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ITunEsTooLクラッシュレポート";
+            this.Text = "Z";
             this.Load += new System.EventHandler(this.CrashReport_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -240,5 +269,7 @@
         private System.Windows.Forms.Button btnSyosai;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button btnNotSend;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.Label label9;
     }
 }

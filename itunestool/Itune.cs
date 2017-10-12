@@ -230,7 +230,7 @@ namespace ITunEsTooL
                 strErrMsg = itunesObject();
                 if (strErrMsg != "")
                 {
-                    pErrMessage += "System Exception 0001 : " + strErrMsg + "\n";
+                    pErrMessage += "boot Exception 0001 : " + strErrMsg + "\n";
                     Msgbox("iTunesが起動出来ませんでした。" + "\n" + "既に起動されている場合は、iTunesを閉じてからITunEsTooLを起動して下さい。", HeadMsg.ATTENTION, 5);
                     this.Close();
                     return;
@@ -1003,7 +1003,6 @@ namespace ITunEsTooL
             iTunesApp app;
             int cnt = 0;
             string strMikoushin = string.Empty;
-
             COMVAL.NEWVAL();
 
             itunes = new iTunesAppClass();
@@ -1022,6 +1021,7 @@ namespace ITunEsTooL
 
             try
             {
+                
                 lblTitle.Text = HeaderName.TITLE;
                 if (!pDoukiFlg)
                 {
@@ -1063,6 +1063,9 @@ namespace ITunEsTooL
                         {
                             continue;
                         }
+
+                        if (string.IsNullOrEmpty(file.Location))
+                            continue;
                         COMVAL.CommonRerize(cnt);
                         COMVAL.strName[cnt] = file.Name;
                         COMVAL.strAlbum[cnt] = file.Album;
@@ -1073,7 +1076,7 @@ namespace ITunEsTooL
                         COMVAL.iPersistentIDHigh[cnt] = itunes.get_ITObjectPersistentIDHigh(file);
                         COMVAL.iPersistentIDRow[cnt] = itunes.get_ITObjectPersistentIDLow(file);
                         COMVAL.blnCompilation[cnt] = file.Compilation;
-                        nullConv(COMVAL.strName[cnt], COMVAL.strAlbum[cnt], COMVAL.strArtist[cnt], COMVAL.strLocation[cnt], COMVAL.strAlbumArtist[cnt], cnt);
+                        nullConv(COMVAL.strName[cnt], COMVAL.strAlbum[cnt], COMVAL.strArtist[cnt], COMVAL.strLocation[cnt], COMVAL.strAlbumArtist[cnt], cnt, COMVAL.iPersistentIDRow[cnt], COMVAL.iPersistentIDHigh[cnt]);
                         cnt++;
                         splash.SendData(cnt);
                         if (splash.Cancel)
@@ -1144,13 +1147,15 @@ namespace ITunEsTooL
         /// <param name="strArtist"></param>
         /// <param name="strLocatuin"></param>
         /// <param name="strAlbumArtist"></param>
-        private void nullConv(string strName, string strAlbum, string strArtist, string strLocation, string strAlbumArtist, int icnt)
+        private void nullConv(string strName, string strAlbum, string strArtist, string strLocation, string strAlbumArtist, int icnt, int? row, int? high)
         {
             COMVAL.strName[icnt] = strName == null ? "" : strName;
             COMVAL.strAlbum[icnt] = strAlbum == null ? "" : strAlbum;
             COMVAL.strArtist[icnt] = strArtist == null ? "" : strArtist;
             COMVAL.strLocation[icnt] = strLocation == null ? "" : strLocation;
             COMVAL.strAlbumArtist[icnt] = strAlbumArtist == null ? "" : strAlbumArtist;
+            COMVAL.iPersistentIDHigh[icnt] = high.HasValue ? high.Value : 0;
+            COMVAL.iPersistentIDRow[icnt] = row.HasValue ? row.Value : 0;
         }
         /// <summary>
         /// 設定ファイル保存
@@ -3016,10 +3021,7 @@ namespace ITunEsTooL
                 {
 
                     AW = AWC[1];
-                    //AW.
-                    //imgTmp = (Image)AW.Format; ;
-
-                    AW.SaveArtworkToFile(CONF.ppath + @"\tmp.jpg");
+                    if (!SaveArtworkToFile(AW, CONF.ppath + @"\tmp.jpg")) return;
                     using (fs = new FileStream(CONF.ppath + @"\tmp.jpg", FileMode.Open, FileAccess.Read))
                     using (Image imgSrc = Image.FromStream(fs))
                     {
@@ -3545,7 +3547,7 @@ namespace ITunEsTooL
                     strAlbum = TTR.Album;
                     strPath = strDirName + @"\" + FileOpe.ValidFileName(strAlbum);
                     strPath = RepeatedFile(strPath);
-                    Art.SaveArtworkToFile(CONF.ppath + @"\tmp.jpg");
+                    if (!SaveArtworkToFile(Art, CONF.ppath + @"\tmp.jpg")) return;
                     using (fs = new FileStream(CONF.ppath + @"\tmp.jpg", FileMode.Open, FileAccess.Read))
                     {
                         using (imgSrc = Bitmap.FromStream(fs))
@@ -3947,80 +3949,88 @@ namespace ITunEsTooL
 
                 foreach (var result in iTunesSearchApiModel.results)
                 {
-                    strArtworkName = SetArtworkName(strName, strAlbum, strArtist);
-                    strPath = RepeatedFile(txtArtWork.Text + @"\" + FileOpe.ValidFileName(strArtworkName));
-
-                    idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "600x600bb"), ref imgChkData);
-                    if (idownload >= 2) { continue; }
-
-                    if (PicCheckFlag)
+                    try
                     {
-                        splash.SendVisible(false);
-                        frmPicChk.Artist = strArtist;
-                        frmPicChk.Album = strAlbum;
-                        frmPicChk.MusicName = strName;
-                        frmPicChk.Url = strPath;
-                        frmPicChk.SetEvent = 2;
-                        frmPicChk.SetColor = pictureBox1.BackColor;
-                        frmPicChk.Img = imgChkData;
-                        DialogSaizenmen();
-                        frmPicChk.ShowDialog();
-                        if (!frmPicChk.Ret)
+                        strArtworkName = SetArtworkName(strName, strAlbum, strArtist);
+                        strPath = RepeatedFile(txtArtWork.Text + @"\" + FileOpe.ValidFileName(strArtworkName));
+
+                        idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "600x600bb"), ref imgChkData);
+                        if (idownload >= 2) { continue; }
+
+                        if (PicCheckFlag)
                         {
-                            splash.SendVisible(true);
+                            splash.SendVisible(false);
+                            frmPicChk.Artist = strArtist;
+                            frmPicChk.Album = strAlbum;
+                            frmPicChk.MusicName = strName;
+                            frmPicChk.Url = strPath;
+                            frmPicChk.SetEvent = 2;
+                            frmPicChk.SetColor = pictureBox1.BackColor;
+                            frmPicChk.Img = imgChkData;
+                            DialogSaizenmen();
+                            frmPicChk.ShowDialog();
+                            if (!frmPicChk.Ret)
+                            {
+                                splash.SendVisible(true);
+                                continue;
+                            }
+                        }
+
+                        if (!SaveImg(imgChkData, strPath))
+                        {
+                            Msgbox("画像が設定出来ませんでした。再検索を行います。", HeadMsg.ATTENTION, 5);
                             continue;
                         }
-                    }
 
-                    if (!SaveImg(imgChkData, strPath))
-                    {
-                        Msgbox("画像が設定出来ませんでした。再検索を行います。", HeadMsg.ATTENTION, 5);
-                        continue;
-                    }
+                        splash.SendMessage("画像を自動設定しています...");
+                        splash.SendVisible(true);
 
-                    splash.SendMessage("画像を自動設定しています...");
-                    splash.SendVisible(true);
-
-                    for (icnt = 0; icnt < COMVAL.strName.Length; icnt++)
-                    {
-                        icnt = Array.IndexOf(COMVAL.strAlbum, strAlbum, icnt);
-                        if (icnt == -1)
-                            break;
-                        if (IBeans.MachiAlbum(COMVAL, strAlbum, strArtist, strAlbumArtist, blnCompilation, ref icnt))
+                        for (icnt = 0; icnt < COMVAL.strName.Length; icnt++)
                         {
-                            if (SetArtworkMusic(ref track, strPath, icnt))
+                            icnt = Array.IndexOf(COMVAL.strAlbum, strAlbum, icnt);
+                            if (icnt == -1)
+                                break;
+                            if (IBeans.MachiAlbum(COMVAL, strAlbum, strArtist, strAlbumArtist, blnCompilation, ref icnt))
                             {
-                                iArtCnt++;
-                                splash.SendData(iArtCnt);
-                                if (splash.Cancel)
+                                if (SetArtworkMusic(ref track, strPath, icnt))
                                 {
-                                    Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
-                                    blnCancel = true;
-                                    splash.SendCacncel = false;
-                                    splash.SendCan(false);
-                                    break;
+                                    iArtCnt++;
+                                    splash.SendData(iArtCnt);
+                                    if (splash.Cancel)
+                                    {
+                                        Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
+                                        blnCancel = true;
+                                        splash.SendCacncel = false;
+                                        splash.SendCan(false);
+                                        break;
+                                    }
                                 }
+                                COMVAL.iArtCnt[icnt] = track.Artwork.Count;
+                                SetArtWork(track);
                             }
-                            COMVAL.iArtCnt[icnt] = track.Artwork.Count;
-                            SetArtWork(track);
                         }
-                    }
 
-                    if (!blnCancel)
-                    {
-                        if (splash.Cancel)
+                        if (!blnCancel)
                         {
-                            Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
-                            splash.SendCacncel = false;
-                            splash.SendCan(false);
+                            if (splash.Cancel)
+                            {
+                                Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
+                                splash.SendCacncel = false;
+                                splash.SendCan(false);
+                                break;
+                            }
+                        }
+                        else
+                        {
                             break;
                         }
-                    }
-                    else
-                    {
                         break;
                     }
-                    break;
+                    catch (System.Exception ex)
+                    {
+                        pErrMessage += "System Exception 1153α : " + ex.Message + "\n" + ex.StackTrace + "\n";
+                        continue;
+                    }
                 }
 
                 splash.CloseSplash();
@@ -4432,80 +4442,50 @@ namespace ITunEsTooL
 
                 for (iArtCnt = 0; iArtCnt < COMVAL.iArtCnt.Length; iArtCnt++)
                 {
-                    if (COMVAL.iArtCnt[iArtCnt] == 0 && COMVAL.strAlbum[iArtCnt] != "")
+                    try
                     {
-                        strtmpAlbum = DelDisc(COMVAL.strAlbum[iArtCnt]);
-                        strtmpsch = GoogleKensaku(strtmpAlbum, COMVAL.strArtist[iArtCnt], COMVAL.strAlbumArtist[iArtCnt], COMVAL.blnCompilation[iArtCnt]);
-                        //results = GoogleSerch(strtmpsch);
-                        var iTunesSearchApiModel = GetItunesSearchApiObject(strtmpsch);
-                        if (iTunesSearchApiModel == null)
-                            continue;
-
-                        foreach (var result in iTunesSearchApiModel.results)
+                        if (COMVAL.iArtCnt[iArtCnt] == 0 && COMVAL.strAlbum[iArtCnt] != "")
                         {
-                            strArtworkName = SetArtworkName(COMVAL.strName[iArtCnt], COMVAL.strAlbum[iArtCnt], COMVAL.strArtist[iArtCnt]);
-                            strPath = RepeatedFile(txtArtWork.Text + @"\" + FileOpe.ValidFileName(strArtworkName));
+                            strtmpAlbum = DelDisc(COMVAL.strAlbum[iArtCnt]);
+                            strtmpsch = GoogleKensaku(strtmpAlbum, COMVAL.strArtist[iArtCnt], COMVAL.strAlbumArtist[iArtCnt], COMVAL.blnCompilation[iArtCnt]);
+                            //results = GoogleSerch(strtmpsch);
+                            var iTunesSearchApiModel = GetItunesSearchApiObject(strtmpsch);
+                            if (iTunesSearchApiModel == null)
+                                continue;
 
-                            idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "600x600bb"), ref imgChkData);
-                            if (idownload >= 2) { continue; }
-
-                            if (PicCheckFlag)
+                            foreach (var result in iTunesSearchApiModel.results)
                             {
-                                splash.SendVisible(false);
-                                frmPicChk.Artist = COMVAL.strArtist[iArtCnt];
-                                frmPicChk.Album = COMVAL.strAlbum[iArtCnt];
-                                frmPicChk.MusicName = COMVAL.strName[iArtCnt];
-                                frmPicChk.Url = strPath;
-                                frmPicChk.SetEvent = 1;
-                                frmPicChk.SetColor = pictureBox1.BackColor;
-                                frmPicChk.Img = imgChkData;
-                                DialogSaizenmen();
-                                frmPicChk.ShowDialog();
-                                if (frmPicChk.Jikai)
-                                    PicCheckFlag = false;
+                                strArtworkName = SetArtworkName(COMVAL.strName[iArtCnt], COMVAL.strAlbum[iArtCnt], COMVAL.strArtist[iArtCnt]);
+                                strPath = RepeatedFile(txtArtWork.Text + @"\" + FileOpe.ValidFileName(strArtworkName));
 
-                                if (frmPicChk.Jump)
-                                {
-                                    splash.SendVisible(true);
-                                    SetMinus(ref COMVAL, iArtCnt);
-                                    break;
-                                }
+                                idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "600x600bb"), ref imgChkData);
+                                if (idownload >= 2) { continue; }
 
-                                if (!frmPicChk.Ret)
+                                if (PicCheckFlag)
                                 {
-                                    splash.SendVisible(true);
-                                    if (splash.Cancel)
+                                    splash.SendVisible(false);
+                                    frmPicChk.Artist = COMVAL.strArtist[iArtCnt];
+                                    frmPicChk.Album = COMVAL.strAlbum[iArtCnt];
+                                    frmPicChk.MusicName = COMVAL.strName[iArtCnt];
+                                    frmPicChk.Url = strPath;
+                                    frmPicChk.SetEvent = 1;
+                                    frmPicChk.SetColor = pictureBox1.BackColor;
+                                    frmPicChk.Img = imgChkData;
+                                    DialogSaizenmen();
+                                    frmPicChk.ShowDialog();
+                                    if (frmPicChk.Jikai)
+                                        PicCheckFlag = false;
+
+                                    if (frmPicChk.Jump)
                                     {
-                                        Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
-                                        blnCancel = true;
-                                        splash.SendCacncel = false;
-                                        splash.SendCan(false);
+                                        splash.SendVisible(true);
+                                        SetMinus(ref COMVAL, iArtCnt);
                                         break;
                                     }
-                                    continue;
-                                }
-                            }
 
-                            if (!SaveImg(imgChkData, strPath))
-                            {
-                                Msgbox("画像が設定出来ませんでした。再検索を行います。", HeadMsg.ATTENTION, 5);
-                                continue;
-                            }
-
-                            splash.SendMessage("画像を自動設定しています...");
-                            splash.SendVisible(true);
-
-                            for (icnt = 0; icnt < COMVAL.strName.Length; icnt++)
-                            {
-                                icnt = Array.IndexOf(COMVAL.strAlbum, COMVAL.strAlbum[iArtCnt], icnt);
-                                if (icnt == -1)
-                                    break;
-                                if (IBeans.MachiAlbum(COMVAL, COMVAL.strAlbum[iArtCnt], COMVAL.strArtist[iArtCnt],
-                                                                    COMVAL.strAlbumArtist[iArtCnt], COMVAL.blnCompilation[iArtCnt], ref icnt))
-                                {
-                                    if (SetArtworkMusic(ref track, strPath, icnt))
+                                    if (!frmPicChk.Ret)
                                     {
-                                        splash.SendData(iArtCnt);
+                                        splash.SendVisible(true);
                                         if (splash.Cancel)
                                         {
                                             Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
@@ -4514,30 +4494,68 @@ namespace ITunEsTooL
                                             splash.SendCan(false);
                                             break;
                                         }
+                                        continue;
                                     }
-                                    COMVAL.iArtCnt[icnt] = track.Artwork.Count;
-                                    SetArtWork(track);
                                 }
-                            }
-                            break;
-                        }
-                    }
 
-                    splash.SendData(iArtCnt);
-                    if (!blnCancel)
-                    {
-                        if (splash.Cancel)
+                                if (!SaveImg(imgChkData, strPath))
+                                {
+                                    Msgbox("画像が設定出来ませんでした。再検索を行います。", HeadMsg.ATTENTION, 5);
+                                    continue;
+                                }
+
+                                splash.SendMessage("画像を自動設定しています...");
+                                splash.SendVisible(true);
+
+                                for (icnt = 0; icnt < COMVAL.strName.Length; icnt++)
+                                {
+                                    icnt = Array.IndexOf(COMVAL.strAlbum, COMVAL.strAlbum[iArtCnt], icnt);
+                                    if (icnt == -1)
+                                        break;
+                                    if (IBeans.MachiAlbum(COMVAL, COMVAL.strAlbum[iArtCnt], COMVAL.strArtist[iArtCnt],
+                                                                        COMVAL.strAlbumArtist[iArtCnt], COMVAL.blnCompilation[iArtCnt], ref icnt))
+                                    {
+                                        if (SetArtworkMusic(ref track, strPath, icnt))
+                                        {
+                                            splash.SendData(iArtCnt);
+                                            if (splash.Cancel)
+                                            {
+                                                Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
+                                                blnCancel = true;
+                                                splash.SendCacncel = false;
+                                                splash.SendCan(false);
+                                                break;
+                                            }
+                                        }
+                                        COMVAL.iArtCnt[icnt] = track.Artwork.Count;
+                                        SetArtWork(track);
+                                    }
+                                }
+                                break;
+                            }
+                        }
+
+                        splash.SendData(iArtCnt);
+                        if (!blnCancel)
                         {
-                            Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
-                            blnCancel = true;
-                            splash.SendCacncel = false;
-                            splash.SendCan(false);
+                            if (splash.Cancel)
+                            {
+                                Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
+                                blnCancel = true;
+                                splash.SendCacncel = false;
+                                splash.SendCan(false);
+                                break;
+                            }
+                        }
+                        else
+                        {
                             break;
                         }
                     }
-                    else
+                    catch (System.Exception ex)
                     {
-                        break;
+                        pErrMessage += "System Exception 1152α : " + ex.Message + "\n" + ex.StackTrace + "\n";
+                        continue;
                     }
                 }
 
@@ -5710,6 +5728,20 @@ namespace ITunEsTooL
             PicCheckFlag = true;
             button9_Click(null, null);
             PicCheckFlag = false;
+        }
+
+        private bool SaveArtworkToFile(IITArtwork artwork, string path)
+        {
+            try
+            {
+                artwork.SaveArtworkToFile(path);
+            }
+            catch (System.Exception ex)
+            {
+                pErrMessage += "AddArt Exception 3241124 : " + ex.Message + "\n" + ex.StackTrace + "\n";
+                return false;
+            }
+            return true;
         }
     }
 }
