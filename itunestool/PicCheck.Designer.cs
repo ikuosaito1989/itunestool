@@ -36,7 +36,6 @@
             this.label43 = new System.Windows.Forms.Label();
             this.chkJikai = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnNextArtwork = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -73,7 +72,7 @@
             this.No.Name = "No";
             this.No.Size = new System.Drawing.Size(226, 27);
             this.No.TabIndex = 13;
-            this.No.Text = "いいえ";
+            this.No.Text = "次の画像へ";
             this.No.UseVisualStyleBackColor = false;
             this.No.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -112,21 +111,6 @@
             this.chkJikai.Size = new System.Drawing.Size(15, 14);
             this.chkJikai.TabIndex = 29;
             this.chkJikai.UseVisualStyleBackColor = true;
-            // 
-            // btnNextArtwork
-            // 
-            this.btnNextArtwork.BackColor = System.Drawing.Color.SkyBlue;
-            this.btnNextArtwork.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.btnNextArtwork.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNextArtwork.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnNextArtwork.ForeColor = System.Drawing.Color.White;
-            this.btnNextArtwork.Location = new System.Drawing.Point(234, 396);
-            this.btnNextArtwork.Name = "btnNextArtwork";
-            this.btnNextArtwork.Size = new System.Drawing.Size(220, 27);
-            this.btnNextArtwork.TabIndex = 31;
-            this.btnNextArtwork.Text = "次のアルバムアートワークを検索する";
-            this.btnNextArtwork.UseVisualStyleBackColor = false;
-            this.btnNextArtwork.Click += new System.EventHandler(this.btnNextArtwork_Click);
             // 
             // label1
             // 
@@ -229,7 +213,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnNextArtwork);
             this.Controls.Add(this.label43);
             this.Controls.Add(this.chkJikai);
             this.Controls.Add(this.lblSetumei);
@@ -261,7 +244,6 @@
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.CheckBox chkJikai;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button btnNextArtwork;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

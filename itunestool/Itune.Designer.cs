@@ -76,17 +76,6 @@
             this.tabSetting = new System.Windows.Forms.TabPage();
             this.lblkoushin = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabSettei = new System.Windows.Forms.TabPage();
-            this.label25 = new System.Windows.Forms.Label();
-            this.btnxml = new System.Windows.Forms.Button();
-            this.btnArtWork = new System.Windows.Forms.Button();
-            this.txtxmlPath = new System.Windows.Forms.TextBox();
-            this.txtErrLog = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.btnErrLog = new System.Windows.Forms.Button();
-            this.txtArtWork = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
             this.tabSonota = new System.Windows.Forms.TabPage();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -128,7 +117,6 @@
             this.label34 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.btnDouki = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -202,7 +190,6 @@
             this.groupBox2.SuspendLayout();
             this.tabSetting.SuspendLayout();
             this.tabControl2.SuspendLayout();
-            this.tabSettei.SuspendLayout();
             this.tabSonota.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -331,13 +318,13 @@
             this.button4.BackColor = System.Drawing.Color.Salmon;
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("メイリオ", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button4.Font = new System.Drawing.Font("メイリオ", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Location = new System.Drawing.Point(323, 193);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(141, 111);
             this.button4.TabIndex = 47;
-            this.button4.Text = "このアルバムを\r\n安心設定";
+            this.button4.Text = "このアルバムの\r\nアートワークを確認して追加する";
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -354,7 +341,6 @@
             this.button11.Text = "Remove this image";
             this.button11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button11.UseVisualStyleBackColor = false;
-            this.button11.Visible = false;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // button9
@@ -362,13 +348,13 @@
             this.button9.BackColor = System.Drawing.Color.ForestGreen;
             this.button9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Font = new System.Drawing.Font("メイリオ", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button9.Font = new System.Drawing.Font("メイリオ", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.button9.ForeColor = System.Drawing.Color.White;
             this.button9.Location = new System.Drawing.Point(325, 76);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(141, 111);
             this.button9.TabIndex = 43;
-            this.button9.Text = "このアルバムを\r\n高速設定";
+            this.button9.Text = "このアルバムの\r\nアートワークを自動で追加する";
             this.button9.UseVisualStyleBackColor = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             this.button9.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabProperty_DragDrop);
@@ -526,12 +512,12 @@
             this.この画像を削除するToolStripMenuItem,
             this.画像を拡大表示するToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(321, 180);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(322, 180);
             // 
             // 再生中の曲をITunEsTooLに設定するToolStripMenuItem
             // 
             this.再生中の曲をITunEsTooLに設定するToolStripMenuItem.Name = "再生中の曲をITunEsTooLに設定するToolStripMenuItem";
-            this.再生中の曲をITunEsTooLに設定するToolStripMenuItem.Size = new System.Drawing.Size(320, 22);
+            this.再生中の曲をITunEsTooLに設定するToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.再生中の曲をITunEsTooLに設定するToolStripMenuItem.Text = "再生中の曲をITunEsTooLに設定する";
             this.再生中の曲をITunEsTooLに設定するToolStripMenuItem.Click += new System.EventHandler(this.再生中の曲をITunEsTooLに設定するToolStripMenuItem_Click);
             // 
@@ -542,7 +528,7 @@
             this.アルバム名ToolStripMenuItem,
             this.アーtぇイスト名ToolStripMenuItem});
             this.画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem.Name = "画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem";
-            this.画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem.Size = new System.Drawing.Size(320, 22);
+            this.画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem.Text = "項目が設定されていない曲をITunEsTooLに設定する";
             // 
             // アートワークToolStripMenuItem
@@ -569,14 +555,14 @@
             // tsetToolStripMenuItem
             // 
             this.tsetToolStripMenuItem.Name = "tsetToolStripMenuItem";
-            this.tsetToolStripMenuItem.Size = new System.Drawing.Size(320, 22);
+            this.tsetToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.tsetToolStripMenuItem.Text = "クリップボードの画像を貼り付け";
             this.tsetToolStripMenuItem.Click += new System.EventHandler(this.tsetToolStripMenuItem_Click);
             // 
             // 画像ファイルを設定するToolStripMenuItem
             // 
             this.画像ファイルを設定するToolStripMenuItem.Name = "画像ファイルを設定するToolStripMenuItem";
-            this.画像ファイルを設定するToolStripMenuItem.Size = new System.Drawing.Size(320, 22);
+            this.画像ファイルを設定するToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.画像ファイルを設定するToolStripMenuItem.Text = "画像ファイルを設定する";
             this.画像ファイルを設定するToolStripMenuItem.Click += new System.EventHandler(this.画像ファイルを設定するToolStripMenuItem_Click);
             // 
@@ -586,20 +572,20 @@
             this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1,
             this.編集モードを取り消すToolStripMenuItem});
             this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem.Name = "曲アルバムアーティスト名を編集モードにするToolStripMenuItem";
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem.Size = new System.Drawing.Size(320, 22);
+            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem.Text = "編集モード";
             // 
             // 曲アルバムアーティスト名を編集モードにするToolStripMenuItem1
             // 
             this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Name = "曲アルバムアーティスト名を編集モードにするToolStripMenuItem1";
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Size = new System.Drawing.Size(287, 22);
+            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Size = new System.Drawing.Size(288, 22);
             this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Text = "曲、アルバム、アーティスト名を編集モードにする";
             this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Click += new System.EventHandler(this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1_Click);
             // 
             // 編集モードを取り消すToolStripMenuItem
             // 
             this.編集モードを取り消すToolStripMenuItem.Name = "編集モードを取り消すToolStripMenuItem";
-            this.編集モードを取り消すToolStripMenuItem.Size = new System.Drawing.Size(287, 22);
+            this.編集モードを取り消すToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.編集モードを取り消すToolStripMenuItem.Text = "編集モードを取り消す";
             this.編集モードを取り消すToolStripMenuItem.Visible = false;
             this.編集モードを取り消すToolStripMenuItem.Click += new System.EventHandler(this.編集モードを取り消すToolStripMenuItem_Click);
@@ -607,21 +593,21 @@
             // この画像のバックアップをとるToolStripMenuItem
             // 
             this.この画像のバックアップをとるToolStripMenuItem.Name = "この画像のバックアップをとるToolStripMenuItem";
-            this.この画像のバックアップをとるToolStripMenuItem.Size = new System.Drawing.Size(320, 22);
+            this.この画像のバックアップをとるToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.この画像のバックアップをとるToolStripMenuItem.Text = "この画像のバックアップをとる";
             this.この画像のバックアップをとるToolStripMenuItem.Click += new System.EventHandler(this.この画像のバックアップをとるToolStripMenuItem_Click);
             // 
             // この画像を削除するToolStripMenuItem
             // 
             this.この画像を削除するToolStripMenuItem.Name = "この画像を削除するToolStripMenuItem";
-            this.この画像を削除するToolStripMenuItem.Size = new System.Drawing.Size(320, 22);
+            this.この画像を削除するToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.この画像を削除するToolStripMenuItem.Text = "この画像を削除する";
             this.この画像を削除するToolStripMenuItem.Click += new System.EventHandler(this.この画像を削除するToolStripMenuItem_Click);
             // 
             // 画像を拡大表示するToolStripMenuItem
             // 
             this.画像を拡大表示するToolStripMenuItem.Name = "画像を拡大表示するToolStripMenuItem";
-            this.画像を拡大表示するToolStripMenuItem.Size = new System.Drawing.Size(320, 22);
+            this.画像を拡大表示するToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.画像を拡大表示するToolStripMenuItem.Text = "画像を拡大表示する";
             this.画像を拡大表示するToolStripMenuItem.Click += new System.EventHandler(this.画像を拡大表示するToolStripMenuItem_Click);
             // 
@@ -653,13 +639,13 @@
             // 
             this.btnAutoSet.BackColor = System.Drawing.Color.ForestGreen;
             this.btnAutoSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAutoSet.Font = new System.Drawing.Font("メイリオ", 36F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnAutoSet.Font = new System.Drawing.Font("メイリオ", 21.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnAutoSet.ForeColor = System.Drawing.Color.White;
             this.btnAutoSet.Location = new System.Drawing.Point(8, 9);
             this.btnAutoSet.Name = "btnAutoSet";
             this.btnAutoSet.Size = new System.Drawing.Size(223, 230);
             this.btnAutoSet.TabIndex = 44;
-            this.btnAutoSet.Text = "高速\r\n設定\r\n";
+            this.btnAutoSet.Text = "自動で\r\nアートワークを追加する";
             this.btnAutoSet.UseVisualStyleBackColor = false;
             this.btnAutoSet.Click += new System.EventHandler(this.btnAutoSet_Click);
             this.btnAutoSet.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabProperty_DragDrop);
@@ -753,7 +739,6 @@
             this.tabSetting.BackColor = System.Drawing.Color.White;
             this.tabSetting.Controls.Add(this.lblkoushin);
             this.tabSetting.Controls.Add(this.tabControl2);
-            this.tabSetting.Controls.Add(this.label15);
             this.tabSetting.Controls.Add(this.label12);
             this.tabSetting.Controls.Add(this.btnDouki);
             this.tabSetting.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -778,7 +763,6 @@
             // 
             // tabControl2
             // 
-            this.tabControl2.Controls.Add(this.tabSettei);
             this.tabControl2.Controls.Add(this.tabSonota);
             this.tabControl2.Controls.Add(this.tabKensaku);
             this.tabControl2.Controls.Add(this.tabDownload);
@@ -792,157 +776,6 @@
             this.tabControl2.Size = new System.Drawing.Size(469, 242);
             this.tabControl2.TabIndex = 21;
             this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
-            // 
-            // tabSettei
-            // 
-            this.tabSettei.BackColor = System.Drawing.Color.Transparent;
-            this.tabSettei.Controls.Add(this.label25);
-            this.tabSettei.Controls.Add(this.btnxml);
-            this.tabSettei.Controls.Add(this.btnArtWork);
-            this.tabSettei.Controls.Add(this.txtxmlPath);
-            this.tabSettei.Controls.Add(this.txtErrLog);
-            this.tabSettei.Controls.Add(this.label14);
-            this.tabSettei.Controls.Add(this.btnErrLog);
-            this.tabSettei.Controls.Add(this.txtArtWork);
-            this.tabSettei.Controls.Add(this.label11);
-            this.tabSettei.Controls.Add(this.label26);
-            this.tabSettei.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.tabSettei.Location = new System.Drawing.Point(4, 23);
-            this.tabSettei.Name = "tabSettei";
-            this.tabSettei.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSettei.Size = new System.Drawing.Size(461, 215);
-            this.tabSettei.TabIndex = 0;
-            this.tabSettei.Text = "保存場所";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.BackColor = System.Drawing.Color.Transparent;
-            this.label25.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label25.ForeColor = System.Drawing.Color.DimGray;
-            this.label25.Location = new System.Drawing.Point(16, 180);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(354, 14);
-            this.label25.TabIndex = 22;
-            this.label25.Text = "※ テキストをダブルクリックするとファイルが保存しているファイル、フォルダを開きます。";
-            // 
-            // btnxml
-            // 
-            this.btnxml.BackColor = System.Drawing.Color.LightBlue;
-            this.btnxml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnxml.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnxml.ForeColor = System.Drawing.Color.White;
-            this.btnxml.Location = new System.Drawing.Point(398, 140);
-            this.btnxml.Name = "btnxml";
-            this.btnxml.Size = new System.Drawing.Size(56, 25);
-            this.btnxml.TabIndex = 8;
-            this.btnxml.TabStop = false;
-            this.btnxml.Text = "選択...";
-            this.btnxml.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnxml.UseVisualStyleBackColor = false;
-            this.btnxml.Click += new System.EventHandler(this.btnxml_Click);
-            // 
-            // btnArtWork
-            // 
-            this.btnArtWork.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.btnArtWork.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnArtWork.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnArtWork.ForeColor = System.Drawing.Color.White;
-            this.btnArtWork.Location = new System.Drawing.Point(398, 90);
-            this.btnArtWork.Name = "btnArtWork";
-            this.btnArtWork.Size = new System.Drawing.Size(56, 25);
-            this.btnArtWork.TabIndex = 17;
-            this.btnArtWork.TabStop = false;
-            this.btnArtWork.Text = "選択...";
-            this.btnArtWork.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnArtWork.UseVisualStyleBackColor = false;
-            this.btnArtWork.Click += new System.EventHandler(this.btnArtWork_Click);
-            // 
-            // txtxmlPath
-            // 
-            this.txtxmlPath.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtxmlPath.Font = new System.Drawing.Font("メイリオ", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtxmlPath.Location = new System.Drawing.Point(15, 144);
-            this.txtxmlPath.Name = "txtxmlPath";
-            this.txtxmlPath.ReadOnly = true;
-            this.txtxmlPath.Size = new System.Drawing.Size(378, 21);
-            this.txtxmlPath.TabIndex = 15;
-            this.txtxmlPath.DoubleClick += new System.EventHandler(this.txtxmlPath_DoubleClick);
-            // 
-            // txtErrLog
-            // 
-            this.txtErrLog.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtErrLog.Font = new System.Drawing.Font("メイリオ", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtErrLog.Location = new System.Drawing.Point(15, 41);
-            this.txtErrLog.Name = "txtErrLog";
-            this.txtErrLog.ReadOnly = true;
-            this.txtErrLog.Size = new System.Drawing.Size(377, 21);
-            this.txtErrLog.TabIndex = 4;
-            this.txtErrLog.Text = "C:\\Program Files\\ITunEsTooL\\Log";
-            this.txtErrLog.DoubleClick += new System.EventHandler(this.txtErrLog_DoubleClick);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.BackColor = System.Drawing.Color.Transparent;
-            this.label14.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(13, 125);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(110, 14);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "xmlファイルの保存場所";
-            // 
-            // btnErrLog
-            // 
-            this.btnErrLog.BackColor = System.Drawing.Color.DarkSalmon;
-            this.btnErrLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnErrLog.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnErrLog.ForeColor = System.Drawing.Color.White;
-            this.btnErrLog.Location = new System.Drawing.Point(398, 37);
-            this.btnErrLog.Name = "btnErrLog";
-            this.btnErrLog.Size = new System.Drawing.Size(56, 25);
-            this.btnErrLog.TabIndex = 5;
-            this.btnErrLog.TabStop = false;
-            this.btnErrLog.Text = "選択...";
-            this.btnErrLog.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnErrLog.UseVisualStyleBackColor = false;
-            this.btnErrLog.Click += new System.EventHandler(this.btnErrLog_Click);
-            // 
-            // txtArtWork
-            // 
-            this.txtArtWork.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtArtWork.Font = new System.Drawing.Font("メイリオ", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtArtWork.Location = new System.Drawing.Point(14, 94);
-            this.txtArtWork.Name = "txtArtWork";
-            this.txtArtWork.ReadOnly = true;
-            this.txtArtWork.Size = new System.Drawing.Size(378, 21);
-            this.txtArtWork.TabIndex = 18;
-            this.txtArtWork.DoubleClick += new System.EventHandler(this.txtArtWork_DoubleClick);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(14, 23);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(234, 14);
-            this.label11.TabIndex = 7;
-            this.label11.Text = "ログ（一時エラーファイル、削除ファイル）の保存場所";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.BackColor = System.Drawing.Color.Transparent;
-            this.label26.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label26.ForeColor = System.Drawing.Color.Black;
-            this.label26.Location = new System.Drawing.Point(12, 75);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(110, 14);
-            this.label26.TabIndex = 16;
-            this.label26.Text = "アートワークの保存場所";
             // 
             // tabSonota
             // 
@@ -1119,12 +952,12 @@
             // 
             this.label31.BackColor = System.Drawing.Color.Transparent;
             this.label31.Font = new System.Drawing.Font("Meiryo UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label31.ForeColor = System.Drawing.Color.DimGray;
+            this.label31.ForeColor = System.Drawing.Color.Black;
             this.label31.Location = new System.Drawing.Point(11, 26);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(421, 17);
             this.label31.TabIndex = 22;
-            this.label31.Text = "※　設定していた画像が削除され、ダウンロードした画像のみアートワークとして設定されます。";
+            this.label31.Text = "設定していた画像が削除され、ダウンロードした画像のみアートワークとして設定されます。";
             this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // chkArtworkDel
@@ -1136,9 +969,9 @@
             this.chkArtworkDel.ForeColor = System.Drawing.Color.Black;
             this.chkArtworkDel.Location = new System.Drawing.Point(13, 8);
             this.chkArtworkDel.Name = "chkArtworkDel";
-            this.chkArtworkDel.Size = new System.Drawing.Size(181, 21);
+            this.chkArtworkDel.Size = new System.Drawing.Size(203, 21);
             this.chkArtworkDel.TabIndex = 17;
-            this.chkArtworkDel.Text = "画像をダウンロードした際に、";
+            this.chkArtworkDel.Text = "すでに設定してある画像を削除する";
             this.chkArtworkDel.UseVisualStyleBackColor = true;
             this.chkArtworkDel.CheckedChanged += new System.EventHandler(this.chkArtworkDel_CheckedChanged);
             // 
@@ -1162,7 +995,7 @@
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(427, 39);
             this.label44.TabIndex = 26;
-            this.label44.Text = "コンピレーションアルバム（さまざまなアーティスト）のアルバムアートワーク検索する際にアーティスト名を含む事が出来ます。";
+            this.label44.Text = "チェックを外すと画像が見つかりやすくなりますが、検索の精度を落ちます。";
             this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // chkComp
@@ -1174,9 +1007,9 @@
             this.chkComp.ForeColor = System.Drawing.Color.Black;
             this.chkComp.Location = new System.Drawing.Point(9, 21);
             this.chkComp.Name = "chkComp";
-            this.chkComp.Size = new System.Drawing.Size(324, 21);
+            this.chkComp.Size = new System.Drawing.Size(236, 21);
             this.chkComp.TabIndex = 18;
-            this.chkComp.Text = "コンピレーションアルバム検索時にアーティスト名を含める";
+            this.chkComp.Text = "アルバム検索時にアーティスト名を含める";
             this.chkComp.UseVisualStyleBackColor = true;
             this.chkComp.CheckedChanged += new System.EventHandler(this.chkComp_CheckedChanged);
             // 
@@ -1500,18 +1333,6 @@
             this.button8.Text = "バージョン情報";
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // label15
-            // 
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label15.ForeColor = System.Drawing.Color.Black;
-            this.label15.Location = new System.Drawing.Point(44, 32);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(183, 16);
-            this.label15.TabIndex = 17;
-            this.label15.Text = "同期しないと何も出来ません！！";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label12
             // 
@@ -2300,13 +2121,13 @@
             // 
             this.btnRelieve.BackColor = System.Drawing.Color.Salmon;
             this.btnRelieve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRelieve.Font = new System.Drawing.Font("メイリオ", 36F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnRelieve.Font = new System.Drawing.Font("メイリオ", 21.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnRelieve.ForeColor = System.Drawing.Color.White;
             this.btnRelieve.Location = new System.Drawing.Point(245, 9);
             this.btnRelieve.Name = "btnRelieve";
             this.btnRelieve.Size = new System.Drawing.Size(223, 230);
             this.btnRelieve.TabIndex = 45;
-            this.btnRelieve.Text = "安心\r\n設定\r\n";
+            this.btnRelieve.Text = "確認して\r\nアートワークを追加する";
             this.btnRelieve.UseVisualStyleBackColor = false;
             this.btnRelieve.Click += new System.EventHandler(this.btnRelieve_Click);
             // 
@@ -2423,7 +2244,6 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmItune_FormClosed);
             this.Load += new System.EventHandler(this.frmItune_Load);
             this.Shown += new System.EventHandler(this.frmItune_Shown);
-            this.Click += new System.EventHandler(this.frmItune_Click);
             this.tabProperty.ResumeLayout(false);
             this.tabProperty.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -2433,8 +2253,6 @@
             this.tabSetting.ResumeLayout(false);
             this.tabSetting.PerformLayout();
             this.tabControl2.ResumeLayout(false);
-            this.tabSettei.ResumeLayout(false);
-            this.tabSettei.PerformLayout();
             this.tabSonota.ResumeLayout(false);
             this.tabSonota.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -2495,7 +2313,6 @@
         private System.Windows.Forms.RadioButton rdoskyBlue;
         private System.Windows.Forms.RadioButton rdoTomato;
         private System.Windows.Forms.TabPage tabSetting;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnDouki;
         private System.Windows.Forms.TabPage tabCopy;
@@ -2541,18 +2358,8 @@
         private System.Windows.Forms.Button btnGoogle;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabSettei;
         private System.Windows.Forms.TabPage tabSonota;
         private System.Windows.Forms.CheckBox chkArtworkDel;
-        private System.Windows.Forms.Button btnArtWork;
-        private System.Windows.Forms.TextBox txtArtWork;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Button btnxml;
-        private System.Windows.Forms.TextBox txtxmlPath;
-        private System.Windows.Forms.TextBox txtErrLog;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button btnErrLog;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TextBox lblName;
         private System.Windows.Forms.TextBox lblArtist;
@@ -2601,7 +2408,6 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.RadioButton rdoUwagaki;
         private System.Windows.Forms.RadioButton rdoSabun;
-        private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label17;

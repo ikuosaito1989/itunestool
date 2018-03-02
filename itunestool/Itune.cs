@@ -41,7 +41,7 @@ namespace ITunEsTooL
         private const string FALSE = "False";
         private Boolean pAutoShutdown = false;
         private Boolean pDoukiFlg = false;
-        private Boolean blnSaishin = true;
+        //private Boolean blnSaishin = true;
         private Boolean PicCheckFlag = false;
         private Point mousePoint;
         private FileVersionInfo ver = null;
@@ -217,14 +217,6 @@ namespace ITunEsTooL
 
                 Initialize(StartSplash);
 
-                if (!SysSet.IsAdministrator())
-                {
-                    Msgbox("ITunEsTooLは管理者のみが使用することが可能です。" + "\n" +
-                           "「管理者として実行(A)...」で起動して下さい。", HeadMsg.NOTICE, 7);
-                    this.Close();
-                    return;
-                }
-
                 ClassicCorrespondence();
 
                 strErrMsg = itunesObject();
@@ -267,7 +259,6 @@ namespace ITunEsTooL
         {
             SystemEvents.UserPreferenceChanged +=
                     new UserPreferenceChangedEventHandler(SystemEvents_UserPreferenceChanged);
-            //itunesD.OnDatabaseChangedEvent += new _IiTunesEvents_OnDatabaseChangedEventEventHandler(itunes_OnDatabaseChangedEvent);
         }
 
         /// <summary>
@@ -303,47 +294,6 @@ namespace ITunEsTooL
             {
                 strErrMsg = ex.Message + "\n" + ex.StackTrace + "\n";
             }
-            return strErrMsg;
-
-        }
-
-        ///// <summary>
-        ///// iTunes上のデータが変更された時
-        ///// </summary>
-        ///// <param name="deletedObjectIDs"></param>
-        ///// <param name="changedObjectIDs"></param>
-        //private void itunes_OnDatabaseChangedEvent(object deletedObjectIDs, object changedObjectIDs)
-        //{
-
-        //    try{
-        //        if (blnshorichu == false && itunesD.LibraryPlaylist.Tracks.Count != Convert.ToDecimal(CONF.pTrackCnt))
-        //            blnSaishin = false;
-        //        Thread.Sleep(1000);
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        pErrMessage += "System Exception 3046 : " + ex.Message + "\n" + ex.StackTrace + "\n";
-        //        return;
-        //    }
-
-        //}
-
-        /// <summary>
-        /// 必須ファイルチェック
-        /// </summary>
-        /// <returns></returns>
-        private string CheckExistsFiles()
-        {
-            string strErrMsg = string.Empty;
-            if (!File.Exists(CONF.ppath + @"\ItunEsTooL.exe"))
-                strErrMsg += "ItunEsTooL.exe" + "\n";
-            if (!File.Exists(CONF.ppath + @"\Interop.iTunesLib.dll"))
-                strErrMsg += "Interop.iTunesLib.dll" + "\n";
-            if (!Directory.Exists(CONF.ppath + @"\Log"))
-                strErrMsg += "Log" + "\n";
-            if (!Directory.Exists(CONF.ppath + @"\Artwork"))
-                strErrMsg += "Artwork" + "\n";
-
             return strErrMsg;
 
         }
@@ -400,10 +350,6 @@ namespace ITunEsTooL
             if (File.Exists(CONF.pxmlPath))
                 if (!Read_Music())
                     DeleteFile(CONF.pxmlPath);
-
-            txtErrLog.Text = CONF.pErrLog;
-            txtxmlPath.Text = CONF.pxmlPath;
-            txtArtWork.Text = CONF.pArtWork;
 
             if (CONF.pbkup == "1")
                 rdoUwagaki.Checked = true;
@@ -548,23 +494,8 @@ namespace ITunEsTooL
                 this.Visible = false;
                 this.ShowInTaskbar = false;
 
-                //try{int i = itunesD.SoundVolume;}
-                //catch (Exception) { return; }
-
                 if (COMVAL == null)
                     return;
-
-                if (!pAutoShutdown)
-                {
-                    int intDay = int.Parse(DateTime.Now.ToString("dd"));
-                    if (CONF.pReview == TRUE && (intDay % 2) == 0 && SysSet.IsAdministrator())
-                    {
-                        Review frmReview = new Review();
-                        frmReview.Color = pictureBox1.BackColor;
-                        frmReview.ShowDialog();
-                        CONF.pReview = frmReview.Jikai;
-                    }
-                }
 
                 WriteXML();
                 Update_Conf();
@@ -657,15 +588,12 @@ namespace ITunEsTooL
 
                 CloseElementXml(ref xtw);
                 xtw.Close();
-                //File.Copy(strXmlPath, CONF.pxmlPath, true);
-                //DeleteFile(strXmlPath);
                 return true;
             }
             catch (System.Exception ex)
             {
                 if (xtw != null)
                     xtw.Close();
-                //                try { DeleteFile(strXmlPath); }catch (Exception) { }
 
                 COMVAL.Release();
                 COMVAL = null;
@@ -1114,7 +1042,6 @@ namespace ITunEsTooL
                 splash.CloseSplash();
                 Msgbox("同期が完了しました。", HeadMsg.COMPLETE, 1);
                 btnDouki.ForeColor = Color.White;
-                CONF.pxmlPath = txtxmlPath.Text;
                 this.Update();
             }
             catch (System.Runtime.InteropServices.COMException ex)
@@ -1152,7 +1079,7 @@ namespace ITunEsTooL
             COMVAL.strName[icnt] = strName == null ? "" : strName;
             COMVAL.strAlbum[icnt] = strAlbum == null ? "" : strAlbum;
             COMVAL.strArtist[icnt] = strArtist == null ? "" : strArtist;
-            COMVAL.strLocation[icnt] = strLocation == null ? "" : strLocation;
+            COMVAL.strLocation[icnt] = strLocation ?? "";
             COMVAL.strAlbumArtist[icnt] = strAlbumArtist == null ? "" : strAlbumArtist;
             COMVAL.iPersistentIDHigh[icnt] = high.HasValue ? high.Value : 0;
             COMVAL.iPersistentIDRow[icnt] = row.HasValue ? row.Value : 0;
@@ -1735,34 +1662,33 @@ namespace ITunEsTooL
             this.Update();
         }
 
-        private void frmItune_Click(object sender, EventArgs e)
-        {
-            CheckSaishin();
-        }
-        private void CheckSaishin()
-        {
-            if (lblkoushin.Text == "")
-                return;
-            try
-            {
+        //private void frmItune_Click(object sender, EventArgs e)
+        //{
+        //    CheckSaishin();
+        //}
+        //private void CheckSaishin()
+        //{
+        //    if (lblkoushin.Text == "")
+        //        return;
+        //    try
+        //    {
 
-                if (!blnSaishin || itunesD.LibraryPlaylist.Tracks.Count != Convert.ToDecimal(CONF.pTrackCnt))
-                {
-                    Msgbox("iTunesの最新の情報が取得出来ていない可能性があります。" + "\n" + "iTunesと同期して下さい。", HeadMsg.NOTICE, 2);
-                    KeikokuDouki();
-                }
-            }
-            catch (System.Exception)
-            {
-                Msgbox("iTunesが閉じられているか、その他の問題が発生しました。" + "\n" +
-                       "ITunEsTooLを終了します。", HeadMsg.NOTICE, 2);
-                this.Close();
-            }
+        //        if (!blnSaishin || itunesD.LibraryPlaylist.Tracks.Count != Convert.ToDecimal(CONF.pTrackCnt))
+        //        {
+        //            Msgbox("iTunesの最新の情報が取得出来ていない可能性があります。" + "\n" + "iTunesと同期して下さい。", HeadMsg.NOTICE, 2);
+        //            KeikokuDouki();
+        //        }
+        //    }
+        //    catch (System.Exception)
+        //    {
+        //        Msgbox("iTunesが閉じられているか、その他の問題が発生しました。" + "\n" +
+        //               "ITunEsTooLを終了します。", HeadMsg.NOTICE, 2);
+        //        this.Close();
+        //    }
 
-        }
+        //}
         private void KeikokuDouki()
         {
-            blnSaishin = true;
             tabControl1.SelectedTab = tabControl1.TabPages["tabSetting"];
             btnDouki.ForeColor = Color.Red;
             lblkoushin.Text = "最新の情報が取得されていない可能性があります！";
@@ -1811,7 +1737,7 @@ namespace ITunEsTooL
                 pDoukiFlg = false;
             }
             ChangeCheckBoxParameter(ref chkDouki, ref CONF.pSync);
-            CheckSaishin();
+            //CheckSaishin();
 
             if (SysSet.Win7Check() || SysSet.IsUacEnabled())
             {
@@ -1823,12 +1749,6 @@ namespace ITunEsTooL
             else
             {
                 画像ファイルを設定するToolStripMenuItem.Visible = false;
-            }
-            if (!Directory.Exists(txtArtWork.Text))
-            {
-                Msgbox("アートワークの保存先がが見つかりません。設定タブにて設定し直してください。", HeadMsg.ATTENTION, 2);
-                tabControl1.SelectedTab = tabControl1.TabPages["tabSetting"];
-                label26.ForeColor = Color.Red;
             }
         }
 
@@ -2692,12 +2612,8 @@ namespace ITunEsTooL
                 groupBox2.BackColor = SystemColors.Control;
                 txtAfter.BackColor = Color.White;
                 txtBefor.BackColor = Color.White;
-                txtErrLog.BackColor = Color.White;
                 txtLogPath.BackColor = Color.White;
                 txtSerchChr.BackColor = Color.White;
-                txtxmlPath.BackColor = Color.White;
-                txtArtWork.BackColor = Color.White;
-                tabSettei.BackColor = SystemColors.Control;
                 tabSonota.BackColor = SystemColors.Control;
                 tabHyouji.BackColor = SystemColors.Control;
                 label37.BackColor = SystemColors.Control;
@@ -2715,12 +2631,8 @@ namespace ITunEsTooL
                 groupBox2.BackColor = Color.White;
                 txtAfter.BackColor = Color.WhiteSmoke;
                 txtBefor.BackColor = Color.WhiteSmoke;
-                txtErrLog.BackColor = Color.WhiteSmoke;
                 txtLogPath.BackColor = Color.WhiteSmoke;
                 txtSerchChr.BackColor = Color.WhiteSmoke;
-                txtxmlPath.BackColor = Color.WhiteSmoke;
-                txtArtWork.BackColor = Color.WhiteSmoke;
-                tabSettei.BackColor = Color.White;
                 tabSonota.BackColor = Color.White;
                 tabHyouji.BackColor = Color.White;
                 label37.BackColor = Color.White;
@@ -2757,14 +2669,14 @@ namespace ITunEsTooL
                     Msgbox("ITunesDataLibrary.xmlのデータが読み込めません。", HeadMsg.ATTENTION, 2);
                     return;
                 }
-                txtxmlPath.Text = strPath;
+
+                CONF.pxmlPath = strPath;
                 Read_Music(strPath);
 
                 DateTime dtUpdate = System.IO.File.GetLastWriteTime(strPath);
 
                 lblkoushin.Text = dtUpdate.ToString() + " 更新";
                 btnDouki.ForeColor = Color.White;
-                CONF.pxmlPath = txtxmlPath.Text;
             }
 
             clsDialog = null;
@@ -2859,19 +2771,7 @@ namespace ITunEsTooL
                 txtLogPath.Text = strPath;
         }
 
-        /// <summary>
-        /// エラーログダイアログ
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnErrLog_Click(object sender, EventArgs e)
-        {
-            string strPath;
 
-            strPath = OpenDialog("エラーログを保存するフォルダを指定して下さい。", CONF.pErrLog);
-            if (strPath != "")
-                txtErrLog.Text = CONF.pErrLog = strPath;
-        }
 
         /// <summary>
         /// ダイアログオープン
@@ -2959,14 +2859,14 @@ namespace ITunEsTooL
 
                     if (index == -1)
                     {
-                        Msgbox("ITunEsTooLにドラッグした曲の情報がありません。" + "\n" + "再度、同期を行って下さい。", HeadMsg.ATTENTION, 5);
+                        Msgbox("ITunEsTooLにドラッグした曲の情報がありません。" + "\n" + "再度、同期を行って下さい。同期を行ってもエラーが発生する場合は、iTunesの音楽の場所が特定出来ないこと可能性がありますので確認してください。", HeadMsg.ATTENTION, 5);
                         return;
                     }
 
                     TR = trackCol.get_ItemByPersistentID(COMVAL.iPersistentIDHigh[index], COMVAL.iPersistentIDRow[index]);
                     if (TR == null)
                     {
-                        Msgbox("ドラッグした曲の情報がありません。" + "\n" + "再度、同期を行って下さい。", HeadMsg.ATTENTION, 5);
+                        Msgbox("ドラッグした曲の情報がありません。" + "\n" + "再度、同期を行って下さい。同期を行ってもエラーが発生する場合は、iTunesの音楽の場所が特定出来ないこと可能性がありますので確認してください。", HeadMsg.ATTENTION, 5);
                         return;
                     }
                     SetArtWork(TR);
@@ -3300,21 +3200,6 @@ namespace ITunEsTooL
             {
                 pErrMessage += "System Exception 1033 : " + ex.Message + "\n" + ex.StackTrace + "\n";
             }
-        }
-
-        /// <summary>
-        /// ダイヤログ（アートワーク）
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnArtWork_Click(object sender, EventArgs e)
-        {
-            string strPath;
-
-            strPath = OpenDialog("アートワークを保存するフォルダを指定して下さい。", CONF.pxmlPath);
-            if (strPath != "")
-                CONF.pArtWork = txtArtWork.Text = strPath;
-            label26.ForeColor = Color.Black;
         }
 
         /// <summary>
@@ -3952,7 +3837,7 @@ namespace ITunEsTooL
                     try
                     {
                         strArtworkName = SetArtworkName(strName, strAlbum, strArtist);
-                        strPath = RepeatedFile(txtArtWork.Text + @"\" + FileOpe.ValidFileName(strArtworkName));
+                        strPath = RepeatedFile(CONF.pArtWork + @"\" + FileOpe.ValidFileName(strArtworkName));
 
                         idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "600x600bb"), ref imgChkData);
                         if (idownload >= 2) { continue; }
@@ -4034,11 +3919,11 @@ namespace ITunEsTooL
                 }
 
                 splash.CloseSplash();
+                SetArtWork(TR);
                 if (iArtCnt > 0)
                     Msgbox("自動設定が完了しました。", HeadMsg.COMPLETE, 1);
                 else
                     Msgbox("アートワークの自動取得が出来ませんでした" + "\n" + "指定のサイズの画像が見つからない可能性があります。", HeadMsg.NOTICE, 2);
-                SetArtWork(TR);
 
             }
             catch (System.Exception ex)
@@ -4177,23 +4062,9 @@ namespace ITunEsTooL
         /// <returns></returns>
         private string DelDisc(string strAlbum)
         {
-            string strDiscName = "Disc";
             string strtmpAlbum = strAlbum;
-
-            if (strAlbum.IndexOf(strDiscName) >= 0 || strAlbum.IndexOf(strDiscName.ToLower()) >= 0 || strAlbum.IndexOf(strDiscName.ToUpper()) >= 0)
-            {
-                for (int i = 1; i <= 10; i++)
-                {
-                    strtmpAlbum = strAlbum.Replace("[" + strDiscName + " " + i.ToString() + "]", "");
-                    strtmpAlbum = strtmpAlbum.Replace("[" + strDiscName.ToLower() + " " + i.ToString() + "]", "");
-                    strtmpAlbum = strtmpAlbum.Replace("[" + strDiscName.ToUpper() + " " + i.ToString() + "]", "");
-                    strtmpAlbum = strtmpAlbum.Replace("[" + strDiscName + i.ToString() + "]", "");
-                    strtmpAlbum = strtmpAlbum.Replace("[" + strDiscName.ToLower() + i.ToString() + "]", "");
-                    strtmpAlbum = strtmpAlbum.Replace("[" + strDiscName.ToUpper() + i.ToString() + "]", "");
-                    if (strAlbum != strtmpAlbum)
-                        break;
-                }
-            }
+            var reg = new Regex("\\[.*\\]");
+            strtmpAlbum = reg.Replace(strAlbum, "");
 
             return strtmpAlbum;
         }
@@ -4456,7 +4327,7 @@ namespace ITunEsTooL
                             foreach (var result in iTunesSearchApiModel.results)
                             {
                                 strArtworkName = SetArtworkName(COMVAL.strName[iArtCnt], COMVAL.strAlbum[iArtCnt], COMVAL.strArtist[iArtCnt]);
-                                strPath = RepeatedFile(txtArtWork.Text + @"\" + FileOpe.ValidFileName(strArtworkName));
+                                strPath = RepeatedFile(CONF.pArtWork + @"\" + FileOpe.ValidFileName(strArtworkName));
 
                                 idownload = DownloadData(result.artworkUrl30.Replace("30x30bb", "600x600bb"), ref imgChkData);
                                 if (idownload >= 2) { continue; }
@@ -4562,6 +4433,7 @@ namespace ITunEsTooL
                 SetZero(ref COMVAL);
 
                 splash.CloseSplash();
+                SetArtWork(TR);
                 if (chkAutoShutdown.Checked && !blnCancel)
                 {
                     pAutoShutdown = true;
@@ -4571,8 +4443,6 @@ namespace ITunEsTooL
                 {
                     Msgbox("自動設定が完了しました。" + "\n" + "※自動設定されない画像がある場合は、個別に自動設定を行って下さい。", HeadMsg.COMPLETE, 1);
                 }
-                SetArtWork(TR);
-
             }
             catch (System.Exception ex)
             {
@@ -4878,7 +4748,7 @@ namespace ITunEsTooL
                     if (rdoJpg.Checked) fmt = ImageFormat.Jpeg;
                     if (rdoPng.Checked) fmt = ImageFormat.Png;
                     strArtworkName = SetArtworkName(strName, strAlbum, strArtist);
-                    strPath = RepeatedFile(txtArtWork.Text + @"\" + FileOpe.ValidFileName(strArtworkName));
+                    strPath = RepeatedFile(CONF.pSaveArtwork + @"\" + FileOpe.ValidFileName(strArtworkName));
                     img.Save(strPath, fmt);
 
                 }
@@ -4957,8 +4827,8 @@ namespace ITunEsTooL
                 }
 
                 splash.CloseSplash();
-                Msgbox("画像設定が完了しました。", HeadMsg.COMPLETE, 1);
                 SetArtWork(TR);
+                Msgbox("画像設定が完了しました。", HeadMsg.COMPLETE, 1);
 
             }
             catch (System.Exception ex)
@@ -5064,8 +4934,8 @@ namespace ITunEsTooL
 
                 }
                 splash.CloseSplash();
-                Msgbox("画像の削除が完了しました。", HeadMsg.COMPLETE, 1);
                 SetArtWork(TR);
+                Msgbox("画像の削除が完了しました。", HeadMsg.COMPLETE, 1);
             }
             catch (System.Exception ex)
             {
@@ -5200,24 +5070,6 @@ namespace ITunEsTooL
                 TR = itunesD.CurrentTrack;
                 SetArtWork(TR);
             }
-        }
-
-        private void txtErrLog_DoubleClick(object sender, EventArgs e)
-        {
-            if (Directory.Exists(txtErrLog.Text))
-                System.Diagnostics.Process.Start(txtErrLog.Text);
-        }
-
-        private void txtArtWork_DoubleClick(object sender, EventArgs e)
-        {
-            if (Directory.Exists(txtArtWork.Text))
-                System.Diagnostics.Process.Start(txtArtWork.Text);
-        }
-
-        private void txtxmlPath_DoubleClick(object sender, EventArgs e)
-        {
-            if (File.Exists(txtxmlPath.Text))
-                System.Diagnostics.Process.Start(txtxmlPath.Text);
         }
 
         private void 画像ファイルを設定するToolStripMenuItem_Click(object sender, EventArgs e)
@@ -5360,8 +5212,9 @@ namespace ITunEsTooL
                     }
                 }
                 splash.CloseSplash();
-                Msgbox("画像設定が完了しました。", HeadMsg.COMPLETE, 1);
                 SetArtWork(TR);
+                Msgbox("画像設定が完了しました。", HeadMsg.COMPLETE, 1);
+                
             }
             catch (System.Exception ex)
             {

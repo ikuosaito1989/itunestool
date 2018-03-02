@@ -131,7 +131,6 @@ namespace ITunEsTooL
             lblName.Text = _strName;
             Yes.BackColor = _iSetColor;
             No.BackColor = _iSetColor;
-            btnNextArtwork.BackColor = _iSetColor;
 
             switch (_iSetEventNum)
             {
@@ -140,15 +139,12 @@ namespace ITunEsTooL
                     Yes.Size = new Size(116, 27);
                     No.Location = new Point(134, 461);
                     No.Size = new Size(116, 27);
-                    btnNextArtwork.Location = new Point(256, 461);
-                    btnNextArtwork.Size = new Size(220, 27);
                     break;
                 case 2:
                     Yes.Location = new Point(12, 461);
                     Yes.Size = new Size(226, 27);
                     No.Location = new Point(250, 461);
                     No.Size = new Size(226, 27);
-                    btnNextArtwork.Visible = false;
                     chkJikai.Visible = false;
                     label43.Visible = false;
                     break;

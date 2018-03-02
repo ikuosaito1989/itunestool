@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Net.Mail;
-
+using System.Configuration;
 namespace ITunEsTooL
 {
     public partial class Review : Form
@@ -79,7 +79,7 @@ namespace ITunEsTooL
 
         private void btnSyosai_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://itunestool.jp/info/privacypolicy%20.html");
+            System.Diagnostics.Process.Start(ConfigurationManager.AppSettings["Domain"] + "info/privacypolicy%20.html");
         }
     }
 }

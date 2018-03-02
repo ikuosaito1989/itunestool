@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Net.NetworkInformation;
-
+using System.Configuration;
 namespace ITunEsTooL
 {
     public partial class frmVersion : Form
@@ -130,7 +130,7 @@ namespace ITunEsTooL
                             "ダウンロードサイトに遷移しますか？",
                                "お知らせ", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
                         if (YorN == DialogResult.Yes)
-                            System.Diagnostics.Process.Start("http://itunestool.jp/");
+                            System.Diagnostics.Process.Start(ConfigurationManager.AppSettings["Domain"]);
                     }
                 }
             }
