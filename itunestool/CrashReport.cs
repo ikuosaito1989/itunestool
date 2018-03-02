@@ -62,12 +62,6 @@ namespace ITunEsTooL
             System.Diagnostics.Process.Start(ConfigurationManager.AppSettings["Domain"] + "/info/privacypolicy%20.html");
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (File.Exists(_Path))
-                System.Diagnostics.Process.Start(_Path);
-        }
-
         private void label9_Click(object sender, EventArgs e)
         {
 

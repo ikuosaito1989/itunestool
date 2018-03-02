@@ -217,6 +217,13 @@ namespace ITunEsTooL
 
                 Initialize(StartSplash);
 
+                if (!SysSet.IsAdministrator())
+                {
+                    Msgbox("ITunEsTooLは管理者のみが使用することが可能です。" + "\n" +
+                           "右クリックで「管理者として実行(A)...」で起動して下さい。", HeadMsg.NOTICE, 7);
+                    this.Close();
+                    return;
+                }
                 ClassicCorrespondence();
 
                 strErrMsg = itunesObject();
@@ -485,10 +492,6 @@ namespace ITunEsTooL
         /// <param name="e"></param>
         private void frmItune_FormClosed(object sender, FormClosedEventArgs e)
         {
-            StreamWriter swErrLog = null;
-            string strTime;
-            string strErrLogPath;
-
             try
             {
                 this.Visible = false;
@@ -498,7 +501,10 @@ namespace ITunEsTooL
                     return;
 
                 WriteXML();
-                Update_Conf();
+                if (SysSet.IsAdministrator())
+                {
+                    Update_Conf();
+                }
 
                 if (pAutoShutdown)
                 {
@@ -506,7 +512,7 @@ namespace ITunEsTooL
                     Application.Exit();
                 }
 
-                if (pErrMessage != "" && Directory.Exists(CONF.pErrLog))
+                if (pErrMessage != "")
                 {
 
                     if (pErrMessage.Contains("System Exception"))
@@ -517,22 +523,13 @@ namespace ITunEsTooL
                         pErrMessage += "OS Versin : " + os.Version.ToString() + "\n";
                         pErrMessage += "UAC Enabled : " + SysSet.IsUacEnabled().ToString() + "\n";
                         pErrMessage += "App Versin : " + ver.FileVersion;
-                        strTime = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
-                        strErrLogPath = CONF.pErrLog + @"\" + "." + strTime + "(ErrorLog).log";
-                        swErrLog = new StreamWriter(strErrLogPath, true, System.Text.Encoding.GetEncoding("Shift_Jis"));
-                        swErrLog.Write(pErrMessage);
-                        swErrLog.Close();
-                        swErrLog = null;
 
                         string appPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
                         CrashReport frmReport = new CrashReport();
                         frmReport.Color = pictureBox1.BackColor;
-                        frmReport.Path = strErrLogPath;
                         frmReport.ErrMsg = pErrMessage;
                         DialogSaizenmen();
                         frmReport.ShowDialog();
-
-                        DeleteFile(strErrLogPath);
                     }
 
                 }
@@ -543,7 +540,7 @@ namespace ITunEsTooL
             {
 
                 pErrMessage += "System Exception 1012 : " + ex.Message + "\n" + ex.StackTrace + "\n";
-                Msgbox("System Exception 1012" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
+                Msgbox("System Exception 1012" + "\n" + "ITunEs TooLを終了します。" + ex.Message+ ex.StackTrace, HeadMsg.HEAD_EXCEPTION, 4);
             }
             finally
             {
@@ -2444,14 +2441,6 @@ namespace ITunEsTooL
 
                 splash.CloseSplash();
                 CONF.pTrackCnt = itunesD.LibraryPlaylist.Tracks.Count.ToString();
-                if (strDelSong != "")
-                {
-                    strDelLogPath = CONF.pErrLog + @"\" + strTime + "(DeleteSong).log";
-                    swDelSong = new System.IO.StreamWriter(strDelLogPath, true, System.Text.Encoding.GetEncoding("Shift_Jis"));
-                    swDelSong.Write(strHead + strDelSong);
-                    swDelSong.Close();
-                    swDelSong = null;
-                }
 
                 File.Copy(strXmlPath, CONF.pxmlPath, true);
                 DeleteFile(strXmlPath);
