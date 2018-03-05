@@ -122,28 +122,10 @@
             this.rdoUwagaki = new System.Windows.Forms.RadioButton();
             this.rdoSabun = new System.Windows.Forms.RadioButton();
             this.tabCopy = new System.Windows.Forms.TabPage();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.btnChoufuku = new System.Windows.Forms.Button();
             this.btnBackArt = new System.Windows.Forms.Button();
-            this.chkBlank = new System.Windows.Forms.CheckBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.btnMakePList = new System.Windows.Forms.Button();
             this.btnExistFile = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtLogPath = new System.Windows.Forms.TextBox();
-            this.txtSerchChr = new System.Windows.Forms.TextBox();
-            this.btnBDialog = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.chkAlbumArtist = new System.Windows.Forms.CheckBox();
-            this.chkArtwork = new System.Windows.Forms.CheckBox();
-            this.chkArtist = new System.Windows.Forms.CheckBox();
-            this.chkName = new System.Windows.Forms.CheckBox();
-            this.chkAlbum = new System.Windows.Forms.CheckBox();
-            this.btnSerchChr = new System.Windows.Forms.Button();
             this.tabSerch = new System.Windows.Forms.TabPage();
             this.btnAllSong = new System.Windows.Forms.Button();
             this.lblKeikoku2 = new System.Windows.Forms.Label();
@@ -198,7 +180,6 @@
             this.tabVersion.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.tabCopy.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.tabSerch.SuspendLayout();
             this.grpName.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -488,7 +469,7 @@
             // pictureBox5
             // 
             this.pictureBox5.ContextMenuStrip = this.contextMenuStrip1;
-            this.pictureBox5.Image = global::ITunEsTooL.Properties.Resources.NoImage;
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
             this.pictureBox5.Location = new System.Drawing.Point(4, 13);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(305, 217);
@@ -1404,23 +1385,10 @@
             // tabCopy
             // 
             this.tabCopy.BackColor = System.Drawing.Color.White;
-            this.tabCopy.Controls.Add(this.label30);
-            this.tabCopy.Controls.Add(this.label27);
-            this.tabCopy.Controls.Add(this.label17);
             this.tabCopy.Controls.Add(this.btnChoufuku);
             this.tabCopy.Controls.Add(this.btnBackArt);
-            this.tabCopy.Controls.Add(this.chkBlank);
-            this.tabCopy.Controls.Add(this.label10);
-            this.tabCopy.Controls.Add(this.btnMakePList);
             this.tabCopy.Controls.Add(this.btnExistFile);
             this.tabCopy.Controls.Add(this.label9);
-            this.tabCopy.Controls.Add(this.label8);
-            this.tabCopy.Controls.Add(this.txtLogPath);
-            this.tabCopy.Controls.Add(this.txtSerchChr);
-            this.tabCopy.Controls.Add(this.btnBDialog);
-            this.tabCopy.Controls.Add(this.label6);
-            this.tabCopy.Controls.Add(this.groupBox1);
-            this.tabCopy.Controls.Add(this.btnSerchChr);
             this.tabCopy.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.tabCopy.ForeColor = System.Drawing.Color.Black;
             this.tabCopy.ImageIndex = 2;
@@ -1431,54 +1399,18 @@
             this.tabCopy.TabIndex = 1;
             this.tabCopy.Text = " メンテナンス ";
             // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.BackColor = System.Drawing.Color.Transparent;
-            this.label30.Font = new System.Drawing.Font("メイリオ", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label30.ForeColor = System.Drawing.Color.DimGray;
-            this.label30.Location = new System.Drawing.Point(295, 282);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(25, 14);
-            this.label30.TabIndex = 45;
-            this.label30.Text = "※２";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.BackColor = System.Drawing.Color.Transparent;
-            this.label27.Font = new System.Drawing.Font("メイリオ", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label27.ForeColor = System.Drawing.Color.DimGray;
-            this.label27.Location = new System.Drawing.Point(104, 282);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(25, 14);
-            this.label27.TabIndex = 44;
-            this.label27.Text = "※２";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.BackColor = System.Drawing.Color.Transparent;
-            this.label17.Font = new System.Drawing.Font("メイリオ", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label17.ForeColor = System.Drawing.Color.DimGray;
-            this.label17.Location = new System.Drawing.Point(15, 282);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(25, 14);
-            this.label17.TabIndex = 43;
-            this.label17.Text = "※１";
-            // 
             // btnChoufuku
             // 
             this.btnChoufuku.BackColor = System.Drawing.Color.PaleGoldenrod;
             this.btnChoufuku.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnChoufuku.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnChoufuku.ForeColor = System.Drawing.Color.SeaGreen;
-            this.btnChoufuku.Location = new System.Drawing.Point(284, 223);
+            this.btnChoufuku.Location = new System.Drawing.Point(33, 104);
             this.btnChoufuku.Name = "btnChoufuku";
-            this.btnChoufuku.Size = new System.Drawing.Size(90, 58);
+            this.btnChoufuku.Size = new System.Drawing.Size(407, 76);
             this.btnChoufuku.TabIndex = 42;
             this.btnChoufuku.TabStop = false;
-            this.btnChoufuku.Text = "重複曲を検索";
+            this.btnChoufuku.Text = "曲名が重複している曲のプレイリストを作成";
             this.btnChoufuku.UseVisualStyleBackColor = false;
             this.btnChoufuku.Click += new System.EventHandler(this.btnChoufuku_Click);
             // 
@@ -1488,56 +1420,14 @@
             this.btnBackArt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackArt.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnBackArt.ForeColor = System.Drawing.Color.White;
-            this.btnBackArt.Location = new System.Drawing.Point(377, 223);
+            this.btnBackArt.Location = new System.Drawing.Point(33, 207);
             this.btnBackArt.Name = "btnBackArt";
-            this.btnBackArt.Size = new System.Drawing.Size(90, 58);
+            this.btnBackArt.Size = new System.Drawing.Size(407, 72);
             this.btnBackArt.TabIndex = 40;
             this.btnBackArt.TabStop = false;
             this.btnBackArt.Text = "アートワークをバックアップ";
             this.btnBackArt.UseVisualStyleBackColor = false;
             this.btnBackArt.Click += new System.EventHandler(this.btnBackArt_Click);
-            // 
-            // chkBlank
-            // 
-            this.chkBlank.AutoSize = true;
-            this.chkBlank.Checked = true;
-            this.chkBlank.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBlank.Font = new System.Drawing.Font("メイリオ", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.chkBlank.ForeColor = System.Drawing.Color.Black;
-            this.chkBlank.Location = new System.Drawing.Point(9, 79);
-            this.chkBlank.Name = "chkBlank";
-            this.chkBlank.Size = new System.Drawing.Size(192, 21);
-            this.chkBlank.TabIndex = 5;
-            this.chkBlank.Text = "設定されていない項目を検索する";
-            this.chkBlank.UseVisualStyleBackColor = true;
-            this.chkBlank.CheckedChanged += new System.EventHandler(this.chkBlank_CheckedChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Font = new System.Drawing.Font("メイリオ", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label10.ForeColor = System.Drawing.Color.DimGray;
-            this.label10.Location = new System.Drawing.Point(15, 296);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(109, 14);
-            this.label10.TabIndex = 38;
-            this.label10.Text = "※１ CSVファイルを作成";
-            // 
-            // btnMakePList
-            // 
-            this.btnMakePList.BackColor = System.Drawing.Color.LightBlue;
-            this.btnMakePList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMakePList.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnMakePList.ForeColor = System.Drawing.Color.IndianRed;
-            this.btnMakePList.Location = new System.Drawing.Point(97, 222);
-            this.btnMakePList.Name = "btnMakePList";
-            this.btnMakePList.Size = new System.Drawing.Size(90, 58);
-            this.btnMakePList.TabIndex = 37;
-            this.btnMakePList.TabStop = false;
-            this.btnMakePList.Text = "検索する曲のアートワークを作成";
-            this.btnMakePList.UseVisualStyleBackColor = false;
-            this.btnMakePList.Click += new System.EventHandler(this.button7_Click);
             // 
             // btnExistFile
             // 
@@ -1545,12 +1435,12 @@
             this.btnExistFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExistFile.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.btnExistFile.ForeColor = System.Drawing.Color.PapayaWhip;
-            this.btnExistFile.Location = new System.Drawing.Point(190, 222);
+            this.btnExistFile.Location = new System.Drawing.Point(33, 13);
             this.btnExistFile.Name = "btnExistFile";
-            this.btnExistFile.Size = new System.Drawing.Size(90, 58);
+            this.btnExistFile.Size = new System.Drawing.Size(407, 76);
             this.btnExistFile.TabIndex = 35;
             this.btnExistFile.TabStop = false;
-            this.btnExistFile.Text = "存在しないファイルを削除";
+            this.btnExistFile.Text = "iTunesの音楽の場所が特定出来ない曲を削除";
             this.btnExistFile.UseVisualStyleBackColor = false;
             this.btnExistFile.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -1560,169 +1450,11 @@
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("メイリオ", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label9.ForeColor = System.Drawing.Color.DimGray;
-            this.label9.Location = new System.Drawing.Point(135, 296);
+            this.label9.Location = new System.Drawing.Point(34, 186);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(182, 14);
+            this.label9.Size = new System.Drawing.Size(161, 14);
             this.label9.TabIndex = 34;
-            this.label9.Text = "※２ iTunesのプレイリストを作成します。";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("メイリオ", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(6, 163);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(206, 17);
-            this.label8.TabIndex = 33;
-            this.label8.Text = "出力ファイルを保存するフォルダを指定";
-            // 
-            // txtLogPath
-            // 
-            this.txtLogPath.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtLogPath.Font = new System.Drawing.Font("メイリオ", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtLogPath.ForeColor = System.Drawing.Color.Black;
-            this.txtLogPath.Location = new System.Drawing.Point(6, 182);
-            this.txtLogPath.Name = "txtLogPath";
-            this.txtLogPath.Size = new System.Drawing.Size(397, 24);
-            this.txtLogPath.TabIndex = 7;
-            // 
-            // txtSerchChr
-            // 
-            this.txtSerchChr.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtSerchChr.Font = new System.Drawing.Font("メイリオ", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.txtSerchChr.Location = new System.Drawing.Point(6, 126);
-            this.txtSerchChr.Name = "txtSerchChr";
-            this.txtSerchChr.Size = new System.Drawing.Size(463, 24);
-            this.txtSerchChr.TabIndex = 6;
-            this.txtSerchChr.DoubleClick += new System.EventHandler(this.txtSerchChr_DoubleClick);
-            // 
-            // btnBDialog
-            // 
-            this.btnBDialog.BackColor = System.Drawing.Color.Pink;
-            this.btnBDialog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBDialog.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnBDialog.ForeColor = System.Drawing.Color.White;
-            this.btnBDialog.Location = new System.Drawing.Point(411, 181);
-            this.btnBDialog.Name = "btnBDialog";
-            this.btnBDialog.Size = new System.Drawing.Size(56, 25);
-            this.btnBDialog.TabIndex = 29;
-            this.btnBDialog.TabStop = false;
-            this.btnBDialog.Text = "選択...";
-            this.btnBDialog.UseVisualStyleBackColor = false;
-            this.btnBDialog.Click += new System.EventHandler(this.btnBDialog_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("メイリオ", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label6.ForeColor = System.Drawing.Color.DimGray;
-            this.label6.Location = new System.Drawing.Point(5, 105);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(342, 17);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "抽出対象の文字列を含む項目を検索します。※ 正規表現使えます。";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.chkAlbumArtist);
-            this.groupBox1.Controls.Add(this.chkArtwork);
-            this.groupBox1.Controls.Add(this.chkArtist);
-            this.groupBox1.Controls.Add(this.chkName);
-            this.groupBox1.Controls.Add(this.chkAlbum);
-            this.groupBox1.Font = new System.Drawing.Font("メイリオ", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.groupBox1.ForeColor = System.Drawing.Color.Black;
-            this.groupBox1.Location = new System.Drawing.Point(6, 18);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(463, 49);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "検索する項目を選択して下さい。";
-            // 
-            // chkAlbumArtist
-            // 
-            this.chkAlbumArtist.AutoSize = true;
-            this.chkAlbumArtist.Checked = true;
-            this.chkAlbumArtist.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAlbumArtist.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.chkAlbumArtist.ForeColor = System.Drawing.Color.Black;
-            this.chkAlbumArtist.Location = new System.Drawing.Point(184, 19);
-            this.chkAlbumArtist.Name = "chkAlbumArtist";
-            this.chkAlbumArtist.Size = new System.Drawing.Size(108, 18);
-            this.chkAlbumArtist.TabIndex = 5;
-            this.chkAlbumArtist.Text = "アルバムアーティスト";
-            this.chkAlbumArtist.UseVisualStyleBackColor = true;
-            // 
-            // chkArtwork
-            // 
-            this.chkArtwork.AutoSize = true;
-            this.chkArtwork.Checked = true;
-            this.chkArtwork.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkArtwork.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.chkArtwork.ForeColor = System.Drawing.Color.Black;
-            this.chkArtwork.Location = new System.Drawing.Point(372, 19);
-            this.chkArtwork.Name = "chkArtwork";
-            this.chkArtwork.Size = new System.Drawing.Size(76, 18);
-            this.chkArtwork.TabIndex = 4;
-            this.chkArtwork.Text = "アートワーク";
-            this.chkArtwork.UseVisualStyleBackColor = true;
-            // 
-            // chkArtist
-            // 
-            this.chkArtist.AutoSize = true;
-            this.chkArtist.Checked = true;
-            this.chkArtist.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkArtist.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.chkArtist.ForeColor = System.Drawing.Color.Black;
-            this.chkArtist.Location = new System.Drawing.Point(91, 19);
-            this.chkArtist.Name = "chkArtist";
-            this.chkArtist.Size = new System.Drawing.Size(84, 18);
-            this.chkArtist.TabIndex = 2;
-            this.chkArtist.Text = "アーティスト名";
-            this.chkArtist.UseVisualStyleBackColor = true;
-            // 
-            // chkName
-            // 
-            this.chkName.AutoSize = true;
-            this.chkName.Checked = true;
-            this.chkName.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkName.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.chkName.ForeColor = System.Drawing.Color.Black;
-            this.chkName.Location = new System.Drawing.Point(304, 19);
-            this.chkName.Name = "chkName";
-            this.chkName.Size = new System.Drawing.Size(48, 18);
-            this.chkName.TabIndex = 3;
-            this.chkName.Text = "曲名";
-            this.chkName.UseVisualStyleBackColor = true;
-            // 
-            // chkAlbum
-            // 
-            this.chkAlbum.AutoSize = true;
-            this.chkAlbum.Checked = true;
-            this.chkAlbum.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAlbum.Font = new System.Drawing.Font("Meiryo UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.chkAlbum.ForeColor = System.Drawing.Color.Black;
-            this.chkAlbum.Location = new System.Drawing.Point(6, 19);
-            this.chkAlbum.Name = "chkAlbum";
-            this.chkAlbum.Size = new System.Drawing.Size(72, 18);
-            this.chkAlbum.TabIndex = 1;
-            this.chkAlbum.Text = "アルバム名";
-            this.chkAlbum.UseVisualStyleBackColor = true;
-            // 
-            // btnSerchChr
-            // 
-            this.btnSerchChr.BackColor = System.Drawing.Color.DarkSalmon;
-            this.btnSerchChr.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSerchChr.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btnSerchChr.ForeColor = System.Drawing.Color.White;
-            this.btnSerchChr.Location = new System.Drawing.Point(6, 222);
-            this.btnSerchChr.Name = "btnSerchChr";
-            this.btnSerchChr.Size = new System.Drawing.Size(90, 58);
-            this.btnSerchChr.TabIndex = 0;
-            this.btnSerchChr.TabStop = false;
-            this.btnSerchChr.Text = "検索する曲のファイルを作成";
-            this.btnSerchChr.UseVisualStyleBackColor = false;
-            this.btnSerchChr.Click += new System.EventHandler(this.btnSerchChr_Click);
+            this.label9.Text = "iTunesのプレイリストを作成します。";
             // 
             // tabSerch
             // 
@@ -1752,7 +1484,7 @@
             this.tabSerch.Padding = new System.Windows.Forms.Padding(3);
             this.tabSerch.Size = new System.Drawing.Size(475, 315);
             this.tabSerch.TabIndex = 0;
-            this.tabSerch.Text = " フォルダ作成 ";
+            this.tabSerch.Text = "バックアップ";
             this.tabSerch.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabSerch_DragDrop);
             this.tabSerch.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabSerch_DragEnter);
             // 
@@ -2130,7 +1862,7 @@
             // 
             this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox6.Enabled = false;
-            this.pictureBox6.Image = global::ITunEsTooL.Properties.Resources.ロゴ;
+            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
             this.pictureBox6.Location = new System.Drawing.Point(73, 49);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(368, 63);
@@ -2245,8 +1977,6 @@
             this.groupBox6.ResumeLayout(false);
             this.tabCopy.ResumeLayout(false);
             this.tabCopy.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.tabSerch.ResumeLayout(false);
             this.tabSerch.PerformLayout();
             this.grpName.ResumeLayout(false);
@@ -2289,22 +2019,8 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnDouki;
         private System.Windows.Forms.TabPage tabCopy;
-        private System.Windows.Forms.CheckBox chkBlank;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button btnMakePList;
         private System.Windows.Forms.Button btnExistFile;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtLogPath;
-        private System.Windows.Forms.TextBox txtSerchChr;
-        private System.Windows.Forms.Button btnBDialog;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox chkArtwork;
-        private System.Windows.Forms.CheckBox chkArtist;
-        private System.Windows.Forms.CheckBox chkName;
-        private System.Windows.Forms.CheckBox chkAlbum;
-        private System.Windows.Forms.Button btnSerchChr;
         private System.Windows.Forms.TabPage tabSerch;
         private System.Windows.Forms.GroupBox grpName;
         private System.Windows.Forms.RadioButton rdoAlbum;
@@ -2370,7 +2086,6 @@
         private System.Windows.Forms.Button btnChoufuku;
         private System.Windows.Forms.Button btnAutoSet;
         private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.CheckBox chkAlbumArtist;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem この画像を削除するToolStripMenuItem;
@@ -2381,9 +2096,6 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.RadioButton rdoUwagaki;
         private System.Windows.Forms.RadioButton rdoSabun;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ToolStripMenuItem 画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 画像ファイルを設定するToolStripMenuItem;
         private System.Windows.Forms.RadioButton rdoArbArt;

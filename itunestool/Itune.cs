@@ -437,9 +437,6 @@ namespace ITunEsTooL
 
             toolTip1.SetToolTip(tabControl1, "F1キーでマニュアルが表示されます（インターネット接続時のみ）");
             toolTip1.SetToolTip(txtBefor, "ダブルクリックでドラッグした曲の" + "\n" + "詳細確認が出来ます。");
-            toolTip1.SetToolTip(txtSerchChr, "【.*】と入力するとすべての曲が" + "\n"
-                                + "CSVに出力されます。" + "\n"
-                                + "ダブルクリックすると【.*】が自動入力されます。");
             toolTip1.SetToolTip(grpName, "アーティスト＋アルバムは" + "\n"
                                 + "アーティスト名のフォルダ内に" + "\n"
                                 + "アルバム名のフォルダが作成されます。");
@@ -900,9 +897,7 @@ namespace ITunEsTooL
             try
             {
                 btnExistFile.Text = "存在しない" + "\n" + "ファイルを削除";
-                btnMakePList.Text = "検索する曲の" + "\n" + "プレイリストを作成";
                 label1.Text = "iTunesから曲をドラッグ＆ドロップで追加します。" + "\n" + "複数データの詳細を見たい場合はテキストをダブルクリックして下さい。";
-                btnSerchChr.Text = "検索する曲の" + "\n" + "ファイルを作成";
                 txtAfter.Text = "";
                 txtBefor.Text = "";
                 txtNumber.Text = "0";
@@ -1750,501 +1745,6 @@ namespace ITunEsTooL
         }
 
         /// <summary>
-        /// 問題点検索ボタン
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSerchChr_Click(object sender, EventArgs e)
-        {
-            iTunesApp app = null;
-            IITLibraryPlaylist libraryPlaylist = null;
-            Regex reg = null;
-            string strMatch = string.Empty;
-            string strArtist = string.Empty;
-            string strAlbum = string.Empty;
-            string strName = string.Empty;
-            string strTime = string.Empty;
-            StreamWriter sw;
-
-            if (COMVAL.strLocation == null)
-            {
-                Msgbox("設定にて、iTunesの情報を取得して下さい。", HeadMsg.ATTENTION, 2);
-                return;
-            }
-
-            if (txtLogPath.Text == "")
-            {
-                Msgbox("パスを指定して下さい。", HeadMsg.ATTENTION, 2);
-                txtLogPath.Focus();
-                return;
-            }
-            if (!Directory.Exists(txtLogPath.Text))
-            {
-                Msgbox("パスが存在しません。指定し直して下さい。", HeadMsg.ATTENTION, 2);
-                txtLogPath.Focus();
-                return;
-            }
-
-            DialogResult YorN = DialogResult.No;
-            if (!CheckChkControl())
-            {
-                Msgbox("チェックボックスを選択して下さい。", HeadMsg.ATTENTION, 2);
-                chkAlbum.Select();
-                return;
-            }
-
-            YorN = Msgbox("問題点を検索します。よろしいですか？" + "\n" + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。", "検索", 3);
-            if (YorN == DialogResult.No)
-                return;
-
-            this.Enabled = false;
-
-            if (txtSerchChr.Text != "")
-            {
-                try
-                {
-                    reg = new Regex(txtSerchChr.Text, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                }
-                catch (System.Exception)
-                {
-                    Msgbox("正規表現の指定方法が間違っています。", HeadMsg.ATTENTION, 2);
-                    this.Enabled = true;
-                    return;
-                }
-            }
-
-            try
-            {
-
-                PlayListName GetName = new PlayListName();
-                GetName.CColor = COMVAL.strColor;
-                GetName.SelectEvent = 0;
-                GetName.setSetumei = "作成するCSVの名前を設定して下さい。";
-                DialogSaizenmen();
-                GetName.ShowDialog();
-
-                string strget = string.Empty;
-                if (!GetName.Ret)
-                    return;
-                strget = GetName.getMassage;
-
-                app = new iTunesApp();
-                libraryPlaylist = app.LibraryPlaylist;
-                Message = "CSVファイルを作成しています...";
-                splash.SendDataALL(libraryPlaylist.Tracks.Count);
-                backgroundWorker1.RunWorkerAsync();
-
-                lblTitle.Text = HeaderName.CSV;
-                sw = new System.IO.StreamWriter(
-                    @txtLogPath.Text + @"\" + FileOpe.ValidFileName(strget) + "(検索).csv", false,
-                    @System.Text.Encoding.GetEncoding("Shift_Jis"));
-
-                string strtxt = string.Empty;
-                strtxt = txtSerchChr.Text.Replace(" ", "␣");
-                if (txtSerchChr.Text != "")
-                    sw.WriteLine("\"" + "検索文字列" + "\"" + "," + "\"" + strtxt + "\"");
-
-                sw.WriteLine("\"" + "曲名" + "\"" + ","
-                           + "\"" + "アルバム" + "\"" + ","
-                           + "\"" + "アーティスト" + "\"" + ","
-                           + "\"" + "アルバムアーティスト" + "\"" + ","
-                           + "\"" + "抽出内容" + "\"");
-
-                string strErr = string.Empty;
-                int cnt = 0;
-                foreach (string file in COMVAL.strName)
-                {
-                    this.Update();
-
-                    if (String.Compare(txtSerchChr.Text, ".*", true) == 0)
-                    {
-                        strMatch = strMatch + "\"" + COMVAL.strName[cnt] + "\"" + "," +
-                                              "\"" + COMVAL.strAlbum[cnt] + "\"" + "," +
-                                              "\"" + COMVAL.strArtist[cnt] + "\"" +
-                                              "\"" + COMVAL.strAlbumArtist[cnt] + "\"" + "\n";
-                        cnt++;
-                        splash.SendData(cnt);
-                        continue;
-                    }
-
-                    strErr = "";
-                    if (txtSerchChr.Text != "")
-                    {
-                        if (chkName.Checked)
-                        {
-                            if (Convert.ToString(reg.Match(file)) != "")
-                                strErr = "検索文字列一致（曲名）";
-                        }
-
-                        if (chkArtist.Checked)
-                        {
-                            if (Convert.ToString(reg.Match(COMVAL.strArtist[cnt])) != "")
-                            {
-                                if (strErr == "")
-                                {
-                                    strErr = "検索文字列一致（アーティスト）";
-                                }
-                                else
-                                {
-                                    strErr = strErr + " + 検索文字列一致（アーティスト）";
-                                }
-                            }
-                        }
-
-                        if (chkAlbum.Checked)
-                        {
-                            if (Convert.ToString(reg.Match(COMVAL.strAlbum[cnt])) != "")
-                            {
-                                if (strErr == "")
-                                {
-                                    strErr = "検索文字列一致（アルバム）";
-                                }
-                                else
-                                {
-                                    strErr = strErr + " + 検索文字列一致（アルバム）";
-                                }
-                            }
-                        }
-
-                        if (chkAlbumArtist.Checked)
-                        {
-                            if (Convert.ToString(reg.Match(COMVAL.strAlbumArtist[cnt])) != "")
-                            {
-                                if (strErr == "")
-                                {
-                                    strErr = "検索文字列一致（アルバムアーティスト）";
-                                }
-                                else
-                                {
-                                    strErr = strErr + " + 検索文字列一致（アルバムアーティスト）";
-                                }
-                            }
-                        }
-                    }
-
-                    if (chkName.Checked)
-                    {
-                        if (COMVAL.strName[cnt] == "" && chkBlank.Checked)
-                            if (strErr == "")
-                            {
-
-                                strErr = strErr + "曲名未設定";
-                            }
-                            else
-                            {
-                                strErr = strErr + " + " + "曲名未設定";
-                            }
-
-                    }
-                    if (chkArtist.Checked)
-                    {
-                        if (COMVAL.strArtist[cnt] == "" && chkBlank.Checked)
-                        {
-                            if (strErr == "")
-                            {
-                                strErr = strErr + "アーティスト未設定";
-                            }
-                            else
-                            {
-                                strErr = strErr + " + " + "アーティスト未設定";
-                            }
-                        }
-                    }
-
-                    if (chkAlbum.Checked)
-                    {
-                        if (COMVAL.strAlbum[cnt] == "" && chkBlank.Checked)
-                        {
-                            if (strErr == "")
-                            {
-                                strErr = strErr + "アルバム未設定";
-                            }
-                            else
-                            {
-                                strErr = strErr + " + " + "アルバム未設定";
-                            }
-                        }
-                    }
-
-
-                    if (chkAlbumArtist.Checked)
-                    {
-                        if (COMVAL.strAlbumArtist[cnt] == "" && chkBlank.Checked)
-                            if (strErr == "")
-                            {
-
-                                strErr = strErr + "アルバムアーティスト未設定";
-                            }
-                            else
-                            {
-                                strErr = strErr + " + " + "アルバムアーティスト未設定";
-                            }
-
-                    }
-                    if (chkArtwork.Checked)
-                    {
-                        if (COMVAL.iArtCnt[cnt] == 0 && chkBlank.Checked)
-                            if (strErr == "")
-                            {
-
-                                strErr = strErr + "アートワーク未設定";
-                            }
-                            else
-                            {
-                                strErr = strErr + " + " + "アートワーク未設定";
-                            }
-
-                    }
-
-                    if (strErr != "")
-                    {
-                        strMatch = strMatch + "\"" + COMVAL.strName[cnt] + "\"" + "," +
-                                              "\"" + COMVAL.strAlbum[cnt] + "\"" + "," +
-                                              "\"" + COMVAL.strArtist[cnt] + "\"" + "," +
-                                              "\"" + COMVAL.strAlbumArtist[cnt] + "\"" + "," +
-                                              "\"" + strErr + "\"" + "\n";
-                    }
-                    cnt++;
-                    splash.SendData(cnt);
-                    if (splash.Cancel)
-                    {
-                        Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
-                        splash.SendCacncel = false;
-                        splash.SendCan(false);
-                        break;
-                    }
-                }
-
-                sw.Write(strMatch);
-                sw.Close();
-                splash.CloseSplash();
-                Msgbox("CSVファイルを作成しました。", HeadMsg.COMPLETE, 1);
-                this.Enabled = true;
-
-            }
-            catch (System.Exception ex)
-            {
-                if (File.Exists(CONF.pxmlPath))
-                    DeleteFile(CONF.pxmlPath);
-                Msgbox("System Exception 1007" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 4);
-                pErrMessage += "System Exception 1007 : " + ex.Message + "\n" + ex.StackTrace + "\n";
-                this.Close();
-
-            }
-            finally
-            {
-                CheckSaizenmen();
-                this.Enabled = true;
-                lblTitle.Text = HeaderName.TITLE;
-            }
-        }
-
-        /// <summary>
-        /// 問題のある曲のプレイリストを作成
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button7_Click(object sender, EventArgs e)
-        {
-            iTunesApp itunes = null;
-            iTunesApp app = null;
-            IITLibraryPlaylist libraryPlaylist = null;
-            IITTrackCollection trackCol = null;
-            IITUserPlaylist playList = null;
-            IITTrack track = null;
-            PlayListName GetName = null;
-            Regex reg = null;
-            object target = null;
-            string[] Chouhuku = new string[1];
-            string strget = string.Empty;
-            int icnt = 0;
-            Boolean blnChkBlank = false;
-            Boolean SetPlayLst = false;
-            DialogResult YorN = DialogResult.No;
-
-            try
-            {
-                if (!CheckChkControl())
-                {
-                    Msgbox("チェックボックスを選択して下さい。", HeadMsg.ATTENTION, 5);
-                    chkAlbum.Select();
-                    return;
-                }
-                if (COMVAL.strName == null)
-                {
-                    Msgbox("設定にて、iTunesの情報を取得して下さい。", HeadMsg.ATTENTION, 5);
-                    return;
-                }
-                YorN = Msgbox("チェックボックスで選択した項目のチェックを行います。" + "\n" + "その結果がプレイリストに反映されますがよろしいですか？"
-                                        + "\n" + "※iTunesと同期直後でない場合、正しい結果が得られない場合があります。",
-                    HeadMsg.MAKE_PLAYLIST, 3);
-                if (YorN == DialogResult.No)
-                    return;
-
-                app = new iTunesApp();
-                libraryPlaylist = app.LibraryPlaylist;
-                itunes = new iTunesAppClass();
-
-                if (txtSerchChr.Text != "")
-                {
-                    try
-                    {
-                        reg = new Regex(txtSerchChr.Text, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                    }
-                    catch (System.Exception)
-                    {
-                        Msgbox("正規表現の指定方法が間違っています。", HeadMsg.ATTENTION, 2);
-                        this.Enabled = true;
-                        return;
-                    }
-                }
-
-                //全メディアのコレクション取得  
-                trackCol = itunes.LibraryPlaylist.Tracks;
-
-                splash.SendDataALL(libraryPlaylist.Tracks.Count);
-                Message = "プレイリストを作成中...";
-                this.Enabled = false;
-
-                GetName = new PlayListName();
-                GetName.CColor = COMVAL.strColor;
-                GetName.SelectEvent = 1;
-                DialogSaizenmen();
-                GetName.ShowDialog();
-
-                if (!GetName.Ret)
-                    return;
-                strget = GetName.getMassage;
-                lblTitle.Text = "プレイリストを作成しています...";
-
-                //プレイリストの新規作成  
-                playList = itunes.CreatePlaylist(strget + "(検索)") as IITUserPlaylist;
-                DialogSaizenmen();
-                splash.SendVisible(true);
-                //マルチスレッド処理
-                backgroundWorker1.RunWorkerAsync();
-
-                for (icnt = 0; icnt < COMVAL.strName.Length; icnt++)
-                {
-                    if (txtSerchChr.Text != "")
-                        blnChkBlank = true;
-
-                    //アルバム
-                    if (chkAlbum.Checked)
-                    {
-                        if (COMVAL.strAlbum[icnt] == "" && chkBlank.Checked)
-                        {
-                            AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
-                            SetPlayLst = true;
-                        }
-                        if (blnChkBlank && !SetPlayLst)
-                        {
-                            if (Convert.ToString(reg.Match(COMVAL.strAlbum[icnt])) != "")
-                            {
-                                AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
-                                SetPlayLst = true;
-                            }
-                        }
-                    }
-                    //アーティスト
-                    if (chkArtist.Checked)
-                    {
-                        if (COMVAL.strArtist[icnt] == "" && !SetPlayLst && chkBlank.Checked)
-                        {
-                            AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
-                            SetPlayLst = true;
-                        }
-                        if (blnChkBlank && !SetPlayLst)
-                        {
-                            if (Convert.ToString(reg.Match(COMVAL.strArtist[icnt])) != "")
-                            {
-                                AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
-                                SetPlayLst = true;
-                            }
-                        }
-                    }
-
-                    //曲名
-                    if (chkName.Checked)
-                    {
-                        if (COMVAL.strName[icnt] == "" && !SetPlayLst && chkBlank.Checked)
-                        {
-                            AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
-                            SetPlayLst = true;
-                        }
-                        if (blnChkBlank && !SetPlayLst)
-                        {
-                            if (Convert.ToString(reg.Match(COMVAL.strName[icnt])) != "")
-                            {
-                                AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
-                                SetPlayLst = true;
-                            }
-                        }
-                    }
-
-                    //アルバムアーティスト
-                    if (chkAlbumArtist.Checked)
-                    {
-                        if (COMVAL.strAlbumArtist[icnt] == "" && !SetPlayLst && chkBlank.Checked)
-                        {
-                            AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
-                            SetPlayLst = true;
-                        }
-                        if (blnChkBlank && !SetPlayLst)
-                        {
-                            if (Convert.ToString(reg.Match(COMVAL.strAlbumArtist[icnt])) != "")
-                            {
-                                AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
-                                SetPlayLst = true;
-                            }
-                        }
-                    }
-
-                    //アートワーク
-                    if (chkArtwork.Checked && !SetPlayLst)
-                    {
-
-                        if (COMVAL.iArtCnt[icnt] == 0 && !SetPlayLst && chkBlank.Checked)
-                        {
-                            AddPlayList(ref track, ref target, ref playList, ref trackCol, icnt);
-                            SetPlayLst = true;
-                        }
-                    }
-                    if (splash.Cancel)
-                    {
-                        Msgbox("処理を中断します。", HeadMsg.NOTICE, 7);
-                        splash.SendCacncel = false;
-                        splash.SendCan(false);
-                        break;
-                    }
-                    splash.SendData(icnt);
-                    SetPlayLst = false;
-                }
-
-                splash.CloseSplash();
-                Msgbox("プレイリストの作成が完了しました。", HeadMsg.COMPLETE, 1);
-
-            }
-            catch (System.Exception ex)
-            {
-                if (File.Exists(CONF.pxmlPath))
-                    DeleteFile(CONF.pxmlPath);
-                splash.CloseSplash();
-                Msgbox("System Exception 1009" + "\n" + "ITunEs TooLを終了します。", HeadMsg.HEAD_EXCEPTION, 2);
-                pErrMessage += "System Exception 1009 : " + ex.Message + "\n" + ex.StackTrace + "\n";
-                this.Close();
-            }
-            finally
-            {
-                CheckSaizenmen();
-                this.Enabled = true;
-                lblTitle.Text = HeaderName.TITLE;
-                ReleaseITunesObject(ref itunes, ref app, ref libraryPlaylist, ref trackCol, ref playList, ref track);
-            }
-
-        }
-
-        /// <summary>
         /// リソース解放
         /// </summary>
         /// <param name="itunes"></param>
@@ -2288,18 +1788,6 @@ namespace ITunEsTooL
             return true;
 
         }
-        /// <summary>
-        /// チェックボックス使用チェック
-        /// </summary>
-        /// <returns></returns>
-        private Boolean CheckChkControl()
-        {
-            if (!chkAlbum.Checked && !chkArtist.Checked && !chkArtwork.Checked && !chkName.Checked && !chkAlbumArtist.Checked)
-                return false;
-            return true;
-
-        }
-
         /// <summary>
         /// プレイリスト作成
         /// </summary>
@@ -2601,8 +2089,6 @@ namespace ITunEsTooL
                 groupBox2.BackColor = SystemColors.Control;
                 txtAfter.BackColor = Color.White;
                 txtBefor.BackColor = Color.White;
-                txtLogPath.BackColor = Color.White;
-                txtSerchChr.BackColor = Color.White;
                 tabSonota.BackColor = SystemColors.Control;
                 tabHyouji.BackColor = SystemColors.Control;
                 label37.BackColor = SystemColors.Control;
@@ -2620,8 +2106,6 @@ namespace ITunEsTooL
                 groupBox2.BackColor = Color.White;
                 txtAfter.BackColor = Color.WhiteSmoke;
                 txtBefor.BackColor = Color.WhiteSmoke;
-                txtLogPath.BackColor = Color.WhiteSmoke;
-                txtSerchChr.BackColor = Color.WhiteSmoke;
                 tabSonota.BackColor = Color.White;
                 tabHyouji.BackColor = Color.White;
                 label37.BackColor = Color.White;
@@ -2747,22 +2231,6 @@ namespace ITunEsTooL
         }
 
         /// <summary>
-        /// エラーチェックダイアログ
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnBDialog_Click(object sender, EventArgs e)
-        {
-            string strPath;
-
-            strPath = OpenDialog("エラーチェックファイルを保存するフォルダを指定して下さい。", txtLogPath.Text);
-            if (strPath != "")
-                txtLogPath.Text = strPath;
-        }
-
-
-
-        /// <summary>
         /// ダイアログオープン
         /// </summary>
         /// <param name="strDescription"></param>
@@ -2804,16 +2272,6 @@ namespace ITunEsTooL
         {
             if (this.TopMost)
                 this.TopMost = false;
-        }
-
-        /// <summary>
-        /// 設定されてない項目を検索（チェックボックス）
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chkBlank_CheckedChanged(object sender, EventArgs e)
-        {
-            chkBlank.ForeColor = chkBlank.Checked ? Color.Black : Color.DimGray;
         }
 
         /// <summary>
@@ -3512,16 +2970,6 @@ namespace ITunEsTooL
             DialogSaizenmen();
             GetName.ShowDialog();
             CheckSaizenmen();
-        }
-
-        /// <summary>
-        /// 検索（テキスト）ダブルクリック
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtSerchChr_DoubleClick(object sender, EventArgs e)
-        {
-            txtSerchChr.Text = ".*";
         }
 
         /// <summary>
@@ -5250,8 +4698,6 @@ namespace ITunEsTooL
                     lblName.BackColor = Color.MistyRose;
                     lblAlbum.BackColor = Color.MistyRose;
                     lblArtist.BackColor = Color.MistyRose;
-                    曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Text = "編集モードを終了する";
-                    編集モードを取り消すToolStripMenuItem.Visible = true;
                     Msgbox("編集モードに変更します。" + "\n" + "曲、アルバム、アーティスト名を変更することが可能です。" + "\n" + "※「編集モードを終了する」を押下しない限り変更はされません。", HeadMsg.NOTICE, 1);
                 }
                 else
@@ -5281,8 +4727,6 @@ namespace ITunEsTooL
                     lblAlbum.BackColor = Color.WhiteSmoke;
                     lblArtist.BackColor = Color.WhiteSmoke;
                     Msgbox("編集モードを終了します。" + "\n" + "曲名、アルバム名、アーティスト名が変更されました。", HeadMsg.NOTICE, 1);
-                    曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Text = "曲アルバムアーティスト名を編集モードにする";
-                    編集モードを取り消すToolStripMenuItem.Visible = false;
                 }
             }
             catch (System.Exception ex)
@@ -5311,8 +4755,6 @@ namespace ITunEsTooL
             lblName.BackColor = Color.WhiteSmoke;
             lblAlbum.BackColor = Color.WhiteSmoke;
             lblArtist.BackColor = Color.WhiteSmoke;
-            曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Text = "曲アルバムアーティスト名を編集モードにする";
-            編集モードを取り消すToolStripMenuItem.Visible = false;
             Msgbox("取り消しが完了しました。", HeadMsg.NOTICE, 1);
         }
 
