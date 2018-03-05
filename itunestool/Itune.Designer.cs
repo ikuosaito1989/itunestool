@@ -59,9 +59,6 @@
             this.アーtぇイスト名ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.画像ファイルを設定するToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.編集モードを取り消すToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.この画像のバックアップをとるToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.この画像を削除するToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.画像を拡大表示するToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -508,12 +505,11 @@
             this.画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem,
             this.tsetToolStripMenuItem,
             this.画像ファイルを設定するToolStripMenuItem,
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem,
             this.この画像のバックアップをとるToolStripMenuItem,
             this.この画像を削除するToolStripMenuItem,
             this.画像を拡大表示するToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(322, 180);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(322, 158);
             // 
             // 再生中の曲をITunEsTooLに設定するToolStripMenuItem
             // 
@@ -530,7 +526,7 @@
             this.アーtぇイスト名ToolStripMenuItem});
             this.画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem.Name = "画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem";
             this.画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
-            this.画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem.Text = "項目が設定されていない曲をITunEsTooLに設定する";
+            this.画像が設定されていない曲をITunEsTooLに設定するToolStripMenuItem.Text = "画像が設定されていない曲をITunEsTooLに設定する";
             // 
             // アートワークToolStripMenuItem
             // 
@@ -566,30 +562,6 @@
             this.画像ファイルを設定するToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
             this.画像ファイルを設定するToolStripMenuItem.Text = "画像ファイルを設定する";
             this.画像ファイルを設定するToolStripMenuItem.Click += new System.EventHandler(this.画像ファイルを設定するToolStripMenuItem_Click);
-            // 
-            // 曲アルバムアーティスト名を編集モードにするToolStripMenuItem
-            // 
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1,
-            this.編集モードを取り消すToolStripMenuItem});
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem.Name = "曲アルバムアーティスト名を編集モードにするToolStripMenuItem";
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem.Size = new System.Drawing.Size(321, 22);
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem.Text = "編集モード";
-            // 
-            // 曲アルバムアーティスト名を編集モードにするToolStripMenuItem1
-            // 
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Name = "曲アルバムアーティスト名を編集モードにするToolStripMenuItem1";
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Size = new System.Drawing.Size(288, 22);
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Text = "曲、アルバム、アーティスト名を編集モードにする";
-            this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1.Click += new System.EventHandler(this.曲アルバムアーティスト名を編集モードにするToolStripMenuItem1_Click);
-            // 
-            // 編集モードを取り消すToolStripMenuItem
-            // 
-            this.編集モードを取り消すToolStripMenuItem.Name = "編集モードを取り消すToolStripMenuItem";
-            this.編集モードを取り消すToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
-            this.編集モードを取り消すToolStripMenuItem.Text = "編集モードを取り消す";
-            this.編集モードを取り消すToolStripMenuItem.Visible = false;
-            this.編集モードを取り消すToolStripMenuItem.Click += new System.EventHandler(this.編集モードを取り消すToolStripMenuItem_Click);
             // 
             // この画像のバックアップをとるToolStripMenuItem
             // 
@@ -2416,9 +2388,6 @@
         private System.Windows.Forms.ToolStripMenuItem 画像ファイルを設定するToolStripMenuItem;
         private System.Windows.Forms.RadioButton rdoArbArt;
         private System.Windows.Forms.RadioButton rdoNmArb;
-        private System.Windows.Forms.ToolStripMenuItem 曲アルバムアーティスト名を編集モードにするToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 曲アルバムアーティスト名を編集モードにするToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 編集モードを取り消すToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem アートワークToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem アルバム名ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem アーtぇイスト名ToolStripMenuItem;

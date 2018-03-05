@@ -7,7 +7,7 @@ namespace ITunEsTooL
 {
     class splash
     {
-        private frmSplash clsSplash = null;
+        private frmSplash clsSplash;
         private Boolean blnCancel = false;
         public Boolean Cancel
         {
@@ -60,9 +60,11 @@ namespace ITunEsTooL
         /// <param name="cnt"></param>
         public void SendData(int cnt)
         {
-            clsSplash.Parcent = cnt;
-            blnCancel = clsSplash.Cancel;
-
+            if (clsSplash != null)
+            {
+                clsSplash.Parcent = cnt;
+                blnCancel = clsSplash.Cancel;
+            }
         }
 
         /// <summary>
@@ -71,9 +73,12 @@ namespace ITunEsTooL
         /// <param name="Cancel"></param>
         public void SendCan(Boolean Cancel)
         {
-            blnCancel = Cancel;
-            clsSplash.SendCancel = blnCancel;
-            clsSplash.HeadMessage = "少々お待ち下さい...";
+            if (clsSplash != null)
+            {
+                blnCancel = Cancel;
+                clsSplash.SendCancel = blnCancel;
+                clsSplash.HeadMessage = "少々お待ち下さい...";
+            }
 
         }
         /// <summary>
@@ -82,7 +87,10 @@ namespace ITunEsTooL
         /// <param name="cnt"></param>
         public void SendMessage(string strMessage)
         {
-            clsSplash.Message = strMessage;
+            if (clsSplash != null)
+            {
+                clsSplash.Message = strMessage;
+            }
         }
         /// <summary>
         /// 一時的な非表示
@@ -90,8 +98,11 @@ namespace ITunEsTooL
         /// <param name="cnt"></param>
         public void SendVisible(Boolean blnVIS)
         {
-            clsSplash.Daimei = "";
-            clsSplash.bVisible = blnVIS;
+            if (clsSplash != null)
+            {
+                clsSplash.Daimei = "";
+                clsSplash.bVisible = blnVIS;
+            }
         }
         /// <summary>
         /// 処理するデータの合計値を渡す

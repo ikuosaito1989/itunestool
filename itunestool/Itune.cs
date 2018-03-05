@@ -4731,13 +4731,16 @@ namespace ITunEsTooL
 
                 if (Clipboard.ContainsImage())
                 {
-                    Bitmap img = (Bitmap)Clipboard.GetImage();
+                    var img = (Bitmap)Clipboard.GetImage();
+                    Clipboard.Clear();
+                    
                     ImageFormat fmt = ImageFormat.Bmp;
                     if (rdoBmp.Checked) fmt = ImageFormat.Bmp;
                     if (rdoJpg.Checked) fmt = ImageFormat.Jpeg;
                     if (rdoPng.Checked) fmt = ImageFormat.Png;
                     strArtworkName = SetArtworkName(strName, strAlbum, strArtist);
-                    strPath = RepeatedFile(CONF.pSaveArtwork + @"\" + FileOpe.ValidFileName(strArtworkName));
+                    strPath = RepeatedFile(CONF.pArtWork + @"\" + FileOpe.ValidFileName(strArtworkName));
+                    //var converter = new ImageConverter();
                     img.Save(strPath, fmt);
 
                 }
