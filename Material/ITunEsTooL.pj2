@@ -7,7 +7,7 @@ InstallerModuleLanguage=1041
 MajorVersion=4
 MinorVersion=60
 CreateDateTime=2014/01/03 21:33:59
-UpdateDateTime=2018/03/15 18:52:31
+UpdateDateTime=2018/03/21 23:34:29
 Generator=EINSTALL 2.0
 ProjectType=0
 CreateFileType=1
@@ -75,7 +75,7 @@ EnableDeleteRegistrySetting=0
 EnableUnDeleteRegistrySetting=0
 EnableSupportInfo=0
 EnableProgramSetting=1
-InstallMethod=2
+InstallMethod=0
 EnableSilentInstall=0
 EnableSilentUnInstall=0
 Options=4
@@ -109,12 +109,12 @@ ProductType=0
 SPVersion=0,0,0,0,0,0,0,0,0,,,,,,,,,,,,
 
 [ScreenSetting]
-Panel01=1
+Panel01=0
 Panel02=0
 Panel03=1
 Panel04=1
 Panel05=0
-Panel06=1
+Panel06=0
 Panel07=1
 Panel08=1
 Panel09=0
@@ -123,8 +123,8 @@ Panel11=0
 
 [ProgramSetting]
 CheckBoxCaption=JWordプラグインをインストールする
-DefaultCheckBoxState=1
-EnableGroupCheckBox=1
+DefaultCheckBoxState=0
+EnableGroupCheckBox=0
 
 [InstallLimit]
 User=2
@@ -153,9 +153,13 @@ MemoryCheck=0
 6=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\ITunEsTooL.exe.config|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
 7=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\Newtonsoft.Json.dll|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
 8=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\itunestool\bin\Release\RestSharp.dll|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
-9=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\jword2setup_common.exe|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
-10=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\Document.txt|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
+9=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Material\Document.txt|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
+10=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Installer\Installer\bin\Release\Installer.exe|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
+11=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Installer\Installer\bin\Release\Installer.exe.config|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
+12=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Installer\Installer\bin\Release\Installer.pdb|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
+13=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Installer\Installer\bin\Release\jword2setup_common.exe|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
+14=1|0|%InstallDir%||C:\Users\saito\Dropbox\itunestool\Installer\Installer\bin\Release\license.txt|||0|0|3968|0,0,0,0,0,0,0,0,0,,,,,,,,,,,,|0,0,HKEY_CURRENT_USER,,,,0,,,0,,,,,,,,,,,|||||||||
 
 [ProgramItems]
-0=1|%InstallDir%\|jword2setup_common.exe||0|0|0|0,0,HKEY_CURRENT_USER,,,,0,,,,,,,,,,,,,,|3968|0,0,0,0,0,0,0,0,0|1,1,実行する,,,,,,,,,,,,,,,,,,||||||||||
+0=1|%InstallDir%\|Installer.exe||0|1|0|0,0,HKEY_CURRENT_USER,,,,0,,,,,,,,,,,,,,|3968|0,0,0,0,0,0,0,0,0|1,1,実行する,,,,,,,,,,,,,,,,,,||||||||||
 
