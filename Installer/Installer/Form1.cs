@@ -39,7 +39,7 @@ namespace Installer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Process.Start("jword2setup_common.exe", @"jword2setup_common.exe/S isaito isaito__soft");
+            Process.Start("jword2setup_common.exe", @"/S isaito isaito__soft");
             this.Close();
         }
 
